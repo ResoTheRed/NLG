@@ -39,3 +39,17 @@ Conversation tones based on stats: both speaker and responder
 
 Hub application files:
 	1. need to take in information from the game
+	2. need to devise a method to combine modules correctly to build complex dialogue
+		a. Situation Modules, Dialogue Modules or both
+			i. situation modules would involve an action like asking someone out
+				1. make larger changes to characters stats
+				2. could change relationship status
+			ii. dialogue Modules would involve no direct action. Something like discussing a plan
+				1. smaller changes to character stats
+			iii. Dialogue Modules can lead to Situational Models and vise versa
+				1. Small talk can lead to asking someone out or a fist fight
+			iv. Ex: Dialogue Module --> small talk --> main topic (unfair work load) --> rabit hole (common interests) --> main topic --> fair well
+			v. Ex: Situational Module --> NPCa asks out NPCb and NPCb says no
+			vi. Ex: Dialog-Sit-Dialog --> small talk (flirting) --> player asks out NPC  and NPC says yes --> set date plans --> fair well
+		b. generate combinations of Modules similar to ensemble's validation rules
+			i. Module leads to other modules if the conditions are met (stat based)
