@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "O/Mus6EDwyPnf9tGNHPAUe68qPJBkuU+/COJS4qnJb+eUUD3okQc0SmvhJ4Mc7mpzN+aK2gNSXpiSORPg9DPbg==",
+  "dgSpecHash": "XHfQZmz5vI3L05qXv9iSKjdoN3AmWmQyweu3jyuEjgCQQog5ZmfgUL6MzDHD6c89ehk3xv8Y4WkhPlChKLZd4Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\Documents\\NLG\\Kati\\Kati.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\User\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
