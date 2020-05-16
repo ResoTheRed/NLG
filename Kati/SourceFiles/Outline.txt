@@ -1,0 +1,24 @@
+﻿Data file
+	1. contains the situation's text data in raw form
+	2. series of lists of phrases or complete thoughs (sentences or phrases connected by conjunctions)
+		a. each base phrase (idea) will have list of phrases saying the same thing but with different
+			moods. the mood will reflect what the characters relationship status
+		b. all pronouns, proper nouns, refs to time, and refs to location will be convered to a key word
+			i. each keyword will contain a list of possible replacement words
+			ii. each replacement word will be assigned to the phrase based on some criteria.  Things like
+				gender, current location, current time, characters speaking, NPC stats
+		c. Each replacement word will have some meta data used as a condition for when the word is to be used.
+			i. possible structure "pronoun":["he" : ["gender":"male","subject": "true","pov":"third"], 
+											 "she" : ["gender":"female","subject":"true","pov","third"],
+											 "him" : ["gender": "male","subject": "false", "pov","third"],]
+			ii. This will require some mechanism to parse the condition
+			iii. each condition will have to be unique
+				1. may lead to massive rule lists for each word
+				2. probably better to generate more keywords then larger rule sets
+				3. "pron1" :["he":"male","she":"female"], "pron2":["him":"male","her":"female"]
+		d. Have constant word lists that will be true for every data file module
+			i. create a global data file module
+			ii. contains keyword lists and conditions for pronouns, constant game locations, time refs, and other constant finite elements
+
+Hub application files:
+	1. need to take in information from the game

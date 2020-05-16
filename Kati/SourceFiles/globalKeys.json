@@ -1,0 +1,16 @@
+{
+  "pron1": {
+    "he": [ "male" ],
+    "she": [ "female" ]
+  },
+  "pron2": {
+    "him": [ "male" ],
+    "her": [ "female" ],
+    "his": [ "male", "possessive" ],
+    "hers": [ "female", "possessive" ]
+  },
+  "pron3": {
+    "himself": [ "male" ],
+    "herself": [ "female" ]
+  }
+}
