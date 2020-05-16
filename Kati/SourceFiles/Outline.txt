@@ -20,5 +20,22 @@
 			i. create a global data file module
 			ii. contains keyword lists and conditions for pronouns, constant game locations, time refs, and other constant finite elements
 
+Conversation tones based on stats: both speaker and responder
+  Type          |   required high       |      optional/mid      |      required lower
+  ------------------------------------------------------------------------------------------
+  -strangers    |    -none              |       -none            |       -all
+  -neutral      |    -*                 |       -*               |       -*
+  -friends      |    -friendship        |       -prof/respect    |       -all others
+  -Lovers       |    -Romance           |       -all positive    |       -all negative       
+  -Professional |    -prof/respect      |       -friends/rivalry |       -disgust/hatred
+  -crush        |    -admiration        |       -all pos         |       -all neg
+  -annoying     |    -disgust           |       -all neg         |       -Rom,Admiration,Friend
+  -enemy        |    -hatred            |       -all neg         |       -all pos
+  -rival        |    -rivalry           |       -all             |       -none
+  --------------------------------------------------------------------------------------------
+  -Neutral happens when none of the others are true.
+  -other tones may use the neutral category
+  --------------------------------------------------------------------------------------------
+
 Hub application files:
 	1. need to take in information from the game

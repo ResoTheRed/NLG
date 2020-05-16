@@ -6,7 +6,7 @@ namespace Kati.SourceFiles{
     /// </summary>
     public class Constants{
         /*collection of paths for GlobalKeys*/
-        public const string pronoun = "/c/Users/User/Documents/NLG/Kati/SourceFiles/globalKeys.json";
+        public const string pronoun = "C:/Users/User/Documents/NLG/Kati/SourceFiles/globalKeys.json";
 
 
     }

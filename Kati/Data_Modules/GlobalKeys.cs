@@ -15,7 +15,7 @@ namespace Kati.Data_Modules{
         /// <summary>
         /// Contains pronouns listed as: pron1, pron2 ...
         /// </summary>
-        public readonly Dictionary<string, List<string>> pronoun;
+        public  readonly Dictionary<string, Dictionary<string,List<string>>> pronoun;
         
         
         public GlobalKeys(string path) {
@@ -39,25 +39,25 @@ namespace Kati.Data_Modules{
         }
 
         /*exception handling for pronoun loading*/
-        private Dictionary<string, List<string>> Pronoun() {
+        public Dictionary<string, Dictionary<string,List<string>>> Pronoun() {
             if (paths.ContainsKey("pronoun")) {
                 try {
                     return LoadPronouns(paths["pronoun"]);
-                } catch (Exception) { };
+                } catch (Exception e) { Console.WriteLine(e); }
             }
             return null;
         }
 
         /*Populate pronoun dictionary*/
-        private Dictionary<string, List<string>> LoadPronouns(string fileName) {
+        public Dictionary<string, Dictionary<string,List<string>>> LoadPronouns(string fileName) {
             string json = ReadFile(fileName);
-            Dictionary<string, List<string>> pron = 
-                JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(json); 
+            Dictionary<string, Dictionary<string, List<string>>> pron = 
+                JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(json); 
             return pron;
         }
 
         /*populate the paths dictionary*/
-        private Dictionary<string, string> LoadPaths(string fileName) {
+        public Dictionary<string, string> LoadPaths(string fileName) {
             string json = ReadFile(fileName);
             Dictionary<string, string> path = 
                 JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
@@ -67,8 +67,6 @@ namespace Kati.Data_Modules{
         private void LoadSinglePath(string key, string path) {
             paths.Add(key,path);
         }
-
-        
 
         
     }
