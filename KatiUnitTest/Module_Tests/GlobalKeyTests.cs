@@ -43,30 +43,33 @@ namespace KatiUnitTest.Module_Tests{
         }
 
         [TestMethod]
-        public void TestPronounDataKeywordPron1() {
-            
-            Assert.IsTrue(global.pronoun.ContainsKey("pron1"));
-            Assert.IsTrue(global.pronoun["pron1"].ContainsKey("he"));
-            Assert.AreEqual("male",global.pronoun["pron1"]["he"][0]);
-            Assert.AreEqual("female",global.pronoun["pron1"]["she"][0]);
+        public void TestPronounDataKeywordPronoun() {
+            Assert.IsTrue(global.pronoun.ContainsKey("pronoun"));
+            Assert.IsTrue(global.pronoun["pronoun"].ContainsKey("male"));
+            Assert.IsTrue(global.pronoun["pronoun"].ContainsKey("female"));
         }
 
         [TestMethod]
         public void TestPronounDataKeywordPron2() {
-            Assert.IsTrue(global.pronoun.ContainsKey("pron2"));
-            Assert.AreEqual("male",global.pronoun["pron2"]["him"][0]);
-            Assert.AreEqual("female",global.pronoun["pron2"]["her"][0]);
-            Assert.AreEqual("male",global.pronoun["pron2"]["his"][0]);
-            Assert.AreEqual("female",global.pronoun["pron2"]["hers"][0]);
-            Assert.AreEqual("possessive",global.pronoun["pron2"]["his"][1]);
-            Assert.AreEqual("possessive", global.pronoun["pron2"]["hers"][1]);
+            Assert.AreEqual("he", global.pronoun["pronoun"]["male"][0]);
+            Assert.AreEqual("she", global.pronoun["pronoun"]["female"][0]);
+            Assert.AreEqual("him", global.pronoun["pronoun"]["male"][1]);
+            Assert.AreEqual("her", global.pronoun["pronoun"]["female"][1]);
+            Assert.AreEqual("his", global.pronoun["pronoun"]["male"][2]);
+            Assert.AreEqual("hers", global.pronoun["pronoun"]["female"][2]);
+
         }
 
         [TestMethod]
         public void TestPronounDataKeywordPron3() {
-            Assert.IsTrue(global.pronoun.ContainsKey("pron3"));
-            Assert.AreEqual("male", global.pronoun["pron3"]["himself"][0]);
-            Assert.AreEqual("female", global.pronoun["pron3"]["herself"][0]);
+            Assert.AreEqual("himself", global.pronoun["pronoun"]["male"][3]);
+            Assert.AreEqual("herself", global.pronoun["pronoun"]["female"][3]);
+            Assert.AreEqual("mr.", global.pronoun["pronoun"]["male"][4]);
+            Assert.AreEqual("ms.", global.pronoun["pronoun"]["female"][4]);
+            Assert.AreEqual("mr.", global.pronoun["pronoun"]["male"][5]);
+            Assert.AreEqual("mrs.", global.pronoun["pronoun"]["female"][5]);
+            Assert.AreEqual("sir", global.pronoun["pronoun"]["male"][6]);
+            Assert.AreEqual("ma'am", global.pronoun["pronoun"]["female"][6]);
         }
 
         [TestMethod]

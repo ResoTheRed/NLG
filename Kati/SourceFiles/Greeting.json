@@ -1,0 +1,30 @@
+/*greetings and return greetings
+  Type          |   required high       |      optional/mid      |      required lower
+  ------------------------------------------------------------------------------------------
+  -strangers    |    -none              |       -none            |       -all
+  -neutral      |    -*                 |       -*               |       -*
+  -friends      |    -friendship        |       -prof/respect    |       -all others
+  -Lovers       |    -Romance           |       -all positive    |       -all negative       
+  -Professional |    -prof/respect      |       -friends/rivalry |       -disgust/hatred
+  -crush        |    -admiration        |       -all pos         |       -all neg
+  -annoying     |    -disgust           |       -all neg         |       -Rom,Admiration,Friend
+  -enemy        |    -hatred            |       -all neg         |       -all pos
+  -rival        |    -rivalry           |       -all             |       -none
+  --------------------------------------------------------------------------------------------
+  Neutral happens when none of the others are true.
+  */
+{
+  "Greetings_X-Y": {
+    "neutral": [ "Hello.", "Hi.", "Hey.", "Hello #name.y#.", "Hey #name.y#.", "Hi #name.y#.", "Hello #name#, nice to see you." ],
+    "neutral_slang": [ "What's up.", "Yo #name.y#", "Whats up #name.y#", "Yep." ],
+    "stranger": ["Hello","Hi, can I help you.", "Good #time.time_of_day#" ],
+    "friend": ["#name.y#"],
+    "lover": [ "Good #time.time_of_day# my love.", "I've missed you." ],
+    "respect": [ "Good #time.time_of_day#" ],
+    "crush": ["Hello..","Umm.. Hello"],
+    "annoying": ["What?"],
+    "enemy": ["Don't talk to me.","Leave me alone.","Yep, not interested.","..."],
+    "rival": []
+  }
+    
+}

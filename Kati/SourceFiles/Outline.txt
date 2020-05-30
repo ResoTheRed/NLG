@@ -33,9 +33,62 @@ Conversation tones based on stats: both speaker and responder
   -enemy        |    -hatred            |       -all neg         |       -all pos
   -rival        |    -rivalry           |       -all             |       -none
   --------------------------------------------------------------------------------------------
-  -Neutral happens when none of the others are true.
-  -other tones may use the neutral category
+  - Neutral happens when none of the others are true.
+  - other tones may use the neutral category
   --------------------------------------------------------------------------------------------
+
+  Json Syntax for categories
+  "topic": {
+    "stranger": {
+      "": {
+        "req": [],
+        "leads to": []
+      }
+    },
+    "neutral": {
+      "": {
+        "req": [],
+        "leads to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "leads to": []
+      }
+    },
+    "lover": {
+      "": {
+        "req": [],
+        "leads to": []
+      }
+    },
+    "professional": {
+      "": {
+        "req": [],
+        "leads to": []
+      }
+    },
+    "annoying": {
+      "": {
+        "req": [],
+        "leads to": []
+      }
+    },
+    "enemy": {
+      "": {
+        "req": [],
+        "leads to": []
+      }
+    },
+    "rival": {
+      "": {
+        "req": [],
+        "leads to": []
+      }
+    }              
+  }
+
 
 Hub application files:
 	1. need to take in information from the game
@@ -53,3 +106,83 @@ Hub application files:
 			vi. Ex: Dialog-Sit-Dialog --> small talk (flirting) --> player asks out NPC  and NPC says yes --> set date plans --> fair well
 		b. generate combinations of Modules similar to ensemble's validation rules
 			i. Module leads to other modules if the conditions are met (stat based)
+	3. Module combinations must follow a protocol
+		a. Check for history, relationship statuses, location, time, and anything else
+		b. Modules should be able to call other modules direclty as part of their structure
+			i. date module can calls greeting, smalltalk, insult or others if needed
+	4. Different Modules are reponsible for different things
+		a. each module should be labeled as a certain category
+			i. Situational --> action (ask on date), changes characters states in a  non-trivial way
+				1. positive --> (dates, friendships,adventures)
+				2. negative --> (fights, insult matches,)
+			ii. Mundane --> common meaningless chatter that have very little effect on characters states after any meaningful relationship has 
+				developed (smalltalk, greetings, farewell,petty rude behavior)
+			iii. History --> discussions about past events that the two speaking characters have done together or that one of the characters
+				have done by themselves (climbed a mountain)
+			iv. Gossip --> discussion about events that others have done
+				1. history dialogue is more powerful than gossip dialogue
+			
+
+Input Required From the Game
+	Current Weather: "nice day", "rain", "Overcast", "hot", "cold", "windy", "humid" 
+	Time: hour, minute, day, week, month, year, season, morning, evening, afternoon, night
+	Location currently occupied by the player: sectors (outside locations), buildings 1-10, characters in the locations, location type (outside/inside)
+	Current Event: whats taking place today
+
+	
+Data given about the game (requirement "req" list from conversation modules)
+
+	1. Weather Keywords (weather.<keyword>): hot, cold, humid, nice_day, rain, windy
+	
+	//elements at each location (descriptions and land marks)
+	2. Location Keywords (location.outside.sector1):
+		outside: sector_1 to sector12 and building_patios, building roof_tops
+			nps (location.outside.sector_1.christina): list any npcs in the location
+		inside: building_name.room (the_blonde_mouse.public_area)
+			nps (location.inside.the_blonde_mouse.public_area.christina): list any npcs in the location
+
+	3. Time (time.week.first)
+		hour: 12:00 AM to 12:00pm --> time.hour.3:00PM
+		day: desc, week_day
+			desc (time.day.desc.morning): morning, evening, afternoon, sunrise, sunset, noon, midnight
+			calendar (time.day.calendar.1): 1 to 28 (numbered day of month/season)
+		week (time.week.2): 1 to 4 (day number / 7 == week)
+		season (time.season.spring): winter, spring, summer, fall
+			event (time.event) <event_name>.day.hour (time.event.halloween.28.8:00PM):
+				#current_event#: next event scheduled
+					near: event is 4 to 0 days away (boolean) 
+				spring (time.season.spring.event.art_fest): art_fest, blueberry_fest
+				summer: writers_block, carnival
+				fall: music_fest, halloween
+				winter: bazaar_market, christmas
+					day (starting day): time.season.spring.event.art_fest.day.<1 to 28>
+					hour (starting): time.season.spring.event.art_fest.day.12.hour.10:00AM
+
+	4. character data: (npc/player)
+		name:
+		stat: (love, friend, professional, respect, admire, annoy, hate, rival) (0-1000)
+		personal: (greedy, kind, boastful)
+			has.#variable_personal_attribute_between_pound_signs#
+			has.direct_personal_attribute --> npc.has.argumentitive
+
+	5. Symbolic boolean expressions: (">","<",">=","<=","==","!=","||","-","+")
+		req: "npc.stat.love.>.500"
+		req: "player.stat.disgust.<.100"
+		req: "player.stat.disgust.<.100.||.player.stat.admiration.>300"
+		req: "time.event.day.-.time.day.calendar.<=.4","time.event.day.-.time.day.calendar.>=.0"
+
+Data format from the "lead to" list:
+	1. module_name.module_section.specific_or_blank
+		a. small_talk.weather_response (pull a question the satisfies the req)
+		b. "lead to" is not set in stone.  Picked by dialogue hub.
+	2. trigger.action
+		a. trigger.next_topic --> force next topic if one exsits
+		b. trigger.end_conversation --> force the dialogue to end
+		c. trigger.romantic_advance --> romantic action has been taken
+		d. trigger.hateful --> hate action has been taken
+		e. trigger.rude --> disgust action has been taken
+		f. trigger.competition --> rivalry action has been taken
+		g. trigger.friendly --> friendly action has been taken
+		h. trigger.professional --> professional action has been taken
+		i. trigger.cynical --> cynical/smart-ass action has been taken 
+

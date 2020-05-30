@@ -1,0 +1,49 @@
+Module asking on a date
+
+Scene: player asks Lerin out on a Date
+
+/** Content from Game
+	1. Time: day, week, season, year, time of day (Morning, evening, afternoon, night)
+	2. Character's info: name, gender, stats 
+	3. location: where the players are on the map
+	4. Current Events taking place:  Quiet night, town fair, (ties into location, like at the pub)
+	5. characters history: have pre-generated history and history developed
+*/
+
+Module structure:
+				Greeting(optional)
+					|
+				SmallTalk (optional)
+				/	 |	   \
+		History(opt)  <-> surroundings(opt)  <->  Gossip (opt)  --> (Each can lead to one-another or not used at all)
+			\		 |		   /
+------------------------------------Module Data --------------------------------------------------
+				 Ask out on date                        --> (Module info)
+				/       |       \
+			    yes   <-  Maybe ->   no
+	    	             |                    |  
+             	         make plans            let down relative stats
+			     |       	                 |        
+                   Discuss excitement       explain (I like our friendship like it is)   --> repeatable
+                                   \         /
+				    Fair well
+
+***Ask the Question***
+X High confidence
+"How about I take you out on a date."
+"Lerin, will you go out on a date with me?"
+"I think I'll take you out sometime."
+"How about, you let me take you out."
+
+Medium confidence
+"I was wonder if you might like to go out some time?"
+"What would you think about going out on a date with me?"
+"What would you say about going on a date with me?"
+"Lerin, I would love to take you out sometime.  What do you say?"
+"what would you think about maybe letting me take you out sometime?  You know, just the two of us."
+
+Low confidence
+"Uhm.. I was.. uhm wondering if I-uh I-mean you would maybe like to...uhm... go-on-a-date-with-me?"
+"You see. I was, well, thinking.  If its not too much trouble, maybe you and I could maybe ... go out sometime?"
+"well, I just want to say. I mean what would you think about.. you know.. maybe uhm... going out sometime?"
+"I was wondering, uhm, well.. Lerin, would you do me the honor of letting me.. take you out sometime?"

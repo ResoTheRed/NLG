@@ -4,7 +4,10 @@ using System.IO;
 using Newtonsoft.Json;
 
 namespace Kati.Data_Modules{
-    
+    /// <summary>
+    /// Class contains commomly used words and phrases that are present in all conversations.
+    /// contains lists like pronouns
+    /// </summary>
     public class GlobalKeys{
         /* Load data through json files */
         /// <summary>

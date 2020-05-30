@@ -1,0 +1,6 @@
+{
+  "pronoun": {
+    "male": ["he","him","his","himself","mr.","mr.","sir"],
+    "female": ["she","her","hers","herself","ms.","mrs.","ma'am"]
+  }
+}
