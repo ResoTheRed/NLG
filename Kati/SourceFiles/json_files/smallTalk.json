@@ -408,7 +408,6 @@
     }
   },
 
-
   "current_event_statement": {
     "stranger": {
       "It's almost time for the #current_event#.": {
@@ -569,47 +568,275 @@
         "req": [ "time.event.yuletide", "npc.hates_yuletide" ],
         "leads to": []
       }
-    },
-    "lover": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "professional": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "annoying": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "enemy": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "rival": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
     }
   },
   "current_event_question": {
     "stranger": {
-      "": {
-        "req": [],
+      "Do you like #current_event#?": {
+        "req": [ "time.#current_event#.near" ],
+        "leads to": [ "PlayerOption.likeCurrentEvent" ]
+      },
+      "I was thinking about going to #current_event#, are you going?": {
+        "req": [ "time.#current_event#.near" ],
+        "leads to": [ "PlayerOption.goingToCurrentEvent" ]
+      }
+    },
+    "neutral": {
+      "I always love the #current_event#, what do you think about it?": {
+        "req": [ "npc.#loves_current_event#", "time.#current_event#.near" ],
+        "leads to": [ "PlayerOption.likeCurrentEvent" ]
+      },
+      "I always hate going to the #current_event#, what do you think about it?": {
+        "req": [ "npc.#hates_current_event#", "time.#current_event#.near" ],
+        "leads to": [ "PlayerOption.likeCurrentEvent" ]
+      },
+      "The #current_event# will be happening soon.  A lot of people venture of to see the festivities. How about you? Will you be going?": {
+        "req": [ "time.#current_event#.near" ],
+        "leads to": [ "PlayerOption.goingToCurrentEvent" ]
+      },
+      "It's almost time for #current_event#.  Some people love it, some people hate it. How about you? What do you think?": {
+        "req": [ "time.#current_event#.near" ],
+        "leads to": [ "PlayerOption.likeCurrentEvent" ]
+      },
+      "I'm soo excited about the #current_event# around the corner. There is just so much to see and do. How about you? Do you like it as well?": {
+        "req": [ "npc.#loves_current_event#", "time.#current_event#.near" ],
+        "leads to": [ "PlayerOption.likeCurrentEvent" ]
+      }
+    }
+  },
+  "current_event_response": {
+    "neutral": {
+      "I love the #current_event#. It is so much fun.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.like++" ]
+      },
+      "I #current_event# is always a blast. I always have to best time when I go.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.like++" ]
+      },
+      "I absolutely love the #current_event#. It's simply great.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.like++" ]
+      },
+      "I love the #current_event#.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.like++" ]
+      },
+      "I like the #current_event#. I always have a good time.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.like+" ]
+      },
+      "I like the #current_event#. It's fun.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.like+" ]
+      },
+      "I #current_event# is always fun. I like to go and people watch.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.like+" ]
+      },
+      "I like the #current_event#.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.like+" ]
+      },
+      "The #current_event# is okay. I enjoy it well enough.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": []
+      },
+      "The #current_event#, it's fun but I can take it or leave it.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": []
+      },
+      "The #current_event# is nice for a little while but then I get kind of bored with it.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": []
+      },
+      "I don't know, the #current_event# is okay I guess.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": []
+      },
+      "I'm not a huge fan of the #current_event#. It is tiresome to me really.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.hates+" ]
+      },
+      "I don't really care for the #current_event#.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.hates+" ]
+      },
+      "The #current_event# is, well, it's a little over hyped to me.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.hates+" ]
+      },
+      "The #current_event# is kind of boring.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.hates+" ]
+      },
+      "I hate the #current_event#. It is not fun at all.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.hates++" ]
+      },
+      "I hate the #current_event#.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.hates++" ]
+      },
+      "I loath the #current_event#. It seems to always drag me down.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.hates++" ]
+      },
+      "The #current_event# always seems to leave a bad taste in my mouth.": {
+        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "leads to": [ "#current_event#.hates++" ]
+      },
+      //"PlayerOption.goingToCurrentEvent"
+      "I am absolutely going to the #current_event#. I never miss it.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.loves++" ]
+      },
+      "You better believe I'm going to the #current_event#.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.loves++" ]
+      },
+      "Of course I'm going to this years #current_event#. I wouldn't miss it.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.loves++" ]
+      },
+      "Oh yeah I'm going.  I go every year.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.loves+" ]
+      },
+      "I'll be there for sure. I never miss it.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.loves+" ]
+      },
+      "I'm planning on being there.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.loves+" ]
+      },
+      "I might stop by.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": []
+      },
+      "I don't know yet, I might if I have time.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": []
+      },
+      "I doubt it.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.hates+" ]
+      },
+      "Probably not, the #current_event# isn't my thing.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.hates+" ]
+      },
+      "Don't count on it.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.hates+" ]
+      },
+      "I avoid the #current_event# like the plague.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.hates++" ]
+      },
+      "I will not be going.  I do my best to avoid it.": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.hates++" ]
+      },
+      "I'd rather not go, I don't like the #current_event#": {
+        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "leads to": [ "#current_event#.hates+" ]
+      }
+    }
+  },
+
+  "Greeting_statement": {
+    "stranger": {
+      "Good morning": {
+        "req": [ "time.day.morning" ],
+        "leads to": []
+      },
+      "Good afternoon.": {
+        "req": [ "time.day.afternoon" ],
+        "leads to": []
+      },
+      "Good evening.": {
+        "req": [ "time.day.evening" ],
+        "leads to": []
+      },
+      "Hello": {
+        "req": [ "time.day.morning" ],
         "leads to": []
       }
     },
     "neutral": {
-      "": {
+      "Hi.": {
+        "req": [],
+        "leads to": ["greeting_question"]
+      },
+      "Hey.": {
+        "req": [],
+        "leads to": [ "greeting_question" ]
+      },
+      "Hello #player.name#.": {
+        "req": [],
+        "leads to": [ "greeting_question" ]
+      }
+    },
+    "friend": {
+      "Hey buddy.": {
+        "req": [],
+        "leads to": [ "greeting_question" ]
+      }
+    },
+    "lover": {
+      "Hey beutiful.": {
+        "req": [ "time.day.morning", "player.female" ],
+        "leads to": []
+      },
+      "Hey handsome.": {
+        "req": [ "time.day.afternoon", "player.male" ],
+        "leads to": []
+      }
+    },
+    "professional": {
+      "Greeting #player.name#.": {
+        "req": [],
+        "leads to": []
+      },
+      "Hello  sir.": {
+        "req": [ "player.male" ],
+        "leads to": []
+      },
+      "Hello  ma'am.": {
+        "req": [ "player.female" ],
+        "leads to": []
+      }
+    }
+  },
+  "Greeting_question": {
+    "neutral": {
+      "How are you today?": {
+        "req": [],
+        "leads to": []
+      },
+      "How's it going?": {
+        "req": [],
+        "leads to": []
+      },
+      "Whats been happening?": {
+        "req": [],
+        "leads to": []
+      },
+      "How have you been?": {
+        "req": [],
+        "leads to": []
+      },
+      "How are things?": {
+        "req": [],
+        "leads to": []
+      },
+      "What's been happening with you lately?": {
+        "req": [],
+        "leads to": []
+      },
+      "How is everything?": {
         "req": [],
         "leads to": []
       }
@@ -651,7 +878,7 @@
       }
     }
   },
-  "current_event_response": {
+  "Greeting_response": {
     "stranger": {
       "": {
         "req": [],
