@@ -33,6 +33,16 @@ namespace Kati.Data_Models{
          * greetings and How are you questions 
          * **/
 
+        /** SmallTalk Requirement Keys 
+         *  weather.[nice_day, rain, hot, windy, cold, humid]
+         *  
+         * **/
+
+        /** SmallTalk Leads To Keys format
+         *  Module_name.section_in_module --> [small_talk.weather_response]
+         *  
+         * **/
+
         //Tone Type: conversation phrase : [tags about responses or leads to] 
         public readonly Dictionary<string, Dictionary<string, List<string>>> weatherQuestion;
         public readonly Dictionary<string, Dictionary<string, List<string>>> weatherStatement;
@@ -40,6 +50,9 @@ namespace Kati.Data_Models{
         public readonly Dictionary<string, Dictionary<string, List<string>>> eventQuestion;
         public readonly Dictionary<string, Dictionary<string, List<string>>> eventStatement;
         public readonly Dictionary<string, Dictionary<string, List<string>>> eventResponse;
+        public readonly Dictionary<string, Dictionary<string, List<string>>> greetingStatement;
+        public readonly Dictionary<string, Dictionary<string, List<string>>> greetingQuestion;
+        public readonly Dictionary<string, Dictionary<string, List<string>>> greetingResponse;
 
     }
 }

@@ -143,9 +143,9 @@ Data given about the game (requirement "req" list from conversation modules)
 
 	3. Time (time.week.first)
 		hour: 12:00 AM to 12:00pm --> time.hour.3:00PM
-		day: desc, week_day
-			desc (time.day.desc.morning): morning, evening, afternoon, sunrise, sunset, noon, midnight
-			calendar (time.day.calendar.1): 1 to 28 (numbered day of month/season)
+		day: 
+			(time.day.morning): morning, evening, afternoon, sunrise, sunset, noon, midnight
+			(time.day.1): 1 to 28 (numbered day of month/season)
 		week (time.week.2): 1 to 4 (day number / 7 == week)
 		season (time.season.spring): winter, spring, summer, fall
 			event (time.event) <event_name>.day.hour (time.event.halloween.28.8:00PM):

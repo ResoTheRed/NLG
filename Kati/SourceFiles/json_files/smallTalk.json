@@ -814,82 +814,115 @@
     "neutral": {
       "How are you today?": {
         "req": [],
-        "leads to": []
+        "leads to": ["greeting_response"]
       },
       "How's it going?": {
         "req": [],
-        "leads to": []
+        "leads to": [ "greeting_response" ]
       },
       "Whats been happening?": {
         "req": [],
-        "leads to": []
+        "leads to": [ "greeting_response" ]
       },
       "How have you been?": {
         "req": [],
-        "leads to": []
+        "leads to": [ "greeting_response" ]
       },
       "How are things?": {
         "req": [],
-        "leads to": []
+        "leads to": [ "greeting_response" ]
       },
       "What's been happening with you lately?": {
         "req": [],
-        "leads to": []
+        "leads to": [ "greeting_response" ]
       },
       "How is everything?": {
         "req": [],
-        "leads to": []
+        "leads to": [ "greeting_response" ]
       }
     },
     "friend": {
-      "": {
+      "What's up?": {
         "req": [],
-        "leads to": []
-      }
-    },
-    "lover": {
-      "": {
+        "leads to": [ "greeting_response" ]
+      },
+      "How's it hanging?": {
         "req": [],
-        "leads to": []
-      }
-    },
-    "professional": {
-      "": {
+        "leads to": [ "greeting_response" ]
+      },
+      "How goes it?": {
         "req": [],
-        "leads to": []
-      }
-    },
-    "annoying": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "enemy": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "rival": {
-      "": {
-        "req": [],
-        "leads to": []
+        "leads to": [ "greeting_response" ]
       }
     }
   },
   "Greeting_response": {
-    "stranger": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
     "neutral": {
-      "": {
+      "I'm doing great.": {
+        "req": [],
+        "leads to": [ "positive++" ]
+      },
+      "I'm doing wonderful.": {
+        "req": [],
+        "leads to": [ "positive++" ]
+      },
+      "I'm doing good.": {
+        "req": [],
+        "leads to": [ "positive+" ]
+      },
+      "I can't complain.": {
+        "req": [],
+        "leads to": [ "positive+" ]
+      },
+      "I'm doing okay.": {
+        "req": [],
+        "leads to": [ "positive+" ]
+      },
+      "Things are well.": {
+        "req": [],
+        "leads to": [ "positive+" ]
+      },
+      "You know, everything is alright I guess.": {
         "req": [],
         "leads to": []
+      },
+      "Things are meh.": {
+        "req": [],
+        "leads to": []
+      },
+      "I'm alright.": {
+        "req": [],
+        "leads to": [ "positive+" ]
+      },
+      "Things aren't going so well.": {
+        "req": [],
+        "leads to": [ "negative+" ]
+      },
+      "I'm not doing so well to be honest.": {
+        "req": [],
+        "leads to": [ "negative+" ]
+      },
+      "Things could be better.": {
+        "req": [],
+        "leads to": [ "negative+" ]
+      },
+      "...": {
+        "req": [],
+        "leads to": [ "negative+" ]
+      },
+      "Life is pain.": {
+        "req": [],
+        "leads to": [ "negative++" ]
+      },
+      "Things are terrible.": {
+        "req": [],
+        "leads to": [ "negative++" ]
+      },
+      "Life is a flaming pile of garbage.": {
+        "req": [],
+        "leads to": [ "negative++" ]
       }
+
     },
     "friend": {
       "": {
@@ -928,4 +961,7 @@
       }
     }
   }
+
+
+
 }
