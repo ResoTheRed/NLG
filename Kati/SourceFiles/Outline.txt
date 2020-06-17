@@ -186,3 +186,46 @@ Data format from the "lead to" list:
 		h. trigger.professional --> professional action has been taken
 		i. trigger.cynical --> cynical/smart-ass action has been taken 
 
+Characters how conversations start (when the player walks up and presses X)
+	1. Have a list of potential conversation topics available depending on what is going on
+		a. topics will be chained together
+			i. chained conversation topics are 1 or more links
+			ii. Ex list: smalltalk:weather->relationship(a,b):Gossip -> futureGoals:healthAndFitness,
+		
+Histories: Short Term, Long Term and static history
+	1. setup histories as a chain of dialogue modules that the player and NPC or NPC and NPC had
+	2. histories need the following elements:
+		a. Game Time Reference: When did this event happen? ex the morning of the first week, 3rd day of spring.
+		b. Game Location Reference: Where did this happen? ex. In the blonde mouse coffee house
+		c. characters who are talking
+		d. Dialogue Chain: includes modules and sub modules that are connect in the dialogue chain
+			i. include reference characters for each sub module ex. who is being talked about
+		e. The outcome: record the conversation outcome.  
+			i. Include any changes made to any characters after the conversation
+			ii. dirive if the conversation was positive, negative, or neutral
+			iii. dirive if it was memerable (big stat change, attribute change like in relationship with)
+				1. devise a stat increase threshold that signals when something is memerable
+				2. attribute changes (friends with, in relationship with,...) are always memerable
+		f. this will require some form of internal syntax
+		ex. <gameTimeStamp>:<Location Stamp>:<personA,personB>,"smallTalk.weather(personA,personB):
+			relationshiop.gossip(personA,personB):futureGoals.fitnessHealth(personA,personB)",
+			<personA.friend+10,personB.freind+10,positive,not_memorable>
+	3. Long term history records short term history that is considered memerable
+		a. devise a time table for when short term history is moved to long term (x days after the time stamp)
+	4. Static history is linked to static storyline dialogue
+		a. recored differently
+		b. required characters involved
+		c. saved as a boolean (did it happen or not)
+		d. always memerable
+	5. histories belong to the characters and will be saves in data structures
+		a. short-term stored in queue
+		b. long-term saved in dictionary key == game character
+
+Random History Generation between NPCs
+	
+Hub to Module think-tank
+	hub determines if module is smallTalk
+		can model game characters with unique values used for dialogue?
+		best method is to Gain a referece to the gameCharacters
+	SmallTalk determines if its weather, greetings, event or other sub-category
+		need to have a reference to what each game character has as stats and attributes

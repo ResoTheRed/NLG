@@ -10,7 +10,8 @@ namespace Kati.SourceFiles{
         /*collection of paths for GlobalKeys*/
         public const string pronoun = "C:/Users/User/Documents/NLG/Kati/SourceFiles/json_files/pronoun.json";
         public const string time = "C:/Users/User/Documents/NLG/Kati/SourceFiles/json_files/time.json";
-        
+        public const string smallTalk = "C:/Users/User/Documents/NLG/Kati/SourceFiles/json_files/smallTalk.json";
+
 
     }
 }

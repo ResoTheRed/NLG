@@ -922,43 +922,6 @@
         "req": [],
         "leads to": [ "negative++" ]
       }
-
-    },
-    "friend": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "lover": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "professional": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "annoying": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "enemy": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
-    },
-    "rival": {
-      "": {
-        "req": [],
-        "leads to": []
-      }
     }
   }
 

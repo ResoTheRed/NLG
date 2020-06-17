@@ -50,6 +50,7 @@ namespace Kati
         public const int DISGUST = 6;
         public const int RIVALRY = 7;
 
+        private Dictionary<int, string[]> attributes;
         private int[] leana = new int[8];
         private int[] geoffrey = new int[8];
         private int[] stats = new int[8];
@@ -152,6 +153,21 @@ namespace Kati
             str += " Adm: " + arr[AFFINITY] + " Hat: " + arr[HATRED] + " Riv: " + arr[RIVALRY] + " dis: " + arr[DISGUST]+"\n";
             return str;
         }
+
+        private void setupAttributeLists() {
+            attributes = new Dictionary<int, string[]>();
+            attributes[1] = new string[] { "loves_art_fest", "hates_art_fest", "" };
+            attributes[2] = new string[] { "loves_blueberry_fest", "hates_blueberry_fest", "" };
+            attributes[3] = new string[] { "loves_writers_block", "hates_writers_block", "" };
+            attributes[4] = new string[] { "loves_music_fest", "hates_music_fest", "" };
+            attributes[5] = new string[] { "loves_halloween", "hates_halloween", "" };
+            attributes[6] = new string[] { "loves_halloween", "hates_halloween", "" };
+            attributes[7] = new string[] { "loves_bazaar", "hates_bazaar", "" };
+            attributes[8] = new string[] { "loves_yuletide", "hates_yuletide", "" };
+
+
+        }
+
     }
 }
 

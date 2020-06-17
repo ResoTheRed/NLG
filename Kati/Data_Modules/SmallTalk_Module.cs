@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Kati.Data_Models{
+
     /*
-         Conversation tones based on stats: both speaker and responder
+       Conversation tones based on stats: both speaker and responder
        Type          |   required high       |      optional/mid      |      required lower
        ------------------------------------------------------------------------------------------
        -strangers    |    -none              |       -none            |       -all
@@ -44,15 +46,127 @@ namespace Kati.Data_Models{
          * **/
 
         //Tone Type: conversation phrase : [tags about responses or leads to] 
-        public readonly Dictionary<string, Dictionary<string, List<string>>> weatherQuestion;
-        public readonly Dictionary<string, Dictionary<string, List<string>>> weatherStatement;
-        public readonly Dictionary<string, Dictionary<string, List<string>>> weatherResponse;
-        public readonly Dictionary<string, Dictionary<string, List<string>>> eventQuestion;
-        public readonly Dictionary<string, Dictionary<string, List<string>>> eventStatement;
-        public readonly Dictionary<string, Dictionary<string, List<string>>> eventResponse;
-        public readonly Dictionary<string, Dictionary<string, List<string>>> greetingStatement;
-        public readonly Dictionary<string, Dictionary<string, List<string>>> greetingQuestion;
-        public readonly Dictionary<string, Dictionary<string, List<string>>> greetingResponse;
+        public Dictionary<string, Dictionary<string, List<string>>> weatherQuestion;
+        public Dictionary<string, Dictionary<string, List<string>>> weatherStatement;
+        public Dictionary<string, Dictionary<string, List<string>>> weatherResponse;
+        public Dictionary<string, Dictionary<string, List<string>>> eventQuestion;
+        public Dictionary<string, Dictionary<string, List<string>>> eventStatement;
+        public Dictionary<string, Dictionary<string, List<string>>> eventResponse;
+        public Dictionary<string, Dictionary<string, List<string>>> greetingStatement;
+        public Dictionary<string, Dictionary<string, List<string>>> greetingQuestion;
+        public Dictionary<string, Dictionary<string, List<string>>> greetingResponse;
+
+        private string pathToJson;
+
+        public SmallTalk_Module(string path) {
+            pathToJson = path;
+            SmallTalk_Loader.LoadFromFile(this);
+        }
+
+        public string PathToJson { get => pathToJson; set => pathToJson = value; }
+    }
+
+    class SmallTalk_Parser {
+
+        private SmallTalk_Module module;
+        //how is character Data stored?  reference to GameCharacter
+
+        public SmallTalk_Parser(SmallTalk_Module module) {
+            this.module = module;
+        }
+
+        //which module is being targeted?
+        //which dialogue string will be used
+        //compare requirements with qualifications of character
+        //return reference from dictionary in SmallTalk_Module
+    
+    }
+
+    /// <summary>
+    /// Class functions to pull raw data from the json file and load it into 
+    /// SmallTalk_Module dictionaries
+    /// </summary>
+
+    class SmallTalk_Loader {
+
+        /*Starts the loading sequence*/
+        public static SmallTalk_Loader LoadFromFile(SmallTalk_Module module) {
+            SmallTalk_Loader loader = new SmallTalk_Loader(module);
+            loader.SetupDataQueries();
+            return loader;
+        }
+
+        private SmallTalk_Module module;
+
+        public SmallTalk_Loader(SmallTalk_Module module) {
+            this.module = module;
+        }
+
+        /// <summary>
+        /// converts a file into a string.  Requires path.
+        /// </summary>
+        /// <param name="filePaht">File to be read</param>
+        /// <returns>files content as String</returns>
+        private string ReadFile(string filePath) {
+            using StreamReader reader = new StreamReader(filePath);
+            return reader.ReadToEnd();
+        }
+
+        private void SetupDataQueries() {
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp;
+            try {
+                temp = ConvertJsonToDictionary();
+            } catch (Exception e) {
+                Console.WriteLine(e);
+                return;
+            }
+            SetupDictionaries(temp);
+        }
+
+        private Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> ConvertJsonToDictionary() {
+            string json = ReadFile(module.PathToJson);
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> data =
+                JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>>(json);
+            return data;
+        }
+
+        private void SetupDictionaries(Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp) {
+            SetupWeather(temp);
+            SetupCurrentEvent(temp);
+            SetupGreetings(temp);
+
+        }
+
+        private void SetupGreetings(Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp) {
+            try {
+                module.greetingStatement = temp["Greeting_statement"];
+                module.greetingQuestion = temp["Greeting_question"];
+                module.greetingResponse = temp["Greeting_response"];
+            } catch (Exception e) {
+                Console.WriteLine("Faild to uplaod Greeting Conversations\n" + e);
+            }
+        }
+
+        private void SetupCurrentEvent(Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp) {
+            try {
+                module.eventQuestion = temp["current_event_question"];
+                module.eventResponse = temp["current_event_response"];
+                module.eventStatement = temp["current_event_statement"];
+            } catch (Exception e) {
+                Console.WriteLine("Failed to upload Event Conversations\n" + e);
+            }
+        }
+
+        private void SetupWeather(Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp) {
+            try {
+                module.weatherQuestion = temp["weather_question"];
+                module.weatherResponse = temp["weather_response"];
+                module.weatherStatement = temp["weather_statement"];
+            } catch (Exception e) {
+                Console.WriteLine("Failed to upload Weather Conversations\n" + e);
+            }
+        }
 
     }
+
 }
