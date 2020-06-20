@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Kati.Module_Hub;
 using Newtonsoft.Json;
 
 namespace Kati.Data_Models{
@@ -68,18 +69,74 @@ namespace Kati.Data_Models{
 
     class SmallTalk_Parser {
 
+        // I think I will need to keep track of the entire dialogue sequence here
+        // It will be reset after the dialogue event has ended
+        // character will repeat the last line of dialogue over and over again after
+        // hub will take care of remembering this.
+
+        private string leadsTo;
+        //contains the dialogue after parsing
+        private string dialogue;
         private SmallTalk_Module module;
         //how is character Data stored?  reference to GameCharacter
+        private GameData gameData;
+        private CharacterData characterData;
+        //need to withdraw allSmallTalk related attributes for each player
 
         public SmallTalk_Parser(SmallTalk_Module module) {
             this.module = module;
+            leadsTo = "";
         }
+        //contains data from the game for requirements
+        public GameData GameData { get => gameData; set => gameData = value; }
+        public CharacterData CharacterData { get => characterData; set => characterData = value; }
+        public string Dialogue { get => dialogue; set => dialogue = value; }
 
-        //which module is being targeted?
+        //which module is being targeted? Random vs. intentional
+        public void SelectStartingTopic() {
+            Random dice = new Random();
+            int option = (int) dice.NextDouble()*10+1;
+            //50% Greeting
+            //20% Weather
+            //30% Event
+            if (option <= 5) {
+                PullGreeting();
+            } else if (option <= 8) {
+                PullEvent();
+            } else {
+                PullWeather();
+            }
+        }
         //which dialogue string will be used
         //compare requirements with qualifications of character
         //return reference from dictionary in SmallTalk_Module
-    
+
+        //parse through greetings
+        private string PullGreeting() {
+            //check leadsTo
+            //if leadsTo is empty
+            return "";
+        }
+
+        private String PullEvent() {
+            return "";
+        }
+
+        private String PullWeather() {
+            return "";
+        }
+
+        private string PullStatement(string type) {
+            return "";
+        }
+        private string PullQuestion(string type) {
+            return "";
+        }
+        private string PulltResponse(string type) {
+            return "";
+        }
+
+
     }
 
     /// <summary>

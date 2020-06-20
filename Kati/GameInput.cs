@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Kati
 {
+	/// <summary>
+	/// Test Class that creates pseudo data --> to be removed
+	/// </summary>
+
 	class GameObject {
 
 		public readonly string weather;
