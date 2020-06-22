@@ -46,6 +46,7 @@ namespace Kati.Module_Hub{
         private string respondersName;
         private string initialorsGender;
         private string respondersGender;
+        private bool initiatorIsPlayer;
         /*combined thone/feeling/emotion of the conversation as a percent*/
         private Dictionary<string, double> interactionTone;
         /*init/respond feelings toward or outlook on th econversation 8 attributes with 8 numbers 0-1000*/
@@ -69,6 +70,7 @@ namespace Kati.Module_Hub{
         public Dictionary<string, string> ResponderAttributeList { get => responderAttributeList; set => responderAttributeList = value; }
         public Dictionary<string, int> InitiatorScalarList { get => initiatorScalarList; set => initiatorScalarList = value; }
         public Dictionary<string, int> ResponderScalarList { get => responderScalarList; set => responderScalarList = value; }
+        public bool InitiatorIsPlayer { get => initiatorIsPlayer; set => initiatorIsPlayer = value; }
     }
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Kati.Module_Hub;
 using Newtonsoft.Json;
 
@@ -45,7 +46,7 @@ namespace Kati.Data_Models{
          *  Module_name.section_in_module --> [small_talk.weather_response]
          *  
          * **/
-
+    
         //Tone Type: conversation phrase : [tags about responses or leads to] 
         public Dictionary<string, Dictionary<string, List<string>>> weatherQuestion;
         public Dictionary<string, Dictionary<string, List<string>>> weatherStatement;
@@ -67,39 +68,108 @@ namespace Kati.Data_Models{
         public string PathToJson { get => pathToJson; set => pathToJson = value; }
     }
 
-    class SmallTalk_Parser {
+    /// <summary>
+    /// Controls who is talking and decides what is said and 
+    /// when the smallTalk chain is over.
+    /// </summary>
+
+    class SmallTalk_Controller {
 
         // I think I will need to keep track of the entire dialogue sequence here
         // It will be reset after the dialogue event has ended
         // character will repeat the last line of dialogue over and over again after
         // hub will take care of remembering this.
 
+        /* possible conversation chains:
+         *      *greeting
+         *      greeting && [event || weather]
+         *      greeting && [event && weather] || [weather && event]
+         *      *[event || weather]
+         *      [event && weather] || [weather && event]
+         */
+
+        /* Order of operations
+         * Initiator: SelectStartingTopic() --> statement or question from possible categories
+         * Responder: respond to question or skip turn
+         * Initiator: SelectNextTopic() or end smalltalk chain
+         * Responder: respond to question or skip turn
+         */
+
+        //need to establish turns
+
+        // set up the initiator default to NPC
+        // the roles will be reversed.
+
+        //constants
+        private const string INITIATOR = "initiator";
+        private const string RESPONDER = "reponder";
+        private const string EVENT = "event";
+        private const string WEATHER = "weather";
+        private const string GREETING = "greeting";
+        private const string STATEMENT = "statement";
+        private const string QUESTION = "question";
+        private const string RESPONSE = "response";
+        private const string SKIPPED = "skipped";
+
+
+        //variables reference the current line of dialogue
+        private string speaking = INITIATOR;
+        private string dialogueState = STATEMENT;
+        private string topic = GREETING;
         private string leadsTo;
+
         //contains the dialogue after parsing
         private string dialogue;
+        //contains the full conversation between initiator and responder
+        //format {"initiator": ["pc_name","dialogue1",...], "reponder":["pc_name","dialogue 1",...] }
+        private Dictionary<string, List<string>> conversation;
+        private Dictionary<string, bool> conversationTopicsDiscussed;
         private SmallTalk_Module module;
+        private SmallTalk_Parser parser;
         //how is character Data stored?  reference to GameCharacter
         private GameData gameData;
         private CharacterData characterData;
         //need to withdraw allSmallTalk related attributes for each player
+        private Random dice = new Random();
 
-        public SmallTalk_Parser(SmallTalk_Module module) {
+
+        public SmallTalk_Controller(SmallTalk_Module module) {
             this.module = module;
+            this.parser = new SmallTalk_Parser(module);
+            conversation[INITIATOR] = new List<string>();
+            conversation[RESPONDER] = new List<string>();
+            ConversationTopicsDiscussed[EVENT] = false;
+            ConversationTopicsDiscussed[WEATHER] = false;
+            ConversationTopicsDiscussed[GREETING] = false;
             leadsTo = "";
         }
+
         //contains data from the game for requirements
-        public GameData GameData { get => gameData; set => gameData = value; }
-        public CharacterData CharacterData { get => characterData; set => characterData = value; }
+        public GameData _GameData { get => gameData; set => gameData = value; }
+        public CharacterData _CharacterData { get => characterData; set => characterData = value; }
         public string Dialogue { get => dialogue; set => dialogue = value; }
+        public Dictionary<string, List<string>> Conversation { get => conversation; }
+        public Dictionary<string, bool> ConversationTopicsDiscussed { get => conversationTopicsDiscussed; set => conversationTopicsDiscussed = value; }
+
+        public void SetupConversation(GameData gameData, CharacterData characterData) {
+            _GameData = gameData;
+            _CharacterData = characterData;
+            conversation[INITIATOR].Add(_CharacterData.InitiatorsName);//NPC
+            conversation[RESPONDER].Add(_CharacterData.RespondersName);//Player
+        }
+
+        public void Converse() {
+            SelectStartingTopic();
+        }
 
         //which module is being targeted? Random vs. intentional
+        //this method is utilized by the initiator
         public void SelectStartingTopic() {
-            Random dice = new Random();
             int option = (int) dice.NextDouble()*10+1;
             //50% Greeting
             //20% Weather
             //30% Event
-            if (option <= 5) {
+            if (option <= 5 ) { //maybe add or if stranger to
                 PullGreeting();
             } else if (option <= 8) {
                 PullEvent();
@@ -107,35 +177,143 @@ namespace Kati.Data_Models{
                 PullWeather();
             }
         }
+
+        //build off of the previous dialogue
+        public void SelectNextTopic() { 
+            //cannot contain greeting, Greetings are reserved for starting topics
+            //cannot be the same topic as one already talked about
+            //may not always have a second smallTalk topic
+            //strangers are less likely to have multiple topics
+            // generally smalltalk will not have a next topic 
+        }
+
         //which dialogue string will be used
         //compare requirements with qualifications of character
         //return reference from dictionary in SmallTalk_Module
 
         //parse through greetings
-        private string PullGreeting() {
-            //check leadsTo
-            //if leadsTo is empty
-            return "";
+        private void PullGreeting() {
+            ConversationTopicsDiscussed[GREETING] = true;
+            topic = GREETING;
+            CheckSpeaker();
         }
 
-        private String PullEvent() {
-            return "";
+        private void PullEvent() {
+            ConversationTopicsDiscussed[EVENT] = true;
+            topic = EVENT;
+            CheckSpeaker();
         }
 
-        private String PullWeather() {
-            return "";
+        private void PullWeather() {
+            ConversationTopicsDiscussed[WEATHER] = true;
+            topic = WEATHER;
+            CheckSpeaker();
+        }
+
+        private void CheckSpeaker() {
+            if (speaking.Equals(INITIATOR)) {
+                RunInitiatorsTurn();
+            } else {
+                RunRespondersTurn();
+            }
+        }
+
+        //must be able to work for all topics
+        private void RunInitiatorsTurn() {
+            //the floor is opened to the npc to choose what they want to do
+            string stateType = STATEMENT;
+            if (!dialogueState.Equals(QUESTION)) {
+                int prob = (int)dice.NextDouble() * 10 + 1;
+                if (prob <= 7) {
+                    dialogueState = STATEMENT;
+                } else {
+                    dialogueState = stateType = QUESTION;
+                }
+            } else {
+                dialogueState = stateType = RESPONSE;
+            }
+            string dialogue = CallMethod(topic, stateType);
+            SetSpeakersTurn(dialogue, INITIATOR, stateType);
+        }
+
+        //must be able to run all topics
+        private void RunRespondersTurn() {
+            if (dialogueState.Equals(QUESTION)) {
+                //answer question here
+                dialogueState = RESPONSE;
+                string dialogue = CallMethod(topic, RESPONSE);
+                SetSpeakersTurn(dialogue, RESPONDER, RESPONSE);
+            } else {
+                dialogueState = SKIPPED;
+            }
+        }
+
+        /* Call after the initiator or the responder speaks, record
+         * the dialogue and switch to the next speaker or end chain
+         */
+        private void SetSpeakersTurn(string dialogue, string speaker, string topic) {
+            if (speaker.Equals(INITIATOR)) {
+                Conversation[topic].Add(dialogue);
+                this.dialogue = dialogue;
+                this.speaking = RESPONDER;
+            } else {
+                Conversation[topic].Add(dialogue);
+                this.dialogue = dialogue;
+                this.speaking = INITIATOR;
+            }
+
+        }
+
+        private string CallMethod(string topic, string stateType) {
+            string dialogue = "";
+            if (stateType.Equals(STATEMENT)) {
+                dialogue = PullStatement(topic);
+            } else if (stateType.Equals(QUESTION)) {
+                dialogue = PullQuestion(topic);
+            } else {
+                dialogue = PullResponse(topic);
+            }
+            return dialogue;
         }
 
         private string PullStatement(string type) {
-            return "";
+            parser.SetStage(speaking,dialogueState,type);
+            return parser.GetDialogue();
         }
         private string PullQuestion(string type) {
-            return "";
+            parser.SetStage(speaking, dialogueState, type);
+            return parser.GetDialogue(); ;
         }
-        private string PulltResponse(string type) {
-            return "";
+        private string PullResponse(string type) {
+            parser.SetStage(speaking, dialogueState, type);
+            return parser.GetDialogue(); ;
         }
 
+
+    }
+
+    /// <summary>
+    /// Class functions to parse rules and find which dialogue topics are
+    /// possible or relevant
+    /// </summary>
+    class SmallTalk_Parser {
+
+        private SmallTalk_Module module;
+        private string speaker;//initiator or responder
+        private string stateType;//statement, question, or response
+        private string topic; //weather, event, or greeting
+
+        public SmallTalk_Parser(SmallTalk_Module module) {
+            this.module = module;
+        }
+
+        public void SetStage(string speaking, string stateType, string topic) { 
+            
+        }
+
+        public string GetDialogue() {
+            return "";
+        }
 
     }
 
