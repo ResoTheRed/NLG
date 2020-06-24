@@ -118,6 +118,9 @@ namespace Kati.Data_Models{
         private string topic = GREETING;
         private string leadsTo;
 
+        //variables reference selecting next topic
+        private int improveProbabilityOfMoreDialogue = 3;
+
         //contains the dialogue after parsing
         private string dialogue;
         //contains the full conversation between initiator and responder
@@ -179,12 +182,49 @@ namespace Kati.Data_Models{
         }
 
         //build off of the previous dialogue
-        public void SelectNextTopic() { 
+        public void SelectNextTopic() {
             //cannot contain greeting, Greetings are reserved for starting topics
             //cannot be the same topic as one already talked about
             //may not always have a second smallTalk topic
             //strangers are less likely to have multiple topics
             // generally smalltalk will not have a next topic 
+            if (!conversationTopicsDiscussed[EVENT] || !conversationTopicsDiscussed[WEATHER]) {
+                int probability = (int)dice.NextDouble() * 10 + 1;
+                probability += NextTopicGreetingRule();
+                //if they love an event then make it an event topic
+                //else 50/50
+                if (probability > 8) {//70%chance there will not be another topic
+                    if (conversationTopicsDiscussed[EVENT]) { 
+                    
+                    }
+                }
+            }
+        }
+
+        /* checks to see if the last topic talked about was Greeting
+         * if so return an integer value that boosts the chances of a
+         * next topic. Greetings can only be said on the first round*/
+        public int NextTopicGreetingRule() {
+            bool lastTopicWasGreeting = 
+                conversationTopicsDiscussed[GREETING] &&
+                !(conversationTopicsDiscussed[WEATHER] ||
+                conversationTopicsDiscussed[EVENT]);
+            return lastTopicWasGreeting ? improveProbabilityOfMoreDialogue : 0;
+        }
+
+        public bool NextTopicEventRule() {
+            bool runEvent = NextTopicGreetingRule() > 0;//only greeting was run
+            if (parser.EventAvaliable()) {
+                if (!runEvent) {
+                    if (conversationTopicsDiscussed[EVENT]) {
+                        runEvent = false;
+                    } else if (conversationTopicsDiscussed[WEATHER]) {
+                        //further discourage Event if Weather has taken player
+                        runEvent = ((int)dice.NextDouble() * 10 + 1) > 5 ? true : false;
+                    }
+                }
+            }
+            return runEvent;
         }
 
         //which dialogue string will be used
@@ -195,22 +235,23 @@ namespace Kati.Data_Models{
         private void PullGreeting() {
             ConversationTopicsDiscussed[GREETING] = true;
             topic = GREETING;
-            CheckSpeaker();
+            CheckWhosSpeakingAndRunThereTurn();
         }
 
         private void PullEvent() {
             ConversationTopicsDiscussed[EVENT] = true;
             topic = EVENT;
-            CheckSpeaker();
+            CheckWhosSpeakingAndRunThereTurn();
         }
 
         private void PullWeather() {
             ConversationTopicsDiscussed[WEATHER] = true;
             topic = WEATHER;
-            CheckSpeaker();
+            CheckWhosSpeakingAndRunThereTurn();
         }
 
-        private void CheckSpeaker() {
+        //run the 
+        private void CheckWhosSpeakingAndRunThereTurn() {
             if (speaking.Equals(INITIATOR)) {
                 RunInitiatorsTurn();
             } else {
@@ -313,6 +354,11 @@ namespace Kati.Data_Models{
 
         public string GetDialogue() {
             return "";
+        }
+
+        //looks if an event is available
+        public bool EventAvaliable() {
+            return true;
         }
 
     }
