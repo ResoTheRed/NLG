@@ -25,7 +25,7 @@ namespace Kati.Data_Models{
        -other tones may use the neutral category
        --------------------------------------------------------------------------------------------
     */
-    class SmallTalk_Module
+    public class SmallTalk_Module
     {
         //can talk to itself
         //topics questions or statements (invoke a response or not)
@@ -73,7 +73,7 @@ namespace Kati.Data_Models{
     /// when the smallTalk chain is over.
     /// </summary>
 
-    class SmallTalk_Controller {
+    public class SmallTalk_Controller {
 
         // I think I will need to keep track of the entire dialogue sequence here
         // It will be reset after the dialogue event has ended
@@ -153,6 +153,9 @@ namespace Kati.Data_Models{
         public string Dialogue { get => dialogue; set => dialogue = value; }
         public Dictionary<string, List<string>> Conversation { get => conversation; }
         public Dictionary<string, bool> ConversationTopicsDiscussed { get => conversationTopicsDiscussed; set => conversationTopicsDiscussed = value; }
+        public string Speaking { get => speaking; set => speaking = value; }
+        public string DialogueState { get => dialogueState; set => dialogueState = value; }
+        public string Topic { get => topic; set => topic = value; }
 
         public void SetupConversation(GameData gameData, CharacterData characterData) {
             _GameData = gameData;
@@ -191,11 +194,11 @@ namespace Kati.Data_Models{
             if (!conversationTopicsDiscussed[EVENT] || !conversationTopicsDiscussed[WEATHER]) {
                 int probability = (int)dice.NextDouble() * 10 + 1;
                 probability += NextTopicGreetingRule();
-                //if they love an event then make it an event topic
-                //else 50/50
-                if (probability > 8) {//70%chance there will not be another topic
-                    if (conversationTopicsDiscussed[EVENT]) { 
-                    
+                if (probability > 8) {//70%chance there will not be another topic unless greetin was other topic
+                    if (conversationTopicsDiscussed[EVENT] && !conversationTopicsDiscussed[WEATHER]) {
+                        PullWeather();
+                    } else if (!conversationTopicsDiscussed[EVENT] && conversationTopicsDiscussed[WEATHER]) {
+                        PullEvent();
                     }
                 }
             }
@@ -234,25 +237,25 @@ namespace Kati.Data_Models{
         //parse through greetings
         private void PullGreeting() {
             ConversationTopicsDiscussed[GREETING] = true;
-            topic = GREETING;
+            Topic = GREETING;
             CheckWhosSpeakingAndRunThereTurn();
         }
 
         private void PullEvent() {
             ConversationTopicsDiscussed[EVENT] = true;
-            topic = EVENT;
+            Topic = EVENT;
             CheckWhosSpeakingAndRunThereTurn();
         }
 
         private void PullWeather() {
             ConversationTopicsDiscussed[WEATHER] = true;
-            topic = WEATHER;
+            Topic = WEATHER;
             CheckWhosSpeakingAndRunThereTurn();
         }
 
         //run the 
         private void CheckWhosSpeakingAndRunThereTurn() {
-            if (speaking.Equals(INITIATOR)) {
+            if (Speaking.Equals(INITIATOR)) {
                 RunInitiatorsTurn();
             } else {
                 RunRespondersTurn();
@@ -263,29 +266,29 @@ namespace Kati.Data_Models{
         private void RunInitiatorsTurn() {
             //the floor is opened to the npc to choose what they want to do
             string stateType = STATEMENT;
-            if (!dialogueState.Equals(QUESTION)) {
+            if (!DialogueState.Equals(QUESTION)) {
                 int prob = (int)dice.NextDouble() * 10 + 1;
                 if (prob <= 7) {
-                    dialogueState = STATEMENT;
+                    DialogueState = STATEMENT;
                 } else {
-                    dialogueState = stateType = QUESTION;
+                    DialogueState = stateType = QUESTION;
                 }
             } else {
-                dialogueState = stateType = RESPONSE;
+                DialogueState = stateType = RESPONSE;
             }
-            string dialogue = CallMethod(topic, stateType);
+            string dialogue = CallMethod(Topic, stateType);
             SetSpeakersTurn(dialogue, INITIATOR, stateType);
         }
 
         //must be able to run all topics
         private void RunRespondersTurn() {
-            if (dialogueState.Equals(QUESTION)) {
+            if (DialogueState.Equals(QUESTION)) {
                 //answer question here
-                dialogueState = RESPONSE;
-                string dialogue = CallMethod(topic, RESPONSE);
+                DialogueState = RESPONSE;
+                string dialogue = CallMethod(Topic, RESPONSE);
                 SetSpeakersTurn(dialogue, RESPONDER, RESPONSE);
             } else {
-                dialogueState = SKIPPED;
+                DialogueState = SKIPPED;
             }
         }
 
@@ -296,11 +299,11 @@ namespace Kati.Data_Models{
             if (speaker.Equals(INITIATOR)) {
                 Conversation[topic].Add(dialogue);
                 this.dialogue = dialogue;
-                this.speaking = RESPONDER;
+                this.Speaking = RESPONDER;
             } else {
                 Conversation[topic].Add(dialogue);
                 this.dialogue = dialogue;
-                this.speaking = INITIATOR;
+                this.Speaking = INITIATOR;
             }
 
         }
@@ -318,15 +321,15 @@ namespace Kati.Data_Models{
         }
 
         private string PullStatement(string type) {
-            parser.SetStage(speaking,dialogueState,type);
+            parser.SetStage(Speaking,DialogueState,type);
             return parser.GetDialogue();
         }
         private string PullQuestion(string type) {
-            parser.SetStage(speaking, dialogueState, type);
+            parser.SetStage(Speaking, DialogueState, type);
             return parser.GetDialogue(); ;
         }
         private string PullResponse(string type) {
-            parser.SetStage(speaking, dialogueState, type);
+            parser.SetStage(Speaking, DialogueState, type);
             return parser.GetDialogue(); ;
         }
 
@@ -337,7 +340,7 @@ namespace Kati.Data_Models{
     /// Class functions to parse rules and find which dialogue topics are
     /// possible or relevant
     /// </summary>
-    class SmallTalk_Parser {
+    public class SmallTalk_Parser {
 
         private SmallTalk_Module module;
         private string speaker;//initiator or responder
@@ -368,7 +371,7 @@ namespace Kati.Data_Models{
     /// SmallTalk_Module dictionaries
     /// </summary>
 
-    class SmallTalk_Loader {
+    public class SmallTalk_Loader {
 
         /*Starts the loading sequence*/
         public static SmallTalk_Loader LoadFromFile(SmallTalk_Module module) {
