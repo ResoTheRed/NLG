@@ -5,7 +5,6 @@ C:\Users\User\Documents\NLG\Kati\bin\Debug\netcoreapp3.1\Kati.runtimeconfig.dev.
 C:\Users\User\Documents\NLG\Kati\bin\Debug\netcoreapp3.1\Kati.dll
 C:\Users\User\Documents\NLG\Kati\bin\Debug\netcoreapp3.1\Kati.pdb
 C:\Users\User\Documents\NLG\Kati\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.csprojAssemblyReference.cache
 C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.csproj.CoreCompileInputs.cache
 C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.AssemblyInfoInputs.cache
 C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.AssemblyInfo.cs
@@ -13,3 +12,4 @@ C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.csproj.CopyComplet
 C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.dll
 C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.pdb
 C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.genruntimeconfig.cache
+C:\Users\User\Documents\NLG\Kati\obj\Debug\netcoreapp3.1\Kati.csprojAssemblyReference.cache

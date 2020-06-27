@@ -5,7 +5,7 @@
         "req": [],
         "leads to": [ "small_talk.weather_response" ]
       },
-      "Interseting weather we're haveing, don't you think?": {
+      "Interseting weather we're having, don't you think?": {
         "req": [],
         "leads to": [ "small_talk.weather_response" ]
       },

@@ -48,15 +48,15 @@ namespace Kati.Data_Models{
          * **/
     
         //Tone Type: conversation phrase : [tags about responses or leads to] 
-        public Dictionary<string, Dictionary<string, List<string>>> weatherQuestion;
-        public Dictionary<string, Dictionary<string, List<string>>> weatherStatement;
-        public Dictionary<string, Dictionary<string, List<string>>> weatherResponse;
-        public Dictionary<string, Dictionary<string, List<string>>> eventQuestion;
-        public Dictionary<string, Dictionary<string, List<string>>> eventStatement;
-        public Dictionary<string, Dictionary<string, List<string>>> eventResponse;
-        public Dictionary<string, Dictionary<string, List<string>>> greetingStatement;
-        public Dictionary<string, Dictionary<string, List<string>>> greetingQuestion;
-        public Dictionary<string, Dictionary<string, List<string>>> greetingResponse;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> weatherQuestion;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> weatherStatement;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> weatherResponse;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> eventQuestion;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> eventStatement;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> eventResponse;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> greetingStatement;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> greetingQuestion;
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> greetingResponse;
 
         private string pathToJson;
 
@@ -102,7 +102,7 @@ namespace Kati.Data_Models{
 
         //constants
         private const string INITIATOR = "initiator";
-        private const string RESPONDER = "reponder";
+        private const string RESPONDER = "responder";
         private const string EVENT = "event";
         private const string WEATHER = "weather";
         private const string GREETING = "greeting";
@@ -117,6 +117,7 @@ namespace Kati.Data_Models{
         private string dialogueState = STATEMENT;
         private string topic = GREETING;
         private string leadsTo;
+        private bool endConversation = false;
 
         //variables reference selecting next topic
         private int improveProbabilityOfMoreDialogue = 3;
@@ -139,12 +140,19 @@ namespace Kati.Data_Models{
         public SmallTalk_Controller(SmallTalk_Module module) {
             this.module = module;
             this.parser = new SmallTalk_Parser(module);
+            InstatiateStructures();
+            leadsTo = "";
+            parser.Ctrl = this;
+        }
+
+        private void InstatiateStructures() {
+            conversation = new Dictionary<string, List<string>>();
             conversation[INITIATOR] = new List<string>();
             conversation[RESPONDER] = new List<string>();
+            conversationTopicsDiscussed = new Dictionary<string, bool>();
             ConversationTopicsDiscussed[EVENT] = false;
             ConversationTopicsDiscussed[WEATHER] = false;
             ConversationTopicsDiscussed[GREETING] = false;
-            leadsTo = "";
         }
 
         //contains data from the game for requirements
@@ -156,6 +164,7 @@ namespace Kati.Data_Models{
         public string Speaking { get => speaking; set => speaking = value; }
         public string DialogueState { get => dialogueState; set => dialogueState = value; }
         public string Topic { get => topic; set => topic = value; }
+        public bool EndConversation { get => endConversation; set => endConversation = value; }
 
         public void SetupConversation(GameData gameData, CharacterData characterData) {
             _GameData = gameData;
@@ -165,34 +174,47 @@ namespace Kati.Data_Models{
         }
 
         public void Converse() {
+            RunFirstRound();
+            while (!EndConversation) {
+                RunNextRound();
+            }
+        }
+
+        public void RunFirstRound() {
+            EndConversation = false;
             SelectStartingTopic();
+            RunRespondersTurn();
+        }
+
+        public void RunNextRound() {
+            SelectNextTopic();
+            RunRespondersTurn();
         }
 
         //which module is being targeted? Random vs. intentional
         //this method is utilized by the initiator
-        public void SelectStartingTopic() {
+        public int SelectStartingTopic() {
             int option = (int) dice.NextDouble()*10+1;
-            //50% Greeting
-            //20% Weather
-            //30% Event
-            if (option <= 5 ) { //maybe add or if stranger to
+            if (option <= 5 ) {
                 PullGreeting();
             } else if (option <= 8) {
                 PullEvent();
             } else {
                 PullWeather();
             }
+            return option;
         }
 
         //build off of the previous dialogue
-        public void SelectNextTopic() {
+        public int SelectNextTopic() {
+            int probability = 0;
             //cannot contain greeting, Greetings are reserved for starting topics
             //cannot be the same topic as one already talked about
             //may not always have a second smallTalk topic
             //strangers are less likely to have multiple topics
             // generally smalltalk will not have a next topic 
             if (!conversationTopicsDiscussed[EVENT] || !conversationTopicsDiscussed[WEATHER]) {
-                int probability = (int)dice.NextDouble() * 10 + 1;
+                probability = (int)dice.NextDouble() * 10 + 1;
                 probability += NextTopicGreetingRule();
                 if (probability > 8) {//70%chance there will not be another topic unless greetin was other topic
                     if (conversationTopicsDiscussed[EVENT] && !conversationTopicsDiscussed[WEATHER]) {
@@ -200,8 +222,13 @@ namespace Kati.Data_Models{
                     } else if (!conversationTopicsDiscussed[EVENT] && conversationTopicsDiscussed[WEATHER]) {
                         PullEvent();
                     }
+                } else {
+                    EndConversation = true;
                 }
+            }else{
+                EndConversation = true;
             }
+            return probability;
         }
 
         /* checks to see if the last topic talked about was Greeting
@@ -254,11 +281,13 @@ namespace Kati.Data_Models{
         }
 
         //run the 
-        private void CheckWhosSpeakingAndRunThereTurn() {
+        private string CheckWhosSpeakingAndRunThereTurn() {
             if (Speaking.Equals(INITIATOR)) {
                 RunInitiatorsTurn();
+                return INITIATOR;
             } else {
                 RunRespondersTurn();
+                return RESPONDER;
             }
         }
 
@@ -282,13 +311,15 @@ namespace Kati.Data_Models{
 
         //must be able to run all topics
         private void RunRespondersTurn() {
+            string dialogue = "";
             if (DialogueState.Equals(QUESTION)) {
                 //answer question here
                 DialogueState = RESPONSE;
-                string dialogue = CallMethod(Topic, RESPONSE);
+                dialogue = CallMethod(Topic, RESPONSE);
                 SetSpeakersTurn(dialogue, RESPONDER, RESPONSE);
             } else {
                 DialogueState = SKIPPED;
+                SetSpeakersTurn(dialogue, RESPONDER, SKIPPED);
             }
         }
 
@@ -297,18 +328,18 @@ namespace Kati.Data_Models{
          */
         private void SetSpeakersTurn(string dialogue, string speaker, string topic) {
             if (speaker.Equals(INITIATOR)) {
-                Conversation[topic].Add(dialogue);
+                conversation[INITIATOR].Add(topic+": "+dialogue);
                 this.dialogue = dialogue;
                 this.Speaking = RESPONDER;
             } else {
-                Conversation[topic].Add(dialogue);
+                conversation[RESPONDER].Add(topic+": "+dialogue);
                 this.dialogue = dialogue;
                 this.Speaking = INITIATOR;
             }
 
         }
 
-        private string CallMethod(string topic, string stateType) {
+        public string CallMethod(string topic, string stateType) {
             string dialogue = "";
             if (stateType.Equals(STATEMENT)) {
                 dialogue = PullStatement(topic);
@@ -343,20 +374,28 @@ namespace Kati.Data_Models{
     public class SmallTalk_Parser {
 
         private SmallTalk_Module module;
+        private SmallTalk_Controller ctrl;
         private string speaker;//initiator or responder
         private string stateType;//statement, question, or response
         private string topic; //weather, event, or greeting
+
+        public string Speaker { get => speaker; set => speaker = value; }
+        public string StateType { get => stateType; set => stateType = value; }
+        public string Topic { get => topic; set => topic = value; }
+        public SmallTalk_Controller Ctrl { get => ctrl; set => ctrl = value; }
 
         public SmallTalk_Parser(SmallTalk_Module module) {
             this.module = module;
         }
 
-        public void SetStage(string speaking, string stateType, string topic) { 
-            
+        public void SetStage(string speaking, string stateType, string topic) {
+            Speaker = speaking;
+            this.StateType = stateType;
+            this.Topic = topic;
         }
 
         public string GetDialogue() {
-            return "";
+            return "Sample dialogue";
         }
 
         //looks if an event is available
@@ -397,7 +436,7 @@ namespace Kati.Data_Models{
         }
 
         private void SetupDataQueries() {
-            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp;
+            Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>> temp;
             try {
                 temp = ConvertJsonToDictionary();
             } catch (Exception e) {
@@ -407,21 +446,21 @@ namespace Kati.Data_Models{
             SetupDictionaries(temp);
         }
 
-        private Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> ConvertJsonToDictionary() {
+        private Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>> ConvertJsonToDictionary() {
             string json = ReadFile(module.PathToJson);
-            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> data =
-                JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>>(json);
+            Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>> data =
+                JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>>>(json);
             return data;
         }
 
-        private void SetupDictionaries(Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp) {
+        private void SetupDictionaries(Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>> temp) {
             SetupWeather(temp);
             SetupCurrentEvent(temp);
             SetupGreetings(temp);
 
         }
 
-        private void SetupGreetings(Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp) {
+        private void SetupGreetings(Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>> temp) {
             try {
                 module.greetingStatement = temp["Greeting_statement"];
                 module.greetingQuestion = temp["Greeting_question"];
@@ -431,7 +470,7 @@ namespace Kati.Data_Models{
             }
         }
 
-        private void SetupCurrentEvent(Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp) {
+        private void SetupCurrentEvent(Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>> temp) {
             try {
                 module.eventQuestion = temp["current_event_question"];
                 module.eventResponse = temp["current_event_response"];
@@ -441,7 +480,7 @@ namespace Kati.Data_Models{
             }
         }
 
-        private void SetupWeather(Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp) {
+        private void SetupWeather(Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>> temp) {
             try {
                 module.weatherQuestion = temp["weather_question"];
                 module.weatherResponse = temp["weather_response"];

@@ -40,12 +40,20 @@ namespace Kati.Module_Hub{
         public int DayOfWeek { get => dayOfWeek; set => dayOfWeek = value; }
 
         public GameData() {
-            EventCalendar = new Dictionary<string, Dictionary<string, int>>();
+            SetupEventCalendar();
         }
 
         public GameData(string weather, string sector, string timeOfDay, int dayOfMonth, string season) {
-            EventCalendar = new Dictionary<string, Dictionary<string, int>>();
+            SetupEventCalendar();
             Weather = weather; Sector = sector; TimeOfDay = timeOfDay; DayOfMonth = dayOfMonth; Season = season;
+        }
+
+        private void SetupEventCalendar() {
+            EventCalendar = new Dictionary<string, Dictionary<string, int>>();
+            EventCalendar["Spring"] = new Dictionary<string, int>();
+            EventCalendar["Summer"] = new Dictionary<string, int>();
+            EventCalendar["Fall"] = new Dictionary<string, int>();
+            EventCalendar["winter"] = new Dictionary<string, int>();
         }
 
         public bool EventIsNear(int dayRangeStart,string season, string _event) {
@@ -60,7 +68,7 @@ namespace Kati.Module_Hub{
         }
 
         public void SetWeek() {
-            Week = DayOfMonth / 7;
+            Week = DayOfMonth / 7 + 1;
         }
 
         public void SetDayOfWeek() {
@@ -102,6 +110,16 @@ namespace Kati.Module_Hub{
         /*collection of every social and personal scalar trait*/
         private Dictionary<string, int> initiatorScalarList;
         private Dictionary<string, int> responderScalarList;
+
+        public CharacterData() {
+            interactionTone = new Dictionary<string, double>();
+            initiatorsTone = new Dictionary<string, double>();
+            respondersTone = new Dictionary<string, double>();
+            initiatorAttributeList = new Dictionary<string, string>();
+            responderAttributeList = new Dictionary<string, string>();
+            initiatorScalarList = new Dictionary<string, int>();
+            responderScalarList = new Dictionary<string, int>();
+        }
 
         public string InitiatorsName { get => initiatorsName; set => initiatorsName = value; }
         public string RespondersName { get => respondersName; set => respondersName = value; }
