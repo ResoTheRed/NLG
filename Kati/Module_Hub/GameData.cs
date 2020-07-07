@@ -56,7 +56,7 @@ namespace Kati.Module_Hub{
             EventCalendar["winter"] = new Dictionary<string, int>();
         }
 
-        public bool EventIsNear(int dayRangeStart,string season, string _event) {
+        public bool EventIsNear(int dayRangeStart, string season, string _event) {
             try {
                 int eventDay = EventCalendar[season][_event];
                 return dayOfMonth >= dayRangeStart && dayOfMonth < eventDay;

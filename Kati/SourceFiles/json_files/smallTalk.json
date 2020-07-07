@@ -166,13 +166,13 @@
         "leads to": []
       }
     },
-    "lover": {
+    "romance": {
       "It is cold. Maybe you could warm me up": {
         "req": [ "weather.cold" ],
         "leads to": [ "trigger.romantic_advance" ]
       }
     },
-    "annoying": {
+    "disgust": {
       "Yep, there's weather outside.": {
         "req": [],
         "leads to": [ "trigger.cynical" ]
@@ -234,7 +234,7 @@
         "leads to": [ "trigger.cynical" ]
       }
     },
-    "enemy": {
+    "hate": {
       "Not interested.": {
         "req": [],
         "leads to": [ "trigger.end_conversation", "trigger.rude" ]
@@ -360,7 +360,7 @@
         "leads to": []
       }
     },
-    "lover": {
+    "romance": {
       "The weather outside is almost as hot as you.": {
         "req": [ "weather.hot" ],
         "leads to": [ "trigger.romantic_advance" ]
@@ -388,7 +388,7 @@
         "leads to": []
       }
     },
-    "enemy": {
+    "hate": {
       "Its to hot outside to talk!": {
         "req": [ "weather.hot" ],
         "leads to": []
@@ -411,125 +411,125 @@
   "current_event_statement": {
     "stranger": {
       "It's almost time for the #current_event#.": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": []
       }
     },
     "neutral": {
       "I've been so busy lately. The time seems to just fly by.": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": []
       },
       "The #current_event# is around the corner. I just get so excited about during this time of the year.": {
-        "req": [ "time.#current_event#.near", "npc.has.#loves_current_event#" ],
+        "req": [ "time.#current_event#", "npc.has.#loves_current_event#" ],
         "leads to": []
       },
       "I just love #current_event#. It is always so exciting.": {
-        "req": [ "time.#current_event#.near", "npc.has.#loves_current_event#" ],
+        "req": [ "time.#current_event#", "npc.has.#loves_current_event#" ],
         "leads to": []
       },
       "It's almost #current_event#. It's my favorite festival of the year.  It always fills me with inspiration.": {
-        "req": [ "time.#current_event#.near", "npc.#loves_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#loves_current_event#" ],
         "leads to": []
       },
       "I'm so excited about #current_event#. There is so much to do and see.": {
-        "req": [ "time.#current_event#.near", "npc.has.#loves_current_event#" ],
+        "req": [ "time.#current_event#", "npc.has.#loves_current_event#" ],
         "leads to": []
       },
       "The #current_event# is coming soon.  I'll make sure to stay home when it happens.": {
-        "req": [ "time.#current_event#.near", "npc.has.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.has.#hates_current_event#" ],
         "leads to": []
       },
       "It's almost time for #current_event#.  That festival is such a drag.": {
-        "req": [ "time.#current_event#.near", "npc.has.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.has.#hates_current_event#" ],
         "leads to": []
       },
       "#current_event# will be happening soon.  I always hate.  Each year seems to get worse.": {
-        "req": [ "time.#current_event#.near", "npc.has.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.has.#hates_current_event#" ],
         "leads to": []
       },
       "It's that time of year. #current_event# will be happening soon.  Its a big deal around here.": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": []
       },
       "It's almost time for #current_event#.": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": []
       },
       "It's going to get busy around here. #current_event# will soon be underway.": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": []
       },
       "#current_event# will be here soon.  I find it to be a bit boring myself.": {
-        "req": [ "time.#current_event#.near", "npc.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#hates_current_event#" ],
         "leads to": []
       },
       "A lot of people like #current_event#. It's not really my thing.": {
-        "req": [ "time.#current_event#.near", "npc.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#hates_current_event#" ],
         "leads to": []
       },
       "A lot of people like #current_event#. It's worth staying for the festivities, if you're into that stuff.": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": []
       },
       "A lot of people like #current_event#. I would know because I'm one of them.": {
-        "req": [ "time.#current_event#.near", "npc.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#hates_current_event#" ],
         "leads to": []
       },
       "The art festival is near. I just love going out and looking at all of those master pieces.  Every year I Say that I won't buy anything, but I always do.": {
-        "req": [ "time.event.art_fest.near", "npc.loves_art_fest" ],
+        "req": [ "time.event.art_fest", "npc.loves_art_fest" ],
         "leads to": []
       },
       "You know, the art festival is happening soon.  I love seeing all of the art on display.": {
-        "req": [ "time.event.art_fest.near", "npc.loves_art_fest" ],
+        "req": [ "time.event.art_fest", "npc.loves_art_fest" ],
         "leads to": []
       },
       "Art Fest will be here soon.  Its great if you love the arts": {
-        "req": [ "time.event.art_fest.near" ],
+        "req": [ "time.event.art_fest" ],
         "leads to": []
       },
       "It's almost time for Art Fest.  Its the time of the year were artists get together to display and sell their work.": {
-        "req": [ "time.event.art_fest.near" ],
+        "req": [ "time.event.art_fest" ],
         "leads to": []
       },
       "The Blueberry Festival is almost here. Every year I eat so many blue berries and I swear that I won't eat another one ever again. But, here we are and I'm readdy to break my oath.": {
-        "req": [ "time.event.blueberry_fest.near" ],
+        "req": [ "time.event.blueberry_fest" ],
         "leads to": []
       },
       "The Blueberry Festival is on it's way.  I'm gonna eat so many blueberries that I might get kicked out.": {
-        "req": [ "time.event.blueberry_fest.near", "npc.loves_blueberry_fest" ],
+        "req": [ "time.event.blueberry_fest", "npc.loves_blueberry_fest" ],
         "leads to": []
       },
       "Blueberry Festival will happen soon. It's fun and all but I really don't care for blueberries.": {
-        "req": [ "time.event.blueberry_fest.near", "npc.hates_blueberry_fest" ],
+        "req": [ "time.event.blueberry_fest", "npc.hates_blueberry_fest" ],
         "leads to": []
       },
       "Every year writers, poets, and theater types gather here to celebrate their craft and philosophy with each other.  They call it Writer's Block Festival.": {
-        "req": [ "time.event.writers_block.near" ],
+        "req": [ "time.event.writers_block" ],
         "leads to": []
       },
       "The Writer's Block Festival is almost here.  It is a magical time.  I can feel the creativity and inspiration in the air.": {
-        "req": [ "time.event.writers_block.near", "npc.loves_writers_block" ],
+        "req": [ "time.event.writers_block", "npc.loves_writers_block" ],
         "leads to": []
       },
       "The Writer's Block Festival is happening soon. It's a strange time when a lot of weirdos come out.": {
-        "req": [ "time.event.writers_block.near", "npc.hates_writers_block" ],
+        "req": [ "time.event.writers_block", "npc.hates_writers_block" ],
         "leads to": []
       },
       "The Music Festival is almost here.  It is the one time of the year that music can be heard on the streets.  It's kind of a large party.": {
-        "req": [ "time.event.music_fest.near" ],
+        "req": [ "time.event.music_fest" ],
         "leads to": []
       },
       "It's music fest time.  Soon the streets will be filled with musician serenading the town with their magical tunes.": {
-        "req": [ "time.event.music_fest.near", "npc.loves_music_fest" ],
+        "req": [ "time.event.music_fest", "npc.loves_music_fest" ],
         "leads to": []
       },
       "It's going to get noisy around here. Music fest is around the cornor.  Luckily I have some ear plugs.": {
-        "req": [ "time.event.music_fest.near", "npc.hates_music_fest" ],
+        "req": [ "time.event.music_fest", "npc.hates_music_fest" ],
         "leads to": []
       },
       "Happy Halloween.": {
-        "req": [ "time.event.halloween.near", "npc.loves_halloween" ],
+        "req": [ "time.event.halloween", "npc.loves_halloween" ],
         "leads to": []
       },
       "Halloween is almost here.  This is when the ghouls and goblins come out and play.": {
@@ -573,33 +573,33 @@
   "current_event_question": {
     "stranger": {
       "Do you like #current_event#?": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": [ "PlayerOption.likeCurrentEvent" ]
       },
       "I was thinking about going to #current_event#, are you going?": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": [ "PlayerOption.goingToCurrentEvent" ]
       }
     },
     "neutral": {
       "I always love the #current_event#, what do you think about it?": {
-        "req": [ "npc.#loves_current_event#", "time.#current_event#.near" ],
+        "req": [ "npc.#loves_current_event#", "time.#current_event#" ],
         "leads to": [ "PlayerOption.likeCurrentEvent" ]
       },
       "I always hate going to the #current_event#, what do you think about it?": {
-        "req": [ "npc.#hates_current_event#", "time.#current_event#.near" ],
+        "req": [ "npc.#hates_current_event#", "time.#current_event#" ],
         "leads to": [ "PlayerOption.likeCurrentEvent" ]
       },
       "The #current_event# will be happening soon.  A lot of people venture of to see the festivities. How about you? Will you be going?": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": [ "PlayerOption.goingToCurrentEvent" ]
       },
       "It's almost time for #current_event#.  Some people love it, some people hate it. How about you? What do you think?": {
-        "req": [ "time.#current_event#.near" ],
+        "req": [ "time.#current_event#" ],
         "leads to": [ "PlayerOption.likeCurrentEvent" ]
       },
       "I'm soo excited about the #current_event# around the corner. There is just so much to see and do. How about you? Do you like it as well?": {
-        "req": [ "npc.#loves_current_event#", "time.#current_event#.near" ],
+        "req": [ "npc.#loves_current_event#", "time.#current_event#" ],
         "leads to": [ "PlayerOption.likeCurrentEvent" ]
       }
     }
@@ -689,27 +689,27 @@
       //"PlayerOption.goingToCurrentEvent"
       "I am absolutely going to the #current_event#. I never miss it.": {
         "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.loves++" ]
+        "leads to": [ "#current_event#.likes++" ]
       },
       "You better believe I'm going to the #current_event#.": {
         "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.loves++" ]
+        "leads to": [ "#current_event#.likes++" ]
       },
       "Of course I'm going to this years #current_event#. I wouldn't miss it.": {
         "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.loves++" ]
+        "leads to": [ "#current_event#.likes++" ]
       },
       "Oh yeah I'm going.  I go every year.": {
         "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.loves+" ]
+        "leads to": [ "#current_event#.likes+" ]
       },
       "I'll be there for sure. I never miss it.": {
         "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.loves+" ]
+        "leads to": [ "#current_event#.likes+" ]
       },
       "I'm planning on being there.": {
         "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.loves+" ]
+        "leads to": [ "#current_event#.likes+" ]
       },
       "I might stop by.": {
         "req": [ "PlayerOption.goingToCurrentEvent" ],
@@ -785,7 +785,7 @@
         "leads to": [ "greeting_question" ]
       }
     },
-    "lover": {
+    "romance": {
       "Hey beutiful.": {
         "req": [ "time.day.morning", "player.female" ],
         "leads to": []
