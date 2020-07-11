@@ -54,6 +54,14 @@ namespace Kati.Module_Hub{
             EventCalendar["Summer"] = new Dictionary<string, int>();
             EventCalendar["Fall"] = new Dictionary<string, int>();
             EventCalendar["winter"] = new Dictionary<string, int>();
+            EventCalendar["Spring"]["art_fest"] = 12;
+            EventCalendar["Spring"]["blueberry_fest"] = 21;
+            EventCalendar["Summer"]["writers_block"] = 10;
+            EventCalendar["Summer"]["carnival"] = 24;
+            EventCalendar["Fall"]["music_fest"] = 15;
+            EventCalendar["Fall"]["halloween"] = 28;
+            EventCalendar["winter"]["bizaar"] = 7;
+            EventCalendar["winter"]["yule_tide"] = 26;
         }
 
         public bool EventIsNear(int dayRangeStart, string season, string _event) {
@@ -64,7 +72,16 @@ namespace Kati.Module_Hub{
                 Console.WriteLine("Event doesn't exist");
             }
             return false;
-        
+        }
+
+        public string EventIsNear() {
+            string _event_ = "none";
+            int distance = 6;
+            foreach (KeyValuePair<string, int> item in EventCalendar[Season]) {
+                if (dayOfMonth >= item.Value - distance && dayOfMonth < item.Value)
+                    return item.Key;
+            }
+            return _event_;
         }
 
         public void SetWeek() {
@@ -77,10 +94,15 @@ namespace Kati.Module_Hub{
 
         public void SetPublicEvent() {
             int min = 30;
+            int distance = 6;
             foreach (var _event in EventCalendar[Season]) {
                 if (_event.Value >= DayOfMonth && _event.Value - DayOfMonth <= min) {
-                    PublicEvent = _event.Key;
-                    min = _event.Value - DayOfMonth;
+                    if (MathF.Abs(_event.Value - DayOfMonth) <= distance) {
+                        PublicEvent = _event.Key;
+                        min = _event.Value - DayOfMonth;
+                    } else {
+                        PublicEvent = "None";
+                    }
                 }
             }
             if(min>28)

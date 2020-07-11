@@ -356,7 +356,7 @@
         "leads to": []
       },
       "It's cold enough to see my breath": {
-        "req": [],
+        "req": ["weather.cold"],
         "leads to": []
       }
     },
@@ -366,7 +366,7 @@
         "leads to": [ "trigger.romantic_advance" ]
       }
     },
-    "annoying": {
+    "disgust": {
       "It's hot.": {
         "req": [ "weather.hot" ],
         "leads to": []
@@ -410,7 +410,7 @@
 
   "current_event_statement": {
     "stranger": {
-      "It's almost time for the #current_event#.": {
+      "It's nearly time for the #current_event#.": {
         "req": [ "time.#current_event#" ],
         "leads to": []
       }
@@ -421,11 +421,11 @@
         "leads to": []
       },
       "The #current_event# is around the corner. I just get so excited about during this time of the year.": {
-        "req": [ "time.#current_event#", "npc.has.#loves_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#loves_current_event#" ],
         "leads to": []
       },
       "I just love #current_event#. It is always so exciting.": {
-        "req": [ "time.#current_event#", "npc.has.#loves_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#loves_current_event#" ],
         "leads to": []
       },
       "It's almost #current_event#. It's my favorite festival of the year.  It always fills me with inspiration.": {
@@ -433,19 +433,19 @@
         "leads to": []
       },
       "I'm so excited about #current_event#. There is so much to do and see.": {
-        "req": [ "time.#current_event#", "npc.has.#loves_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#loves_current_event#" ],
         "leads to": []
       },
       "The #current_event# is coming soon.  I'll make sure to stay home when it happens.": {
-        "req": [ "time.#current_event#", "npc.has.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#hates_current_event#" ],
         "leads to": []
       },
       "It's almost time for #current_event#.  That festival is such a drag.": {
-        "req": [ "time.#current_event#", "npc.has.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#hates_current_event#" ],
         "leads to": []
       },
       "#current_event# will be happening soon.  I always hate.  Each year seems to get worse.": {
-        "req": [ "time.#current_event#", "npc.has.#hates_current_event#" ],
+        "req": [ "time.#current_event#", "npc.#hates_current_event#" ],
         "leads to": []
       },
       "It's that time of year. #current_event# will be happening soon.  Its a big deal around here.": {
@@ -761,7 +761,7 @@
         "leads to": []
       },
       "Hello": {
-        "req": [ "time.day.morning" ],
+        "req": [ ],
         "leads to": []
       }
     },
@@ -787,11 +787,11 @@
     },
     "romance": {
       "Hey beutiful.": {
-        "req": [ "time.day.morning", "player.female" ],
+        "req": [ "player.female" ],
         "leads to": []
       },
       "Hey handsome.": {
-        "req": [ "time.day.afternoon", "player.male" ],
+        "req": [ "player.male" ],
         "leads to": []
       }
     },
@@ -806,6 +806,30 @@
       },
       "Hello  ma'am.": {
         "req": [ "player.female" ],
+        "leads to": []
+      },
+      "Good morning ma'am.": {
+        "req": [ "player.female", "time.day.morning" ],
+        "leads to": []
+      },
+      "Good morning sir.": {
+        "req": [ "player.male", "time.day.morning" ],
+        "leads to": []
+      },
+      "Good afternoon ma'am.": {
+        "req": [ "player.female", "time.day.afternoon" ],
+        "leads to": []
+      },
+      "Good afternoon sir.": {
+        "req": [ "player.male", "time.day.afternoon" ],
+        "leads to": []
+      },
+      "Good evening ma'am.": {
+        "req": [ "player.female", "time.day.evening" ],
+        "leads to": []
+      },
+      "Good evening sir.": {
+        "req": [ "player.male", "time.day.evening" ],
         "leads to": []
       }
     }
