@@ -60,6 +60,16 @@
     }
   },
   "weather_response": {
+    "positive": {
+      "It is cold. Maybe you could warm me up": {
+        "req": [ "romance", "weather.cold" ],
+        "leads to": [ "romance.+" ]
+      },
+      "It's always a nice_day when I'm in good company.": {
+        "req": [ ],
+        "leads to": [ "friend.+" ]
+      }
+    },
     "neutral": {
       "It sure is.": {
         "req": [],
@@ -161,29 +171,9 @@
         "req": [ "weather.cold" ],
         "leads to": []
       },
-      "I know righ.  I just can't seem to warm up.": {
+      "I know right.  I just can't seem to warm up.": {
         "req": [ "weather.cold" ],
         "leads to": []
-      }
-    },
-    "romance": {
-      "It is cold. Maybe you could warm me up": {
-        "req": [ "weather.cold" ],
-        "leads to": [ "trigger.romantic_advance" ]
-      }
-    },
-    "disgust": {
-      "Yep, there's weather outside.": {
-        "req": [],
-        "leads to": [ "trigger.cynical" ]
-      },
-      "Uhuh, hot.": {
-        "req": [ "weather.hot" ],
-        "leads to": []
-      },
-      "Well it was a nice day.": {
-        "req": [ "weather.nice_day" ],
-        "leads to": [ "trigger.hateful" ]
       },
       "Yea, it is.": {
         "req": [],
@@ -201,83 +191,97 @@
         "req": [],
         "leads to": []
       },
-      "... hot, whatever.": {
-        "req": [ "weather.hot" ],
-        "leads to": [ "trigger.rude" ]
-      },
-      "... cold, whatever.": {
-        "req": [ "weather.cold" ],
-        "leads to": [ "trigger.rude" ]
-      },
-      "... windy, whatever.": {
-        "req": [ "weather.windy" ],
-        "leads to": [ "trigger.rude" ]
-      },
-      "... humid, whatever.": {
-        "req": [ "weather.humid" ],
-        "leads to": [ "trigger.rude" ]
-      },
       "Thats fine.": {
         "req": [],
         "leads to": []
+      }
+    },
+    "negative": {
+      "Yep, there's weather outside.": {
+        "req": [],
+        "leads to": [ "disgust.+", "friend.-" ]
+      },
+      "Uhuh, hot.": {
+        "req": [ "weather.hot" ],
+        "leads to": [ "professional.-" ]
+      },
+      "Well it was a nice day.": {
+        "req": [ "weather.nice_day" ],
+        "leads to": [ "hate.+", "romance.-" ]
       },
       "Uhhm..weather..": {
         "req": [],
-        "leads to": [ "trigger.cynical" ]
+        "leads to": [ "proffesional.-" ]
       },
       "What do you need again?": {
         "req": [],
-        "leads to": [ "trigger.next_topic" ]
+        "leads to": [ "next_topic" ]
       },
       "Thanks for the weather report.": {
         "req": [],
-        "leads to": [ "trigger.cynical" ]
+        "leads to": [ "disgust.+" ]
       }
     },
-    "hate": {
+    "negative+": {
+      "... hot, whatever.": {
+        "req": [ "weather.hot" ],
+        "leads to": [ "disgust.+", "friend.-" ]
+      },
+      "... cold, whatever.": {
+        "req": [ "weather.cold" ],
+        "leads to": [ "disgust.+", "friend.-" ]
+      },
+      "... windy, whatever.": {
+        "req": [ "weather.windy" ],
+        "leads to": [ "disgust.+", "friend.-" ]
+      },
+      "... humid, whatever.": {
+        "req": [ "weather.humid" ],
+        "leads to": [ "disgust.+", "friend.-" ]
+      },
       "Not interested.": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.rude" ]
+        "leads to": [ "end_conversation", "hate.+" ]
       },
       "Don't care.": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.rude" ]
+        "leads to": [ "end_conversation", "hate.+", "romance.-" ]
       },
       "Wow, did you figure that out on your own?": {
         "req": [],
-        "leads to": [ "trigger.rude", "trigger.cynical" ]
+        "leads to": [ "friend.-", "romance.-", "professional.-", "hate.+" ]
       },
       "Do you have something important to say or do you plan on just wasting my time?": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.next_topic", "trigger.rude" ]
+        "leads to": [ "next_topic", "romance.-", "professional.-", "hate.+" ]
       },
       "Blah blah blah, not interested.": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.rude" ]
+        "leads to": [ "end_conversation", "romance.-", "professional.-", "hate.+" ]
       },
-      "Wow, thanks for the important news. I don't know what I've would have done it you haven't told me that.": {
+      "Wow, thanks for the important news. I don't know what I've would have done if you haven't told me that.": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.cynical" ]
+        "leads to": [ "end_conversation", "romance.-", "professional.-", "hate.+" ]
       },
       "Are you finished? ...": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.rude" ]
+        "leads to": [ "end_conversation", "romance.-", "friend.-", "hate.+" ]
       },
       "Why are you talking to me.": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.hateful" ]
+        "leads to": [ ".end_conversation", "friend.-", "hate.+" ]
       },
       "Uhmm, go away.": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.hateful" ]
+        "leads to": [ ".end_conversation", "friend.-", "hate.+" ]
       },
       "Piss Off.": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.hateful" ]
+        "leads to": [ ".end_conversation", "friend.-", "hate.++" ]
       },
       "STOP TALKING TO ME!.": {
         "req": [],
-        "leads to": [ "trigger.end_conversation", "trigger.hateful" ]
+        "leads to": [ ".end_conversation", "friend.-", "hate.++" ]
       }
     }
   },
@@ -605,143 +609,151 @@
     }
   },
   "current_event_response": {
-    "neutral": {
+    "positve+": {
       "I love the #current_event#. It is so much fun.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.like++" ]
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.++" ]
       },
       "I #current_event# is always a blast. I always have to best time when I go.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.like++" ]
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.++" ]
       },
       "I absolutely love the #current_event#. It's simply great.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.like++" ]
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.++" ]
       },
       "I love the #current_event#.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.like++" ]
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.++" ]
       },
+      "I am absolutely going to the #current_event#. I never miss it.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.++" ]
+      },
+      "You better believe I'm going to the #current_event#.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.++" ]
+      },
+      "Of course I'm going to this years #current_event#. I wouldn't miss it.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.++" ]
+      }
+    },
+    "positve": {
       "I like the #current_event#. I always have a good time.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.like+" ]
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.+" ]
       },
       "I like the #current_event#. It's fun.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.like+" ]
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.+" ]
       },
       "I #current_event# is always fun. I like to go and people watch.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.like+" ]
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.+" ]
       },
       "I like the #current_event#.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.like+" ]
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.+" ]
       },
+      "Oh yeah I'm going.  I go every year.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.+" ]
+      },
+      "I'll be there for sure. I never miss it.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.+" ]
+      },
+      "I'm planning on being there.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.+" ]
+      }
+    },
+    "neutral": {
       "The #current_event# is okay. I enjoy it well enough.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "req": [ "likeCurrentEvent" ],
         "leads to": []
       },
       "The #current_event#, it's fun but I can take it or leave it.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "req": [ "likeCurrentEvent" ],
         "leads to": []
       },
       "The #current_event# is nice for a little while but then I get kind of bored with it.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "req": [ "likeCurrentEvent" ],
         "leads to": []
       },
       "I don't know, the #current_event# is okay I guess.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
+        "req": [ "likeCurrentEvent" ],
         "leads to": []
       },
-      "I'm not a huge fan of the #current_event#. It is tiresome to me really.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.hates+" ]
-      },
-      "I don't really care for the #current_event#.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.hates+" ]
-      },
-      "The #current_event# is, well, it's a little over hyped to me.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.hates+" ]
-      },
-      "The #current_event# is kind of boring.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.hates+" ]
-      },
-      "I hate the #current_event#. It is not fun at all.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.hates++" ]
-      },
-      "I hate the #current_event#.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.hates++" ]
-      },
-      "I loath the #current_event#. It seems to always drag me down.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.hates++" ]
-      },
-      "The #current_event# always seems to leave a bad taste in my mouth.": {
-        "req": [ "PlayerOption.likeCurrentEvent" ],
-        "leads to": [ "#current_event#.hates++" ]
-      },
-      //"PlayerOption.goingToCurrentEvent"
-      "I am absolutely going to the #current_event#. I never miss it.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.likes++" ]
-      },
-      "You better believe I'm going to the #current_event#.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.likes++" ]
-      },
-      "Of course I'm going to this years #current_event#. I wouldn't miss it.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.likes++" ]
-      },
-      "Oh yeah I'm going.  I go every year.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.likes+" ]
-      },
-      "I'll be there for sure. I never miss it.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.likes+" ]
-      },
-      "I'm planning on being there.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.likes+" ]
-      },
       "I might stop by.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "req": [ "goingToCurrentEvent" ],
         "leads to": []
       },
       "I don't know yet, I might if I have time.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
+        "req": [ "goingToCurrentEvent" ],
         "leads to": []
-      },
+      }
+      
+    },
+    "negative": {
       "I doubt it.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.hates+" ]
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.-" ]
       },
       "Probably not, the #current_event# isn't my thing.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.hates+" ]
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "disgust.-" ]
       },
       "Don't count on it.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.hates+" ]
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "disgust.-" ]
       },
       "I avoid the #current_event# like the plague.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.hates++" ]
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "disgust.-" ]
       },
       "I will not be going.  I do my best to avoid it.": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.hates++" ]
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "disgust.-" ]
       },
       "I'd rather not go, I don't like the #current_event#": {
-        "req": [ "PlayerOption.goingToCurrentEvent" ],
-        "leads to": [ "#current_event#.hates+" ]
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.-" ]
+      },
+      "I'm not a huge fan of the #current_event#. It is tiresome to me really.": {
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.-" ]
+      },
+      "I don't really care for the #current_event#.": {
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.-" ]
+      },
+      "The #current_event# is, well, it's a little over hyped to me.": {
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.-" ]
+      },
+      "The #current_event# is kind of boring.": {
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.-" ]
+      }
+    },
+    "negative+": {
+      "I hate the #current_event#. It is not fun at all.": {
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.-", "disgust.+" ]
+      },
+      "I hate the #current_event#.": {
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.-", "disgust.+" ]
+      },
+      "I loath the #current_event#. It seems to always drag me down.": {
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.-", "disgust.+" ]
+      },
+      "The #current_event# always seems to leave a bad taste in my mouth.": {
+        "req": [ "likeCurrentEvent" ],
+        "leads to": [ "friend.-", "disgust.+" ]
       }
     }
   },
@@ -881,30 +893,32 @@
     }
   },
   "Greeting_response": {
-    "neutral": {
+    "positive": {
       "I'm doing great.": {
         "req": [],
-        "leads to": [ "positive++" ]
+        "leads to": [ "friend.+" ]
       },
       "I'm doing wonderful.": {
         "req": [],
-        "leads to": [ "positive++" ]
+        "leads to": [ "friend.+" ]
       },
       "I'm doing good.": {
         "req": [],
-        "leads to": [ "positive+" ]
-      },
+        "leads to": [ "friend.+" ]
+      }
+    },
+    "neutral": {
       "I can't complain.": {
         "req": [],
-        "leads to": [ "positive+" ]
+        "leads to": []
       },
       "I'm doing okay.": {
         "req": [],
-        "leads to": [ "positive+" ]
+        "leads to": []
       },
       "Things are well.": {
         "req": [],
-        "leads to": [ "positive+" ]
+        "leads to": []
       },
       "You know, everything is alright I guess.": {
         "req": [],
@@ -916,35 +930,37 @@
       },
       "I'm alright.": {
         "req": [],
-        "leads to": [ "positive+" ]
-      },
+        "leads to": []
+      }
+    },
+    "negative": {
       "Things aren't going so well.": {
         "req": [],
-        "leads to": [ "negative+" ]
+        "leads to": [ "disgust.+" ]
       },
       "I'm not doing so well to be honest.": {
         "req": [],
-        "leads to": [ "negative+" ]
+        "leads to": [ "disgust.+" ]
       },
       "Things could be better.": {
         "req": [],
-        "leads to": [ "negative+" ]
+        "leads to": [ "disgust.+" ]
       },
       "...": {
         "req": [],
-        "leads to": [ "negative+" ]
+        "leads to": [ "disgust.+" ]
       },
       "Life is pain.": {
         "req": [],
-        "leads to": [ "negative++" ]
+        "leads to": [ "disgust.+" ]
       },
       "Things are terrible.": {
         "req": [],
-        "leads to": [ "negative++" ]
+        "leads to": [ "disgust.+" ]
       },
       "Life is a flaming pile of garbage.": {
         "req": [],
-        "leads to": [ "negative++" ]
+        "leads to": [ "disgust.+" ]
       }
     }
   }

@@ -3,8 +3,8 @@ using Kati.Module_Hub;
 using System;
 using System.Collections.Generic;
 
-namespace Kati
-{
+namespace Kati{
+
     class Program{
 
         private static SmallTalk_Module module;
@@ -13,8 +13,6 @@ namespace Kati
         static void Main(string[] args){
             TestSmallTalkText(5);
         }
-
-
 
         public static void TestSmallTalkText(int length) {
             for (int i = 0; i < length; i++) {

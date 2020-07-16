@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using Kati.Module_Hub;
@@ -970,7 +971,7 @@ namespace Kati.Data_Models{
 
             return dialogue;
         }
-        //
+        
         public bool CorrectTimeOfDay(List<string> list) {
             bool hasReq = true;
             if (list.Count == 1) {
@@ -989,6 +990,108 @@ namespace Kati.Data_Models{
             }
             return hasReq;
         }
+
+        //############################### Response Data ####################################
+        /*
+            Weather topic
+                req: nice_day, cold, hot, humid, windy, rain
+                *4 good, bad, neutral, random based on character.
+                *friend,romance,professional,respect admiration,disgust,hate,rivalry
+                *++,+,-,--
+         */
+
+        public void ParseResponse() {
+            if (Topic.Equals("weather")) {
+                ParseWeatherResponse();
+            } else if (Topic.Equals("event")) {
+                ParseEventResponse();
+            } else if (Topic.Equals("greeting")) {
+                ParseGreetingResponse();
+            }
+        }
+
+        public void ParseWeatherResponse() {
+            //remove choices that don't fit the requirements
+            var responseVerbose = NarrowWeatherResponses();
+            //return the four branch choices that will make up the response
+            responseVerbose = ReturnFourChoiceBranches(responseVerbose);
+            //return response object?
+            //Dictionary<string, List<string>> response = 
+        }
+        //remove all options missing a requirement
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> NarrowWeatherResponses() {
+            Dictionary < string, Dictionary<string, Dictionary<string, List<string>>>> response =
+                module.weatherResponse;
+            
+            foreach(KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in response) {
+                foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in response[item.Key]) {
+                    bool hasWeatherReq = false, hasReqNeeded = false;
+                    foreach (string req in response[item.Key][inner.Key]["req"]) {
+                        string[] words = req.Split(".");
+                        if (words.Length > 1 && words[0].Equals("weather")) {
+                            hasWeatherReq = true;
+                            if (Ctrl._GameData.Weather.Equals(words[1])) {
+                                hasReqNeeded = true;
+                            }
+                        }
+                    }
+                    if (hasWeatherReq && !hasReqNeeded) {
+                        response[item.Key].Remove(inner.Key);
+                    }
+                }
+            }
+            return response;
+        }
+
+        public void ParseEventResponse() { 
+        
+        }
+
+        public void ParseGreetingResponse() { 
+        
+        }
+
+        //problems:
+        //what if random is the same as another option that has one or no possible option
+        //what if multiple otions default to neutral and the same option is picked over and over again
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> ReturnFourChoiceBranches
+            (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> response) {
+            List<string> keys = new List<string>();
+            foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>>  key in response) {
+                keys.Add(key.Key);
+            }
+            Dictionary < string,Dictionary<string, Dictionary<string, List<string>>>> newResponse = 
+                new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> ();
+            keys = ResponseKeyRules1(keys);
+            newResponse["positive"] = response[keys[0]];//likely to be positive
+            newResponse["neutral"] = response[keys[1]];//always neutral
+            newResponse["negative"] = response[keys[2]];//likely to be negative
+            newResponse["random"] = response[keys[3]];//random, but would be cool if it reflected the relationships
+            return newResponse;
+        }
+        public List<string> ResponseKeyRules1(List<string> keys) {
+            List<string> newKeys = new List<string>();
+            string[] temp = new string[5];
+            temp[0] = (keys.Contains("positive+")) ? "positive+" : "neutral";
+            temp[1] = (keys.Contains("positive")) ? "positive" : "neutral";
+            temp[2] = "neutral";
+            temp[3] = (keys.Contains("negative")) ? "negative" : "neutral";
+            temp[4] = (keys.Contains("negative+")) ? "negative+" : "neutral";
+            newKeys.Add(temp[(int)(Ctrl.Dice.NextDouble() * 2)]);//pull one positive
+            newKeys.Add(temp[2]);//default neutral
+            newKeys.Add(temp[(int)(Ctrl.Dice.NextDouble() * 2)+3]);//pull one negative
+            newKeys.Add(temp[(int)(Ctrl.Dice.NextDouble() * temp.Length)]);//pull one random
+            return newKeys;
+        }
+
+        public Dictionary<string, List<string>> GetResponse
+            (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose) {
+            Dictionary<string, List<string>> options = new Dictionary<string, List<string>>();
+            options[]
+            return options;
+        }
+
+
     }
 
     /// <summary>

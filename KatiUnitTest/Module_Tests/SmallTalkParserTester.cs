@@ -729,7 +729,7 @@ namespace KatiUnitTest.Module_Tests{
             dialogueList = parser.TrimDialogueOptions("professional");
             dialogue = parser.DropLeadsToFromList(dialogueList);
             dialogue = parser.RemoveGeetingsMissingTimeReq(dialogue);
-            Assert.IsTrue(dialogue.Count ==3 );
+            Assert.IsTrue(dialogue.Count ==5 );
         }
 
         [TestMethod]
