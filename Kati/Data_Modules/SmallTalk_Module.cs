@@ -387,6 +387,7 @@ namespace Kati.Data_Models{
         private string speaker;//initiator or responder
         private string stateType;//statement, question, or response
         private string topic; //weather, event, or greeting
+        private string responseType;
 
         private Dictionary<string, List<string>> weatherKeys;
         private Dictionary<string, List<string>> eventKeys;
@@ -402,6 +403,7 @@ namespace Kati.Data_Models{
         public Dictionary<string, List<string>> WeatherKeys { get => weatherKeys; set => weatherKeys = value; }
         public Dictionary<string, List<string>> EventKeys { get => eventKeys; set => eventKeys = value; }
         public Dictionary<string, List<string>> GreetingKeys { get => greetingKeys; set => greetingKeys = value; }
+        public string ResponseType { get => responseType; set => responseType = value; }
 
         public SmallTalk_Parser(SmallTalk_Module module) {
             this.module = module;
@@ -576,7 +578,28 @@ namespace Kati.Data_Models{
             var cat = CategorizeTone(tone);
             //pulls the top ranking attribute
             string winningAttribute = PickMostInfluentialAttribute(cat);
+            //setup Response type
+            SetResponseType(winningAttribute);
             return winningAttribute;
+        }
+
+        public void SetResponseType(string dialogue) {
+            if (Topic.Equals("event") && stateType.Equals("question")) {
+                foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in module.eventQuestion) {
+                    foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in module.eventQuestion[item.Key]) {
+                        if (dialogue.Equals(inner.Key)) {
+                            string[] temp = module.eventQuestion[item.Key][inner.Key]["leads to"][0].Split(".");
+                            ResponseType = temp[1];
+                        }
+                    }
+                }
+            } else if (Topic.Equals("weather") && stateType.Equals("question")) {
+                ResponseType = "weather";
+            } else if (Topic.Equals("greeting") && stateType.Equals("question")) {
+                ResponseType = "greeting";
+            } else {
+                ResponseType = "none";
+            }
         }
 
         public Dictionary<string, double> MatchCharacterAttributesToAvailableDialogueTones
@@ -1000,29 +1023,35 @@ namespace Kati.Data_Models{
                 *++,+,-,--
          */
 
-        public void ParseResponse() {
+        public Dictionary<string, List<string>> ParseResponse() {
+            Dictionary<string, List<string>> responseOptions = null;
             if (Topic.Equals("weather")) {
-                ParseWeatherResponse();
+                responseOptions = ParseWeatherResponse();
             } else if (Topic.Equals("event")) {
-                ParseEventResponse();
+                responseOptions = ParseEventResponse();
             } else if (Topic.Equals("greeting")) {
-                ParseGreetingResponse();
+                responseOptions = ParseGreetingResponse();
             }
+            return responseOptions;
         }
 
-        public void ParseWeatherResponse() {
+        public Dictionary<string, List<string>> ParseWeatherResponse() {
             //remove choices that don't fit the requirements
             var responseVerbose = NarrowWeatherResponses();
             //return the four branch choices that will make up the response
             responseVerbose = ReturnFourChoiceBranches(responseVerbose);
-            //return response object?
-            //Dictionary<string, List<string>> response = 
+            //move all choice into dataStructure List<List<string>>
+            var optionStrings = GetResponse(responseVerbose);
+            //get only one dialogue piece for each choice
+            var options = ResponseQualityControl(optionStrings);
+            //return dialogue choice with lead to info (how it will affect the game)
+            return BuildResponseStructure(responseVerbose,options);
         }
+
         //remove all options missing a requirement
         public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> NarrowWeatherResponses() {
             Dictionary < string, Dictionary<string, Dictionary<string, List<string>>>> response =
                 module.weatherResponse;
-            
             foreach(KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in response) {
                 foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in response[item.Key]) {
                     bool hasWeatherReq = false, hasReqNeeded = false;
@@ -1043,12 +1072,39 @@ namespace Kati.Data_Models{
             return response;
         }
 
-        public void ParseEventResponse() { 
-        
+        public Dictionary<string, List<string>> ParseEventResponse() {
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> response =
+                module.eventResponse;
+            var verbose = NarrowEventResponses(response);
+            verbose = ReturnFourChoiceBranches(verbose);
+            var optionStrings = GetResponse(verbose);
+            var options = ResponseQualityControl(optionStrings);
+            return BuildResponseStructure(verbose, options);
         }
 
-        public void ParseGreetingResponse() { 
-        
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> NarrowEventResponses
+            (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose) {
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> responses = 
+                new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>();
+            foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in verbose) {
+                foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in verbose[item.Key]) {
+                    string words = verbose[item.Key][inner.Key]["req"][0];
+                    if (!words.Equals(ResponseType)) {
+                         verbose[item.Key].Remove(inner.Key);
+                    }                    
+                }
+            }
+            return verbose;
+        }
+
+        public Dictionary<string, List<string>> ParseGreetingResponse() {
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> response =
+                module.greetingResponse;
+            var verbose = NarrowEventResponses(response);
+            verbose = ReturnFourChoiceBranches(verbose);
+            var optionStrings = GetResponse(verbose);
+            var options = ResponseQualityControl(optionStrings);
+            return BuildResponseStructure(verbose, options);
         }
 
         //problems:
@@ -1072,10 +1128,12 @@ namespace Kati.Data_Models{
         public List<string> ResponseKeyRules1(List<string> keys) {
             List<string> newKeys = new List<string>();
             string[] temp = new string[5];
-            temp[0] = (keys.Contains("positive+")) ? "positive+" : "neutral";
+            temp[0] = (keys.Contains("positive+")) ? "positive+" : 
+                (keys.Contains("positive")) ? "positive" : "neutral";
             temp[1] = (keys.Contains("positive")) ? "positive" : "neutral";
             temp[2] = "neutral";
-            temp[3] = (keys.Contains("negative")) ? "negative" : "neutral";
+            temp[3] = (keys.Contains("negative")) ? "negative" : 
+                (keys.Contains("negative+")) ? "negative+" : "neutral";
             temp[4] = (keys.Contains("negative+")) ? "negative+" : "neutral";
             newKeys.Add(temp[(int)(Ctrl.Dice.NextDouble() * 2)]);//pull one positive
             newKeys.Add(temp[2]);//default neutral
@@ -1084,11 +1142,72 @@ namespace Kati.Data_Models{
             return newKeys;
         }
 
-        public Dictionary<string, List<string>> GetResponse
+        public List<List<string>> GetResponse
             (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose) {
-            Dictionary<string, List<string>> options = new Dictionary<string, List<string>>();
-            options[]
-            return options;
+            List<List<string>> option = new List<List<string>>();
+            foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> key in verbose) {
+                List<string> temp = new List<string>();
+                foreach (KeyValuePair<string, Dictionary<string, List<string>>> item in verbose[key.Key]) {
+                    temp.Add(item.Key);
+                }
+                option.Add(temp);
+            }
+            return option;
+        }
+        //remove all responses for each of the four to one dialogue bit
+        public List<string> ResponseQualityControl(List<List<string>> option) {
+            List<string> responses = new List<string>();
+            for (int i=0; i < option.Count;i++) {
+                string choice = option[i][(int)(Ctrl.Dice.NextDouble() * option[i].Count)];
+                if (responses.Contains(choice)) {
+                    int index = i;
+                    if (option[i].Count <= 1) {
+                        index = 1; //pull from neutral
+                    }
+                    for (int j = 0; j < option[index].Count; j++) {
+                        //try pulling random: can be dangerous
+                        int value = (int)(Ctrl.Dice.NextDouble() * option[index].Count);
+                        if (!responses.Contains(option[index][value])) {
+                            responses.Add(option[index][value]);
+                            j = option[index].Count;
+                        }
+                    }
+                } else {
+                    responses.Add(choice);
+                }
+            }
+            return responses;
+        }
+
+        public Dictionary<string, List<string>> BuildResponseStructure
+            (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> responseVerbose,
+            List<string> optionStrings) {
+            Dictionary<string, List<string>> responseStructure = new Dictionary<string, List<string>>();
+            if (optionStrings.Count > 0)
+                if(responseVerbose["positive"].ContainsKey(optionStrings[0]))
+                    responseStructure[optionStrings[0]] = responseVerbose["positive"]
+                    [optionStrings[0]]["leads to"];
+                else
+                    responseStructure[optionStrings[0]] = responseVerbose["neutral"]
+                    [optionStrings[0]]["leads to"];
+            if (optionStrings.Count > 1)
+                responseStructure[optionStrings[1]] = responseVerbose["neutral"]
+                [optionStrings[1]]["leads to"];
+            if (optionStrings.Count > 2)
+                if (responseVerbose["negative"].ContainsKey(optionStrings[2]))
+                    responseStructure[optionStrings[2]] = responseVerbose["negative"]
+                    [optionStrings[2]]["leads to"];
+                else
+                    responseStructure[optionStrings[2]] = responseVerbose["neutral"]
+                    [optionStrings[2]]["leads to"];
+            if (optionStrings.Count > 3)
+                if (responseVerbose["random"].ContainsKey(optionStrings[3]))
+                    responseStructure[optionStrings[3]] = responseVerbose["random"]
+                    [optionStrings[3]]["leads to"];
+                else
+                    responseStructure[optionStrings[3]] = responseVerbose["neutral"]
+                    [optionStrings[3]]["leads to"];
+            return responseStructure;
         }
 
 

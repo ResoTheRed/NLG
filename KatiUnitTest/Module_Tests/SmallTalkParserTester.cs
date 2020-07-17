@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Kati.Data_Models;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using System.Threading;
 
 namespace KatiUnitTest.Module_Tests{
     
@@ -130,8 +131,8 @@ namespace KatiUnitTest.Module_Tests{
             parser.SetCurrentListTopic();
             Assert.IsNotNull(parser.CurrentList);
             Assert.IsTrue(parser.CurrentList["neutral"]
-                ["I love the #current_event#."]["req"][0]
-                .Equals("PlayerOption.likeCurrentEvent"));
+                ["The #current_event# is okay. I enjoy it well enough."]["req"][0]
+                .Equals("likeCurrentEvent"));
         }
 
         [TestMethod]
@@ -159,9 +160,9 @@ namespace KatiUnitTest.Module_Tests{
             parser.SetStage("initiator", "response", "greeting");
             parser.SetCurrentListTopic();
             Assert.IsNotNull(parser.CurrentList);
-            Assert.IsTrue(parser.CurrentList["neutral"]
+            Assert.IsTrue(parser.CurrentList["positive"]
                 ["I'm doing great."]["leads to"][0]
-                .Equals("positive++"));
+                .Equals("friend.+"));
         }
 
         [TestMethod]
@@ -591,6 +592,23 @@ namespace KatiUnitTest.Module_Tests{
         }
 
         [TestMethod]
+        public void TestSetResponseType() {
+            parser.SetStage("initiator", "question", "event");
+            string str = "I was thinking about going to #current_event#, are you going?";
+            parser.SetResponseType(str);
+            Assert.IsTrue(parser.ResponseType.Equals("goingToCurrentEvent"));
+            str = "The #current_event# will be happening soon.  A lot of people venture of to see the festivities. How about you? Will you be going?";
+            parser.SetResponseType(str);
+            Assert.IsTrue(parser.ResponseType.Equals("goingToCurrentEvent"));
+            for (int i = 0; i < 50; i++) {
+                str = parser.SetRelationshipDialogueTone();
+                parser.SetResponseType(str);
+                Assert.IsTrue(parser.ResponseType.Equals("goingToCurrentEvent")||
+                    parser.ResponseType.Equals("likeCurrentEvent"));
+            }
+        }
+
+        [TestMethod]
         public void TestCompareMultipleCaseGameReq() {
             parser.Ctrl._GameData.DayOfMonth = 10;
             parser.Ctrl._GameData.SetPublicEvent();
@@ -839,5 +857,201 @@ namespace KatiUnitTest.Module_Tests{
             Assert.IsTrue(choice.Length > 0);
         }
 
+        [TestMethod]
+        public void TestNarrowWeatherResponse() {
+            parser.SetStage("initiator", "question", "weather");
+            parser.GetDialogue();
+            //default game data: evening, nice day
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> test =
+                parser.NarrowWeatherResponses();
+            Assert.IsTrue(test.Count == 4);
+            Assert.IsTrue(test["positive"].ContainsKey("It's always a nice_day when I'm in good company."));
+            Assert.IsTrue(test["positive"].Count==1);
+            Assert.IsTrue(test["neutral"].Count == 14);
+            Assert.IsFalse(test["neutral"].ContainsKey("I know, it's so hot out."));
+            Assert.IsTrue(test["neutral"].ContainsKey("Yea, it is."));
+            Assert.IsTrue(test["negative"].Count == 5);
+            Assert.IsFalse(test["negative"].ContainsKey("Uhuh, hot."));
+            Assert.IsTrue(test["negative"].ContainsKey("Thanks for the weather report."));
+            Assert.IsTrue(test["negative+"].Count == 11);
+            Assert.IsFalse(test["negative+"].ContainsKey("... hot, whatever."));
+            Assert.IsTrue(test["negative+"].ContainsKey("Piss Off."));
+        }
+
+        [TestMethod]
+        public void TestResponseKeyRules1() {
+            for (int i = 0; i < 100; i++) {
+                List<string> list = new List<string>() { "positive", "neutral", "negative", "negative+" };
+                var keys = parser.ResponseKeyRules1(list);
+                Assert.IsTrue(keys.Count == 4);
+                Assert.IsTrue(keys[0].Equals("positive"));
+                Assert.IsTrue(keys[1].Equals("neutral"));
+                Assert.IsTrue(keys[2].Equals("negative") || keys[2].Equals("negative+"));
+            }
+            for (int i = 0; i < 100; i++) {
+                List<string> list = new List<string>() { "positive", "positive+", "neutral", "negative", "negative+" };
+                var keys = parser.ResponseKeyRules1(list);
+                Assert.IsTrue(keys.Count == 4);
+                Assert.IsTrue(keys[0].Equals("positive")|| keys[0].Equals("positive+"));
+                Assert.IsTrue(keys[1].Equals("neutral"));
+                Assert.IsTrue(keys[2].Equals("negative") || keys[2].Equals("negative+"));
+            }
+            for (int i = 0; i < 100; i++) {
+                List<string> list = new List<string>() { "positive", "positive+", "neutral" };
+                var keys = parser.ResponseKeyRules1(list);
+                Assert.IsTrue(keys.Count == 4);
+                Assert.IsTrue(keys[0].Equals("positive") || keys[0].Equals("positive+"));
+                Assert.IsTrue(keys[1].Equals("neutral"));
+                Assert.IsTrue(keys[2].Equals("neutral"));
+            }
+        }
+
+        [TestMethod]
+        public void TestReturnFourDialogueBranches() {
+            for (int i = 0; i < 25; i++) {
+                parser.SetStage("initiator", "question", "weather");
+                parser.GetDialogue();
+                //default game data: evening, nice day
+                Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
+                    parser.NarrowWeatherResponses();
+                var test = parser.ReturnFourChoiceBranches(temp);
+                Assert.IsTrue(test.Count == 4);
+                Assert.IsTrue(test["positive"].ContainsKey("It's always a nice_day when I'm in good company."));
+                Assert.IsTrue(test["positive"].Count == 1);
+                Assert.IsTrue(test["neutral"].Count == 14);
+                Assert.IsFalse(test["neutral"].ContainsKey("I know, it's so hot out."));
+                Assert.IsTrue(test["neutral"].ContainsKey("Yea, it is."));
+                Assert.IsTrue(test.ContainsKey("negative") || test.ContainsKey("negative+"));
+                if (test["negative"].Count == 5) {
+                    Assert.IsTrue(test["negative"].Count == 5);
+                    Assert.IsFalse(test["negative"].ContainsKey("Uhuh, hot."));
+                    Assert.IsTrue(test["negative"].ContainsKey("Thanks for the weather report."));
+                } else {
+                    Assert.IsTrue(test["negative"].Count == 11);
+                    Assert.IsFalse(test["negative"].ContainsKey("... hot, whatever."));
+                    Assert.IsTrue(test["negative"].ContainsKey("Piss Off."));
+                }
+                Assert.IsTrue(test["random"].Count > 0);
+            }
+        }
+
+        [TestMethod]
+        public void TestGetResponse() {
+            for (int j = 0; j < 20; j++) {
+                parser.SetStage("initiator", "question", "weather");
+                parser.GetDialogue();
+                //default game data: evening, nice day
+                Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
+                    parser.NarrowWeatherResponses();
+                var test = parser.ReturnFourChoiceBranches(temp);
+                List<List<string>> responses = parser.GetResponse(test);
+                Assert.IsTrue(responses.Count == 4);
+                for (int i = 0; i < responses[0].Count; i++) {
+                    Assert.IsTrue(test["positive"].ContainsKey(responses[0][i]));
+                }
+                for (int i = 0; i < responses[1].Count; i++) {
+                    Assert.IsTrue(test["neutral"].ContainsKey(responses[1][i]));
+                }
+                for (int i = 0; i < responses[2].Count; i++) {
+                    Assert.IsTrue(test["negative"].ContainsKey(responses[2][i]));
+                }
+                for (int i = 0; i < responses[3].Count; i++) {
+                    Assert.IsTrue(test["random"].ContainsKey(responses[3][i]));
+                }
+                Assert.IsTrue(responses[0].Count > 0);
+                Assert.IsTrue(responses[1].Count > 0);
+                Assert.IsTrue(responses[2].Count > 0);
+                Assert.IsTrue(responses[3].Count > 0);
+            }
+        }
+
+        [TestMethod]
+        public void TestResponseQualityControl() {
+            for (int i = 0; i < 100; i++) {
+                parser.SetStage("initiator", "question", "weather");
+                parser.GetDialogue();
+                //default game data: evening, nice day
+                Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
+                    parser.NarrowWeatherResponses();
+                var testB = parser.ReturnFourChoiceBranches(temp);
+                List<List<string>> responses = parser.GetResponse(testB);
+                List<string> test = parser.ResponseQualityControl(responses);
+                Assert.IsTrue(test.Count == 4);
+                Assert.IsTrue(responses[0].Contains(test[0]));
+                Assert.IsTrue(responses[1].Contains(test[1]));
+                Assert.IsTrue(responses[2].Contains(test[2]));
+                Assert.IsTrue(test[3].Length > 0);
+            }
+        }
+
+        [TestMethod]
+        public void TestBuildResponseStructure() {
+            for (int i = 0; i < 50; i++) {
+                parser.SetStage("initiator", "question", "weather");
+                parser.GetDialogue();
+                //default game data: evening, nice day
+                Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
+                    parser.NarrowWeatherResponses();
+                var testB = parser.ReturnFourChoiceBranches(temp);
+                List<List<string>> responses = parser.GetResponse(testB);
+                List<string> testC = parser.ResponseQualityControl(responses);
+                Dictionary<string, List<string>> test = parser.BuildResponseStructure(testB, testC);
+                Assert.IsTrue(test.Count >= 2);
+                Assert.IsTrue(test["It's always a nice_day when I'm in good company."][0].Equals("friend.+"));
+            }
+        }
+
+        [TestMethod]
+        public void TestNarrowEventResponses() {
+            parser.SetStage("initiator", "question", "event");
+            parser.ResponseType = "likeCurrentEvent";
+            var responses = parser.NarrowEventResponses(module.eventResponse);
+            Assert.IsTrue(responses.Count == 5);
+            Assert.IsTrue(responses["positive+"].Count == 4);
+            Assert.IsTrue(responses["positive"].Count == 4);
+            Assert.IsTrue(responses["neutral"].Count == 4);
+            Assert.IsTrue(responses["negative"].Count == 4);
+            Assert.IsTrue(responses["negative+"].Count == 4);
+            Assert.IsTrue(responses["positive+"].ContainsKey("I love the #current_event#."));
+            Assert.IsFalse(responses["positive+"].ContainsKey("You better believe I'm going to the #current_event#."));
+            Assert.IsTrue(responses["positive"].ContainsKey("I like the #current_event#. It's fun."));
+            Assert.IsFalse(responses["positive"].ContainsKey("Oh yeah I'm going.  I go every year."));
+            Assert.IsTrue(responses["neutral"].ContainsKey("I don't know, the #current_event# is okay I guess."));
+            Assert.IsFalse(responses["neutral"].ContainsKey("I might stop by."));
+            Assert.IsTrue(responses["negative"].ContainsKey("The #current_event# is kind of boring."));
+            Assert.IsFalse(responses["negative"].ContainsKey("Don't count on it."));
+            Assert.IsTrue(responses["negative+"].ContainsKey("I hate the #current_event#."));
+        }
+
+        [TestMethod]
+        public void TestReturnFourChoiceBranchEvent() {
+            parser.SetStage("initiator", "question", "event");
+            parser.GetDialogue();
+            //default game data: evening, nice day
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
+                parser.NarrowWeatherResponses();
+            var test = parser.ReturnFourChoiceBranches(temp);
+            Assert.IsTrue(test.Count == 4);
+            Assert.IsTrue(test.ContainsKey("positive"));
+            Assert.IsTrue(test.ContainsKey("neutral"));
+            Assert.IsTrue(test.ContainsKey("negative"));
+            Assert.IsTrue(test.ContainsKey("random"));
+        }
+
+        [TestMethod]
+        public void TestGetResponseEvent() { 
+            
+        }
+
+        [TestMethod]
+        public void TestResponseQualityControlEvent() { 
+            
+        }
+
+        [TestMethod]
+        public void TestParseEventResponse() {
+            var test = parser.ParseEventResponse();
+            Assert.IsTrue(test.Count==4);
+        }
     }
 }

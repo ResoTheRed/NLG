@@ -148,11 +148,11 @@
         "leads to": []
       },
       "The wind's really blowing.": {
-        "req": [ "weather.wind" ],
+        "req": [ "weather.windy" ],
         "leads to": []
       },
       "I know right. The wind is blowing hard.": {
-        "req": [],
+        "req": ["weather.windy"],
         "leads to": []
       },
       "It's colder than usual.": {
@@ -222,7 +222,7 @@
         "leads to": [ "disgust.+" ]
       }
     },
-    "negative+": {
+    "negative+" : {
       "... hot, whatever.": {
         "req": [ "weather.hot" ],
         "leads to": [ "disgust.+", "friend.-" ]
@@ -609,7 +609,7 @@
     }
   },
   "current_event_response": {
-    "positve+": {
+    "positive+": {
       "I love the #current_event#. It is so much fun.": {
         "req": [ "likeCurrentEvent" ],
         "leads to": [ "friend.++" ]
@@ -639,7 +639,7 @@
         "leads to": [ "friend.++" ]
       }
     },
-    "positve": {
+    "positive": {
       "I like the #current_event#. I always have a good time.": {
         "req": [ "likeCurrentEvent" ],
         "leads to": [ "friend.+" ]
@@ -694,7 +694,6 @@
         "req": [ "goingToCurrentEvent" ],
         "leads to": []
       }
-      
     },
     "negative": {
       "I doubt it.": {
