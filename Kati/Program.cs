@@ -2,6 +2,7 @@
 using Kati.Module_Hub;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kati{
 
@@ -11,7 +12,39 @@ namespace Kati{
         private static SmallTalk_Parser parser;
 
         static void Main(string[] args){
-            TestSmallTalkText(5);
+            
+            //TestSmallTalkText(5);
+            TestSmallTalkEventResponse(2);
+        }
+
+        public static void TestSmallTalkEventResponse(int iterations) {
+            Setup();
+            for (int i = 0; i < iterations; ++i) {
+                parser.ResponseType= "likeCurrentEvent";
+                var response = parser.ParseWeatherResponse();
+                foreach (KeyValuePair<string, List<string>> r in response) {
+                    string req = "";
+                    if (r.Value.Count > 0)
+                        req = r.Value[0];
+                    Console.WriteLine(r.Key+" "+req);
+                }
+                response = parser.ParseEventResponse();
+                foreach (KeyValuePair<string, List<string>> r in response) {
+                    string req = "";
+                    if (r.Value.Count > 0)
+                        req = r.Value[0];
+                    Console.WriteLine(r.Key + " " + req);
+                }
+                response = parser.ParseGreetingResponse();
+                foreach (KeyValuePair<string, List<string>> r in response) {
+                    string req = "";
+                    if (r.Value.Count > 0)
+                        req = r.Value[0];
+                    Console.WriteLine(r.Key + " " + req);
+                }
+                Console.WriteLine("\n");
+            }
+            
         }
 
         public static void TestSmallTalkText(int length) {

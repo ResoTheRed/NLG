@@ -1027,30 +1027,51 @@ namespace KatiUnitTest.Module_Tests{
         public void TestReturnFourChoiceBranchEvent() {
             parser.SetStage("initiator", "question", "event");
             parser.GetDialogue();
+            parser.ResponseType = "likeCurrentEvent";
             //default game data: evening, nice day
             Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
-                parser.NarrowWeatherResponses();
+                parser.NarrowEventResponses(module.eventResponse);
             var test = parser.ReturnFourChoiceBranches(temp);
             Assert.IsTrue(test.Count == 4);
             Assert.IsTrue(test.ContainsKey("positive"));
+            Assert.IsTrue(test["positive"].Count==4);
             Assert.IsTrue(test.ContainsKey("neutral"));
+            Assert.IsTrue(test["neutral"].Count==4);
             Assert.IsTrue(test.ContainsKey("negative"));
+            Assert.IsTrue(test["negative"].Count==4);
             Assert.IsTrue(test.ContainsKey("random"));
+            Assert.IsTrue(test["random"].Count==4);
         }
 
         [TestMethod]
-        public void TestGetResponseEvent() { 
-            
-        }
-
-        [TestMethod]
-        public void TestResponseQualityControlEvent() { 
-            
+        public void TestGetResponseEvent() {
+            parser.SetStage("initiator", "question", "event");
+            parser.GetDialogue();
+            parser.ResponseType = "likeCurrentEvent";
+            //default game data: evening, nice day
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
+                parser.NarrowEventResponses(module.eventResponse);
+            temp = parser.ReturnFourChoiceBranches(temp);
+            var test = parser.GetResponse(temp);
+            Assert.IsTrue(test.Count == 4);
+            Assert.IsTrue(test[0].Count == 4);
+            Assert.IsTrue(test[1].Count == 4);
+            Assert.IsTrue(test[2].Count == 4);
+            Assert.IsTrue(test[3].Count == 4);
         }
 
         [TestMethod]
         public void TestParseEventResponse() {
+            parser.ResponseType = "likeCurrentEvent";
             var test = parser.ParseEventResponse();
+            Assert.IsTrue(test.Count==4);
+        }
+
+        [TestMethod]
+        public void TestParseGreetingResponse() {
+            parser.SetStage("initiator", "question", "event");
+            parser.GetDialogue();
+            var test = parser.ParseGreetingResponse();
             Assert.IsTrue(test.Count==4);
         }
     }

@@ -930,6 +930,14 @@
       "I'm alright.": {
         "req": [],
         "leads to": []
+      },
+      "Things are good I think.": {
+        "req": [],
+        "leads to": []
+      },
+      "Just taking it one day at a time.": {
+        "req": [],
+        "leads to": []
       }
     },
     "negative": {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -1035,6 +1036,27 @@ namespace Kati.Data_Models{
             return responseOptions;
         }
 
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> ModuleDictDeepCopy
+            (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> original) {
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> copy =
+                new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>();
+            foreach(KeyValuePair< string, Dictionary<string, Dictionary<string, List<string>>> > item in original){
+                copy[item.Key] = new Dictionary<string, Dictionary<string, List<string>>>();
+                foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in original[item.Key]){
+                    copy[item.Key][inner.Key] = new Dictionary<string, List<string>>();
+                    copy[item.Key][inner.Key]["req"] = new List<string>();
+                    copy[item.Key][inner.Key]["leads to"] = new List<string>();
+                    foreach (string req in original[item.Key][inner.Key]["req"]) {
+                        copy[item.Key][inner.Key]["req"].Add(req);
+                    }
+                    foreach (string req in original[item.Key][inner.Key]["leads to"]) {
+                        copy[item.Key][inner.Key]["leads to"].Add(req);
+                    }
+                }
+            }
+            return copy;
+        }
+
         public Dictionary<string, List<string>> ParseWeatherResponse() {
             //remove choices that don't fit the requirements
             var responseVerbose = NarrowWeatherResponses();
@@ -1050,9 +1072,9 @@ namespace Kati.Data_Models{
 
         //remove all options missing a requirement
         public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> NarrowWeatherResponses() {
-            Dictionary < string, Dictionary<string, Dictionary<string, List<string>>>> response =
-                module.weatherResponse;
-            foreach(KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in response) {
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> response =
+                ModuleDictDeepCopy(module.weatherResponse);
+            foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in response) {
                 foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in response[item.Key]) {
                     bool hasWeatherReq = false, hasReqNeeded = false;
                     foreach (string req in response[item.Key][inner.Key]["req"]) {
@@ -1074,7 +1096,7 @@ namespace Kati.Data_Models{
 
         public Dictionary<string, List<string>> ParseEventResponse() {
             Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> response =
-                module.eventResponse;
+                ModuleDictDeepCopy(module.eventResponse);
             var verbose = NarrowEventResponses(response);
             verbose = ReturnFourChoiceBranches(verbose);
             var optionStrings = GetResponse(verbose);
@@ -1084,8 +1106,8 @@ namespace Kati.Data_Models{
 
         public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> NarrowEventResponses
             (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose) {
-            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> responses = 
-                new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>();
+            //Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose = 
+            //    new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>(responses);
             foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in verbose) {
                 foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in verbose[item.Key]) {
                     string words = verbose[item.Key][inner.Key]["req"][0];
@@ -1099,12 +1121,20 @@ namespace Kati.Data_Models{
 
         public Dictionary<string, List<string>> ParseGreetingResponse() {
             Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> response =
-                module.greetingResponse;
-            var verbose = NarrowEventResponses(response);
+                ModuleDictDeepCopy(module.greetingResponse);
+            var verbose = NarrowGreetingResponse(response);
             verbose = ReturnFourChoiceBranches(verbose);
             var optionStrings = GetResponse(verbose);
             var options = ResponseQualityControl(optionStrings);
             return BuildResponseStructure(verbose, options);
+        }
+
+        public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> NarrowGreetingResponse
+            (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose) {
+            //currently has to requirements to narrow down
+            Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> response =
+                new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>(verbose);
+            return response;
         }
 
         //problems:
@@ -1141,7 +1171,7 @@ namespace Kati.Data_Models{
             newKeys.Add(temp[(int)(Ctrl.Dice.NextDouble() * temp.Length)]);//pull one random
             return newKeys;
         }
-
+        //converts dictionary format: "positive" : "dialogue phrase"
         public List<List<string>> GetResponse
             (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose) {
             List<List<string>> option = new List<List<string>>();
