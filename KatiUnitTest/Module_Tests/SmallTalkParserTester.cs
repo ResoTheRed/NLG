@@ -1005,7 +1005,8 @@ namespace KatiUnitTest.Module_Tests{
         public void TestNarrowEventResponses() {
             parser.SetStage("initiator", "question", "event");
             parser.ResponseType = "likeCurrentEvent";
-            var responses = parser.NarrowEventResponses(module.eventResponse);
+            var copy = parser.ModuleDictDeepCopy(module.eventResponse);
+            var responses = parser.NarrowEventResponses(copy);
             Assert.IsTrue(responses.Count == 5);
             Assert.IsTrue(responses["positive+"].Count == 4);
             Assert.IsTrue(responses["positive"].Count == 4);
@@ -1021,6 +1022,16 @@ namespace KatiUnitTest.Module_Tests{
             Assert.IsTrue(responses["negative"].ContainsKey("The #current_event# is kind of boring."));
             Assert.IsFalse(responses["negative"].ContainsKey("Don't count on it."));
             Assert.IsTrue(responses["negative+"].ContainsKey("I hate the #current_event#."));
+
+            parser.ResponseType = "goingToCurrentEvent";
+            copy = parser.ModuleDictDeepCopy(module.eventResponse);
+            responses = parser.NarrowEventResponses(copy);
+            Assert.IsTrue(responses.Count == 5);
+            Assert.IsTrue(responses["positive+"].Count == 3);
+            Assert.IsTrue(responses["positive"].Count == 3);
+            Assert.IsTrue(responses["neutral"].Count == 2);
+            Assert.IsTrue(responses["negative"].Count == 6);
+            Assert.IsTrue(responses["negative+"].Count == 4);
         }
 
         [TestMethod]
@@ -1029,8 +1040,9 @@ namespace KatiUnitTest.Module_Tests{
             parser.GetDialogue();
             parser.ResponseType = "likeCurrentEvent";
             //default game data: evening, nice day
+            var copy = parser.ModuleDictDeepCopy(module.eventResponse);
             Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
-                parser.NarrowEventResponses(module.eventResponse);
+                parser.NarrowEventResponses(copy);
             var test = parser.ReturnFourChoiceBranches(temp);
             Assert.IsTrue(test.Count == 4);
             Assert.IsTrue(test.ContainsKey("positive"));
@@ -1041,6 +1053,21 @@ namespace KatiUnitTest.Module_Tests{
             Assert.IsTrue(test["negative"].Count==4);
             Assert.IsTrue(test.ContainsKey("random"));
             Assert.IsTrue(test["random"].Count==4);
+
+            parser.ResponseType = "goingToCurrentEvent";
+            //default game data: evening, nice day
+            copy = parser.ModuleDictDeepCopy(module.eventResponse);
+            temp = parser.NarrowEventResponses(copy);
+            test = parser.ReturnFourChoiceBranches(temp);
+            Assert.IsTrue(test.Count == 4);
+            Assert.IsTrue(test.ContainsKey("positive"));
+            Assert.IsTrue(test["positive"].Count == 3);
+            Assert.IsTrue(test.ContainsKey("neutral"));
+            Assert.IsTrue(test["neutral"].Count == 2);
+            Assert.IsTrue(test.ContainsKey("negative"));
+            Assert.IsTrue(test["negative"].Count == 6 || test["negative"].Count == 4);
+            Assert.IsTrue(test.ContainsKey("random"));
+            Assert.IsTrue(test["random"].Count >0);
         }
 
         [TestMethod]
@@ -1049,8 +1076,9 @@ namespace KatiUnitTest.Module_Tests{
             parser.GetDialogue();
             parser.ResponseType = "likeCurrentEvent";
             //default game data: evening, nice day
+            var copy = parser.ModuleDictDeepCopy(module.eventResponse);
             Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> temp =
-                parser.NarrowEventResponses(module.eventResponse);
+                parser.NarrowEventResponses(copy);
             temp = parser.ReturnFourChoiceBranches(temp);
             var test = parser.GetResponse(temp);
             Assert.IsTrue(test.Count == 4);
@@ -1058,21 +1086,77 @@ namespace KatiUnitTest.Module_Tests{
             Assert.IsTrue(test[1].Count == 4);
             Assert.IsTrue(test[2].Count == 4);
             Assert.IsTrue(test[3].Count == 4);
+
+            parser.ResponseType = "goingToCurrentEvent";
+            //default game data: evening, nice day
+            copy = parser.ModuleDictDeepCopy(module.eventResponse);
+            temp = parser.NarrowEventResponses(copy);
+            temp = parser.ReturnFourChoiceBranches(temp);
+            test = parser.GetResponse(temp);
+            Assert.IsTrue(test.Count == 4);
+            Assert.IsTrue(test[0].Count == 3);
+            Assert.IsTrue(test[1].Count == 2);
+            Assert.IsTrue(test[2].Count == 6|| test[2].Count == 4);
+            Assert.IsTrue(test[3].Count> 0);
         }
 
         [TestMethod]
         public void TestParseEventResponse() {
-            parser.ResponseType = "likeCurrentEvent";
+            parser.ResponseType = "goingToCurrentEvent";// "likeCurrentEvent";
             var test = parser.ParseEventResponse();
             Assert.IsTrue(test.Count==4);
         }
 
         [TestMethod]
         public void TestParseGreetingResponse() {
-            parser.SetStage("initiator", "question", "event");
+            parser.SetStage("initiator", "question", "greeting");
             parser.GetDialogue();
             var test = parser.ParseGreetingResponse();
             Assert.IsTrue(test.Count==4);
+        }
+
+        [TestMethod]
+        public void TestParseResponse() {
+            for (int i = 0; i < 10000; i++) {
+                parser.SetStage("initiator", "question", "event");
+                parser.ResponseType = "goingToCurrentEvent";
+                var dialogue = parser.ParseResponse();
+                Assert.IsTrue(dialogue.Count >= 3);
+                parser.SetStage("initiator", "question", "greeting");
+                dialogue = parser.ParseResponse();
+                Assert.IsTrue(dialogue.Count >= 3);
+                parser.SetStage("initiator", "question", "weather");
+                dialogue = parser.ParseResponse();
+                Assert.IsTrue(dialogue.Count == 4);
+            }
+        }
+
+        [TestMethod]
+        public void TestParserDeepCopy() {
+            var copy = parser.ModuleDictDeepCopy(module.eventResponse);
+            var verbose = module.eventResponse;
+            Assert.IsTrue(copy.Count==verbose.Count);
+            foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in verbose) {
+                Assert.IsTrue(copy.ContainsKey(item.Key));
+                Assert.IsTrue(copy[item.Key].Count == verbose[item.Key].Count);
+                foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in verbose[item.Key]) {
+                    Assert.IsTrue(copy[item.Key].ContainsKey(inner.Key));
+                    Assert.IsTrue(copy[item.Key][inner.Key].Count == verbose[item.Key][inner.Key].Count);
+                    if (verbose[item.Key][inner.Key]["req"].Count > 0)
+                        Assert.IsTrue(copy[item.Key][inner.Key]["req"][0].Equals(verbose[item.Key][inner.Key]["req"][0]));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TestQuestionToResponseTransition() {
+            parser.SetStage("initiator", "question", "event");
+            string question = parser.GetDialogue();
+            parser.SetStage("responder", "response", "event");
+            var response = parser.ParseResponse();
+            Assert.IsTrue(response.Count >= 3);
+
+
         }
     }
 }

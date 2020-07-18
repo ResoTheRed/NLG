@@ -369,11 +369,17 @@ namespace Kati.Data_Models{
         }
 
 
+
+
     }
 
     /// <summary>
     /// Class functions to parse rules and find which dialogue topics are
     /// possible or relevant
+    /// Requires stage to be set on each iteration of dialogue
+    /// get the initiators dialogue (statement or question) by calling GetDialogue()
+    /// get the players response by calling ParseResponse();
+    /// 
     /// </summary>
     public class SmallTalk_Parser {
 
@@ -418,11 +424,13 @@ namespace Kati.Data_Models{
         }
 
         //all methods that check requirements lead to this method
+        //returns the proper dialogue value for the conversation
         //requires SetStage
         public string GetDialogue() {
             SetCurrentListTopic();
             string attributeBranch = SetRelationshipDialogueTone();
             string dialogue = GenerateDialogue(attributeBranch);
+            SetResponseType(dialogue);
             dialogue = ReplaceRawDialogueWords(dialogue);
             return dialogue;
         }
@@ -579,8 +587,6 @@ namespace Kati.Data_Models{
             var cat = CategorizeTone(tone);
             //pulls the top ranking attribute
             string winningAttribute = PickMostInfluentialAttribute(cat);
-            //setup Response type
-            SetResponseType(winningAttribute);
             return winningAttribute;
         }
 
@@ -1033,7 +1039,18 @@ namespace Kati.Data_Models{
             } else if (Topic.Equals("greeting")) {
                 responseOptions = ParseGreetingResponse();
             }
+            responseOptions = RefineResponseStrings(responseOptions);
             return responseOptions;
+        }
+
+        private Dictionary<string, List<string>> RefineResponseStrings
+            (Dictionary<string, List<string>> responseOptions) {
+            Dictionary<string, List<string>> refined = new Dictionary<string, List<string>>();
+            foreach (string key in responseOptions.Keys) {
+                string str = ReplaceRawDialogueWords(key);
+                refined[str] = responseOptions[key];
+            }
+            return refined;
         }
 
         public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> ModuleDictDeepCopy
@@ -1106,8 +1123,7 @@ namespace Kati.Data_Models{
 
         public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> NarrowEventResponses
             (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose) {
-            //Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> verbose = 
-            //    new Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>>(responses);
+            
             foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in verbose) {
                 foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in verbose[item.Key]) {
                     string words = verbose[item.Key][inner.Key]["req"][0];
@@ -1169,6 +1185,11 @@ namespace Kati.Data_Models{
             newKeys.Add(temp[2]);//default neutral
             newKeys.Add(temp[(int)(Ctrl.Dice.NextDouble() * 2)+3]);//pull one negative
             newKeys.Add(temp[(int)(Ctrl.Dice.NextDouble() * temp.Length)]);//pull one random
+            for (int i = 0; i < 4; i++) {
+                if (newKeys.Count - 1 < i) {
+                    newKeys.Add(temp[2]);
+                }
+            }
             return newKeys;
         }
         //converts dictionary format: "positive" : "dialogue phrase"
@@ -1188,22 +1209,26 @@ namespace Kati.Data_Models{
         public List<string> ResponseQualityControl(List<List<string>> option) {
             List<string> responses = new List<string>();
             for (int i=0; i < option.Count;i++) {
-                string choice = option[i][(int)(Ctrl.Dice.NextDouble() * option[i].Count)];
-                if (responses.Contains(choice)) {
-                    int index = i;
-                    if (option[i].Count <= 1) {
-                        index = 1; //pull from neutral
-                    }
-                    for (int j = 0; j < option[index].Count; j++) {
-                        //try pulling random: can be dangerous
-                        int value = (int)(Ctrl.Dice.NextDouble() * option[index].Count);
-                        if (!responses.Contains(option[index][value])) {
-                            responses.Add(option[index][value]);
-                            j = option[index].Count;
+                try {
+                    string choice = option[i][(int)(Ctrl.Dice.NextDouble() * option[i].Count)];
+                    if (responses.Contains(choice)) {
+                        int index = i;
+                        if (option[i].Count <= 1) {
+                            index = 1; //pull from neutral
                         }
+                        for (int j = 0; j < option[index].Count; j++) {
+                            //try pulling random: can be dangerous
+                            int value = (int)(Ctrl.Dice.NextDouble() * option[index].Count);
+                            if (!responses.Contains(option[index][value])) {
+                                responses.Add(option[index][value]);
+                                j = option[index].Count;
+                            }
+                        }
+                    } else {
+                        responses.Add(choice);
                     }
-                } else {
-                    responses.Add(choice);
+                } catch (System.ArgumentOutOfRangeException) { 
+                    
                 }
             }
             return responses;

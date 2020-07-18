@@ -753,6 +753,22 @@
       "The #current_event# always seems to leave a bad taste in my mouth.": {
         "req": [ "likeCurrentEvent" ],
         "leads to": [ "friend.-", "disgust.+" ]
+      },
+      "I hate #current_event#! I would never go there.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.-", "disgust.+" ]
+      },
+      "I wouldn't be caught dead at #current_event#! It's sooo lame!.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.-", "disgust.+" ]
+      },
+      "Only an idiot would go to #current_event#! What do you take me for!.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.-", "hate.+" ]
+      },
+      "Going to #current_event# is as pleasant as a root canal! I would never go.  Don't tell me that you're going.": {
+        "req": [ "goingToCurrentEvent" ],
+        "leads to": [ "friend.-", "hate.+" ]
       }
     }
   },

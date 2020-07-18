@@ -2,6 +2,8 @@
 using Kati.Module_Hub;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 
 namespace Kati{
@@ -12,36 +14,105 @@ namespace Kati{
         private static SmallTalk_Parser parser;
 
         static void Main(string[] args){
-            
+
             //TestSmallTalkText(5);
-            TestSmallTalkEventResponse(2);
+            //TestSmallTalkEventResponse(20000);
+            //TestEventResponse2();
+            TestAB();
+        }
+
+        public static void TestAB() {
+            Setup();
+            parser.SetStage("initiator", "question", "event");
+            string question = parser.GetDialogue();
+            parser.SetStage("responder", "response", "event");
+            //parser.ResponseType = "goingToCurrentEvent";
+            var response = parser.ParseResponse();
+            Console.WriteLine(question);
+            Console.WriteLine(parser.ResponseType);
+            foreach (string key in response.Keys) {
+                Console.WriteLine(key);
+            }
+        }
+
+
+        public static void TestEventResponse2() {
+            Setup();
+            var verbose = parser.ModuleDictDeepCopy(module.eventResponse);
+            parser.ResponseType = "goingToCurrentEvent";
+            verbose = parser.NarrowEventResponses(verbose);
+            foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, List<string>>>> item in verbose) {
+                foreach (KeyValuePair<string, Dictionary<string, List<string>>> inner in verbose[item.Key]) {
+                    string words = verbose[item.Key][inner.Key]["req"][0];
+                    if (!words.Equals(parser.ResponseType)) {
+                        verbose[item.Key].Remove(inner.Key);
+                        Console.WriteLine("Removed: "+item.Key + " \"req\" " + words + ":\n\t" + inner.Key);
+                    } else {
+                        Console.WriteLine("Keeping:"+item.Key + " \"req\" " + words + ":\n\t" + inner.Key);
+                    }
+                }
+            }
+
         }
 
         public static void TestSmallTalkEventResponse(int iterations) {
             Setup();
+            int counter = 0;
+            for (int i = 0; i < iterations; ++i) {
+                parser.ResponseType = "likeCurrentEvent";
+                var response = parser.ParseEventResponse();
+                if (response.Count != 4) {
+                    Console.WriteLine("likeCurrentEvent");
+                    foreach (KeyValuePair<string, List<string>> r in response) {
+                        string req = "";
+                        if (r.Value.Count > 0)
+                            req = r.Value[0];
+                        Console.WriteLine(r.Key + " " + req);
+                    }
+                    Console.WriteLine();
+                }
+                parser.ResponseType = "goingToCurrentEvent";
+                response = parser.ParseEventResponse();
+                if (response.Count != 4) {
+                    counter++;
+                    Console.WriteLine("goingToCurrentEvent");
+                    foreach (KeyValuePair<string, List<string>> r in response) {
+                        string req = "";
+                        if (r.Value.Count > 0)
+                            req = r.Value[0];
+                        Console.WriteLine(r.Key + " " + req);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            Console.WriteLine(counter+" out of "+iterations);
+        }
+
+        public static void TestSmallTalkResponse(int iterations) {
+            Setup();
             for (int i = 0; i < iterations; ++i) {
                 parser.ResponseType= "likeCurrentEvent";
-                var response = parser.ParseWeatherResponse();
-                foreach (KeyValuePair<string, List<string>> r in response) {
-                    string req = "";
-                    if (r.Value.Count > 0)
-                        req = r.Value[0];
-                    Console.WriteLine(r.Key+" "+req);
-                }
-                response = parser.ParseEventResponse();
-                foreach (KeyValuePair<string, List<string>> r in response) {
-                    string req = "";
-                    if (r.Value.Count > 0)
-                        req = r.Value[0];
-                    Console.WriteLine(r.Key + " " + req);
-                }
-                response = parser.ParseGreetingResponse();
+                //var response = parser.ParseWeatherResponse();
+                //foreach (KeyValuePair<string, List<string>> r in response) {
+                //    string req = "";
+                //    if (r.Value.Count > 0)
+                //        req = r.Value[0];
+                //    Console.WriteLine(r.Key+" "+req);
+                //}
+                var response = parser.ParseEventResponse();
                 foreach (KeyValuePair<string, List<string>> r in response) {
                     string req = "";
                     if (r.Value.Count > 0)
                         req = r.Value[0];
                     Console.WriteLine(r.Key + " " + req);
                 }
+                //response = parser.ParseGreetingResponse();
+                //foreach (KeyValuePair<string, List<string>> r in response) {
+                //    string req = "";
+                //    if (r.Value.Count > 0)
+                //        req = r.Value[0];
+                //    Console.WriteLine(r.Key + " " + req);
+                //}
                 Console.WriteLine("\n");
             }
             
