@@ -17,7 +17,9 @@ namespace KatiUnitTest.Module_Tests{
 
         [TestInitialize]
         public void Start() {
-            module = new SmallTalk_Module(Kati.SourceFiles.Constants.smallTalk);
+            //A lot of test rely on a certain count of elements based on a criteria
+            //Using a static version of hte json data to not break tests.
+            module = new SmallTalk_Module("C:/Users/User/Documents/NLG/KatiUnitTest/Module_Tests/SmallTalk/smallTalk.json");
             parser = new SmallTalk_Parser(module);
             SmallTalk_Controller c = new SmallTalk_Controller(module);
             c._GameData = SetupGameData();

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using Kati.Module_Hub;
@@ -92,18 +90,6 @@ namespace Kati.Data_Models{
          *      [event && weather] || [weather && event]
          */
 
-        /* Order of operations
-         * Initiator: SelectStartingTopic() --> statement or question from possible categories
-         * Responder: respond to question or skip turn
-         * Initiator: SelectNextTopic() or end smalltalk chain
-         * Responder: respond to question or skip turn
-         */
-
-        //need to establish turns
-
-        // set up the initiator default to NPC
-        // the roles will be reversed.
-
         //constants
         public const string INITIATOR = "initiator";
         public const string RESPONDER = "responder";
@@ -113,23 +99,14 @@ namespace Kati.Data_Models{
         public const string STATEMENT = "statement";
         public const string QUESTION = "question";
         public const string RESPONSE = "response";
-        public const string SKIPPED = "skipped";
+        public const string SELF = "Small Talk Module";
 
         //variables reference the current line of dialogue
         private string speaking = INITIATOR;
         private string dialogueState = STATEMENT;
         private string topic = GREETING;
-        private string leadsTo;
         private bool endConversation = false;
 
-        //variables reference selecting next topic
-        private int improveProbabilityOfMoreDialogue = 3;
-
-        //contains the dialogue after parsing
-        private string dialogue;
-        //contains the full conversation between initiator and responder
-        //format {"initiator": ["pc_name","dialogue1",...], "reponder":["pc_name","dialogue 1",...] }
-        private Dictionary<string, List<string>> conversation;
         private Dictionary<string, bool> conversationTopicsDiscussed;
         private SmallTalk_Module module;
         private SmallTalk_Parser parser;
@@ -144,14 +121,10 @@ namespace Kati.Data_Models{
             this.module = module;
             this.parser = new SmallTalk_Parser(module);
             InstatiateStructures();
-            leadsTo = "";
             parser.Ctrl = this;
         }
 
         private void InstatiateStructures() {
-            conversation = new Dictionary<string, List<string>>();
-            conversation[INITIATOR] = new List<string>();
-            conversation[RESPONDER] = new List<string>();
             conversationTopicsDiscussed = new Dictionary<string, bool>();
             ConversationTopicsDiscussed[EVENT] = false;
             ConversationTopicsDiscussed[WEATHER] = false;
@@ -161,8 +134,6 @@ namespace Kati.Data_Models{
         //contains data from the game for requirements
         public GameData _GameData { get => gameData; set => gameData = value; }
         public CharacterData _CharacterData { get => characterData; set => characterData = value; }
-        public string Dialogue { get => dialogue; set => dialogue = value; }
-        public Dictionary<string, List<string>> Conversation { get => conversation; }
         public Dictionary<string, bool> ConversationTopicsDiscussed { get => conversationTopicsDiscussed; set => conversationTopicsDiscussed = value; }
         public string Speaking { get => speaking; set => speaking = value; }
         public string DialogueState { get => dialogueState; set => dialogueState = value; }
@@ -173,203 +144,135 @@ namespace Kati.Data_Models{
         public void SetupConversation(GameData gameData, CharacterData characterData) {
             _GameData = gameData;
             _CharacterData = characterData;
-            conversation[INITIATOR].Add(_CharacterData.InitiatorsName);//NPC
-            conversation[RESPONDER].Add(_CharacterData.RespondersName);//Player
         }
 
-        public void Converse() {
-            RunFirstRound();
-            while (!EndConversation) {
-                RunNextRound();
-            }
-        }
 
-        public void RunFirstRound() {
+        public ModuleDialoguePackage RunFirstRound() {
             EndConversation = false;
-            SelectStartingTopic();
-            RunRespondersTurn();
+            Speaking = INITIATOR;//set speaker
+            SelectTopic();//set topic: greeting, event, weather
+            SetInitatorDialogueType();//set type: statement, question
+            var dialogue = CallPullMethod();
+            return new ModuleDialoguePackage(dialogue, SmallTalk_Controller.SELF,GetReturnStatus());            
         }
 
-        public void RunNextRound() {
-            SelectNextTopic();
-            RunRespondersTurn();
-        }
-
-        //which module is being targeted? Random vs. intentional
-        //this method is utilized by the initiator
-        public int SelectStartingTopic() {
-            int option = (int) (Dice.NextDouble()*10+1);
-            if (option <= 5 ) {
-                PullGreeting();
-            } else if (option <= 8) {
-                PullEvent();
+        public ModuleDialoguePackage RunNextRound() {
+            Dictionary<string, List<string>> dialogue = null;
+            if (DialogueState.Equals(QUESTION)) {
+                DialogueState = RESPONSE;
+                dialogue = CallPullMethod();
             } else {
-                PullWeather();
-            }
-            return option;
-        }
-
-        //build off of the previous dialogue
-        public int SelectNextTopic() {
-            int probability = 0;
-            //cannot contain greeting, Greetings are reserved for starting topics
-            //cannot be the same topic as one already talked about
-            //may not always have a second smallTalk topic
-            //strangers are less likely to have multiple topics
-            // generally smalltalk will not have a next topic 
-            if (!conversationTopicsDiscussed[EVENT] || !conversationTopicsDiscussed[WEATHER]) {
-                probability = (int)(Dice.NextDouble() * 10 + 1);
-                probability += NextTopicGreetingRule();
-                if (probability > 8) {//70%chance there will not be another topic unless greetin was other topic
-                    if (conversationTopicsDiscussed[EVENT] && !conversationTopicsDiscussed[WEATHER]) {
-                        PullWeather();
-                    } else if (!conversationTopicsDiscussed[EVENT] && conversationTopicsDiscussed[WEATHER]) {
-                        PullEvent();
-                    }
+                int option = (int)(Dice.NextDouble() *10+1);
+                if (option > 6) {
+                    SelectTopic();
+                    SetInitatorDialogueType();
+                    dialogue = CallPullMethod();
                 } else {
                     EndConversation = true;
                 }
-            }else{
+            }
+            return new ModuleDialoguePackage(dialogue, SmallTalk_Controller.SELF, GetReturnStatus());
+        }
+
+        public ModuleStatus GetReturnStatus() {
+            ModuleStatus status = ModuleStatus.CONTINUE;
+            if (EndConversation) {
+                status = ModuleStatus.EXIT;
+            } else if (DialogueState.Equals(QUESTION)) {
+                status = ModuleStatus.RETURN;
+            } 
+            return status;
+        }
+
+        //which module is being targeted? Random vs. intentional
+        //50% Greeting 30% event 20% weather
+        private int SelectTopic() {
+            int option = (int) ((Dice.NextDouble()*10)+1);
+            bool notSet = true;
+            int counter = 0;
+            while (notSet  && counter<5) {
+                notSet = SelectTopic(option);
+                ++counter;
+            }
+            return option;
+        }
+        public bool SelectTopic(int option) {
+            bool notSet = true;
+            if (option <= 5 && !ConversationTopicsDiscussed[GREETING]) {
+                SetTopicToGreeting();
+                notSet = false;
+            } else if (option <= 8 && !ConversationTopicsDiscussed[EVENT]) {
+                SetTopicToEvent();
+                notSet = false;
+            } else if (option < 11 && !ConversationTopicsDiscussed[WEATHER]) {
+                SetTopicToWeather();
+                notSet = false;
+            } else if (ConversationTopicsDiscussed[GREETING] &&
+                       ConversationTopicsDiscussed[EVENT] &&
+                       ConversationTopicsDiscussed[WEATHER] ) {
+                //all topics have been exausted
                 EndConversation = true;
+                notSet = false;
             }
-            return probability;
+            return notSet;
         }
 
-        /* checks to see if the last topic talked about was Greeting
-         * if so return an integer value that boosts the chances of a
-         * next topic. Greetings can only be said on the first round*/
-        public int NextTopicGreetingRule() {
-            bool lastTopicWasGreeting = 
-                conversationTopicsDiscussed[GREETING] &&
-                !(conversationTopicsDiscussed[WEATHER] ||
-                conversationTopicsDiscussed[EVENT]);
-            return lastTopicWasGreeting ? improveProbabilityOfMoreDialogue : 0;
-        }
-
-        public bool NextTopicEventRule() {
-            bool runEvent = NextTopicGreetingRule() > 0;//only greeting was run
-            if (parser.EventAvaliable()) {
-                if (!runEvent) {
-                    if (conversationTopicsDiscussed[EVENT]) {
-                        runEvent = false;
-                    } else if (conversationTopicsDiscussed[WEATHER]) {
-                        //further discourage Event if Weather has taken player
-                        runEvent = ((int)(Dice.NextDouble() * 10 + 1)) > 5 ? true : false;
-                    }
-                }
-            }
-            return runEvent;
-        }
-
-        //which dialogue string will be used
-        //compare requirements with qualifications of character
-        //return reference from dictionary in SmallTalk_Module
-
-        //parse through greetings
-        private void PullGreeting() {
+        //Set conversation topic 
+        private void SetTopicToGreeting() {
             ConversationTopicsDiscussed[GREETING] = true;
             Topic = GREETING;
-            CheckWhosSpeakingAndRunThereTurn();
         }
-
-        private void PullEvent() {
+        private void SetTopicToEvent() {
             ConversationTopicsDiscussed[EVENT] = true;
             Topic = EVENT;
-            CheckWhosSpeakingAndRunThereTurn();
         }
-
-        private void PullWeather() {
+        private void SetTopicToWeather() {
             ConversationTopicsDiscussed[WEATHER] = true;
             Topic = WEATHER;
-            CheckWhosSpeakingAndRunThereTurn();
         }
 
-        //run the 
-        private string CheckWhosSpeakingAndRunThereTurn() {
+        private void SetInitatorDialogueType() {
+            int option = (int)(Dice.NextDouble() * 10 + 1);
             if (Speaking.Equals(INITIATOR)) {
-                RunInitiatorsTurn();
-                return INITIATOR;
-            } else {
-                RunRespondersTurn();
-                return RESPONDER;
-            }
-        }
-
-        //must be able to work for all topics
-        private void RunInitiatorsTurn() {
-            //the floor is opened to the npc to choose what they want to do
-            string stateType = STATEMENT;
-            if (!DialogueState.Equals(QUESTION)) {
-                int prob = (int)(Dice.NextDouble() * 10 + 1);
-                if (prob <= 7) {
+                if (option < 8)
                     DialogueState = STATEMENT;
-                } else {
-                    DialogueState = stateType = QUESTION;
-                }
-            } else {
-                DialogueState = stateType = RESPONSE;
-            }
-            string dialogue = CallMethod(Topic, stateType);
-            SetSpeakersTurn(dialogue, INITIATOR, stateType);
-        }
-
-        //must be able to run all topics
-        private void RunRespondersTurn() {
-            string dialogue = "";
-            if (DialogueState.Equals(QUESTION)) {
-                //answer question here
-                DialogueState = RESPONSE;
-                dialogue = CallMethod(Topic, RESPONSE);
-                SetSpeakersTurn(dialogue, RESPONDER, RESPONSE);
-            } else {
-                DialogueState = SKIPPED;
-                SetSpeakersTurn(dialogue, RESPONDER, SKIPPED);
+                else
+                    DialogueState = QUESTION;
             }
         }
 
-        /* Call after the initiator or the responder speaks, record
-         * the dialogue and switch to the next speaker or end chain
-         */
-        private void SetSpeakersTurn(string dialogue, string speaker, string topic) {
-            if (speaker.Equals(INITIATOR)) {
-                conversation[INITIATOR].Add(topic+": "+dialogue);
-                this.dialogue = dialogue;
-                this.Speaking = RESPONDER;
+        public Dictionary<string, List<string>> CallPullMethod() {
+            Dictionary<string, List<string>> dialogue;
+            if (DialogueState.Equals(STATEMENT)) {
+                dialogue = PullStatement(Topic);
+            } else if (DialogueState.Equals(QUESTION)) {
+                dialogue = PullQuestion(Topic);
             } else {
-                conversation[RESPONDER].Add(topic+": "+dialogue);
-                this.dialogue = dialogue;
-                this.Speaking = INITIATOR;
-            }
-
-        }
-
-        public string CallMethod(string topic, string stateType) {
-            string dialogue = "";
-            if (stateType.Equals(STATEMENT)) {
-                dialogue = PullStatement(topic);
-            } else if (stateType.Equals(QUESTION)) {
-                dialogue = PullQuestion(topic);
-            } else {
-                dialogue = PullResponse(topic);
+                dialogue = PullResponse(Topic);
             }
             return dialogue;
         }
 
-        private string PullStatement(string type) {
+        private Dictionary<string, List<string>> PullStatement(string type) {
             parser.SetStage(Speaking,DialogueState,type);
-            return parser.GetDialogue();
+            Dictionary<string, List<string>> dialogueStructure = new Dictionary<string, List<string>>();
+            dialogueStructure["setStage"] = new List<string>() { Speaking, DialogueState, type };
+            dialogueStructure[parser.GetDialogue()] = new List<string>();
+            return dialogueStructure;
         }
-        private string PullQuestion(string type) {
+        private Dictionary<string, List<string>> PullQuestion(string type) {
             parser.SetStage(Speaking, DialogueState, type);
-            return parser.GetDialogue(); ;
+            Dictionary<string, List<string>> dialogueStructure = new Dictionary<string, List<string>>();
+            dialogueStructure["setStage"] = new List<string>() { Speaking, DialogueState, type };
+            dialogueStructure[parser.GetDialogue()] = new List<string>();
+            return dialogueStructure;
         }
-        private string PullResponse(string type) {
+        private Dictionary<string, List<string>> PullResponse(string type) {
             parser.SetStage(Speaking, DialogueState, type);
-            return parser.GetDialogue(); ;
+            Dictionary<string, List<string>> dialogueStructure = parser.ParseResponse();
+            dialogueStructure["setStage"] = new List<string>() { Speaking, DialogueState, type };
+            return dialogueStructure;
         }
-
-
-
 
     }
 
