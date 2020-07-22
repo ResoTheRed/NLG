@@ -96,6 +96,7 @@ namespace Kati.Data_Models{
         public const string EVENT = "event";
         public const string WEATHER = "weather";
         public const string GREETING = "greeting";
+        public const string GREETING_STATEMENT = "greeting statement";
         public const string STATEMENT = "statement";
         public const string QUESTION = "question";
         public const string RESPONSE = "response";
@@ -129,6 +130,14 @@ namespace Kati.Data_Models{
             ConversationTopicsDiscussed[EVENT] = false;
             ConversationTopicsDiscussed[WEATHER] = false;
             ConversationTopicsDiscussed[GREETING] = false;
+            ConversationTopicsDiscussed[GREETING_STATEMENT] = false;
+            EndConversation = false;
+        }
+
+        public void ResetSmallTalk() {
+            InstatiateStructures();
+            //update gamedata
+            //update character data
         }
 
         //contains data from the game for requirements
@@ -146,32 +155,92 @@ namespace Kati.Data_Models{
             _CharacterData = characterData;
         }
 
-
+        //Run for initial small talk conversation
         public ModuleDialoguePackage RunFirstRound() {
-            EndConversation = false;
             Speaking = INITIATOR;//set speaker
             SelectTopic();//set topic: greeting, event, weather
             SetInitatorDialogueType();//set type: statement, question
-            var dialogue = CallPullMethod();
+            var dialogue = GetDialogue();
             return new ModuleDialoguePackage(dialogue, SmallTalk_Controller.SELF,GetReturnStatus());            
         }
 
+        //Run if conversation using small talk persists
         public ModuleDialoguePackage RunNextRound() {
+            ModuleDialoguePackage mod;
             Dictionary<string, List<string>> dialogue = null;
             if (DialogueState.Equals(QUESTION)) {
                 DialogueState = RESPONSE;
-                dialogue = CallPullMethod();
+                dialogue = GetDialogue();
+                mod = new ModuleDialoguePackage(dialogue, SmallTalk_Controller.SELF, GetReturnStatus());
+                mod.IsResponse = true;
             } else {
-                int option = (int)(Dice.NextDouble() *10+1);
-                if (option > 6) {
+                int option = (int)(Dice.NextDouble() * 10 + 1);
+                if (option > 5) {
                     SelectTopic();
                     SetInitatorDialogueType();
-                    dialogue = CallPullMethod();
+                    dialogue = GetDialogue();
                 } else {
+                    DialogueState = "none";
                     EndConversation = true;
                 }
+                mod = new ModuleDialoguePackage(dialogue, SmallTalk_Controller.SELF, GetReturnStatus());
+                mod.IsResponse = false;
             }
-            return new ModuleDialoguePackage(dialogue, SmallTalk_Controller.SELF, GetReturnStatus());
+            return mod;
+        }
+
+        public Dictionary<string, List<string>> GetDialogue() {
+            Dictionary<string, List<string>> data = null;
+            if (Topic.Equals(GREETING) && !ConversationTopicsDiscussed[GREETING]) {
+                data = RunGreeting(data);
+            } else if (Topic.Equals(EVENT) && !ConversationTopicsDiscussed[EVENT]) {
+                data = RunEvent(data);
+            } else if (!ConversationTopicsDiscussed[WEATHER]) {
+                data = RunWeather(data);
+            } else {
+                EndConversation = true;
+            }
+            return data;
+        }
+
+
+        //Does setConversationTopicsDiscussed info and pull conversation
+        //can only be called if  ConversationTopicsDiscussed[GREETING] = false;
+        //Greeting must be first or not at all
+        public Dictionary<string, List<string>> RunGreeting(Dictionary<string, List<string>> data) {
+            //if(statement) can run question next or run any other branch
+            if (dialogueState.Equals(STATEMENT) && !ConversationTopicsDiscussed[GREETING_STATEMENT]) {
+                ConversationTopicsDiscussed[GREETING_STATEMENT] = true;
+                data = CallPullMethod();
+            } else {
+                dialogueState = QUESTION;
+                ConversationTopicsDiscussed[GREETING] = true;
+                data = CallPullMethod();
+            }
+            return data;
+        }
+
+        //Does setConversationTopicsDiscussed info and pull conversation
+        public Dictionary<string, List<string>> RunWeather(Dictionary<string, List<string>> data) {
+            if(DialogueState.Equals(STATEMENT))
+                EndConversation = true;
+            ConversationTopicsDiscussed[WEATHER] = true;
+            data = CallPullMethod();
+            return data;
+        }
+        //Does setConversationTopicsDiscussed info and pull conversation
+        public Dictionary<string, List<string>> RunEvent(Dictionary<string, List<string>> data) {
+            if (DialogueState.Equals(STATEMENT))
+                EndConversation = true;
+            ConversationTopicsDiscussed[EVENT] = true;
+            data = CallPullMethod();
+            return data;
+        }
+
+        public Dictionary<string, List<string>> RunResponse(Dictionary<string, List<string>> data) {
+            if (!Topic.Equals(GREETING))
+                EndConversation = true;
+            return data;
         }
 
         public ModuleStatus GetReturnStatus() {
@@ -201,10 +270,10 @@ namespace Kati.Data_Models{
             if (option <= 5 && !ConversationTopicsDiscussed[GREETING]) {
                 SetTopicToGreeting();
                 notSet = false;
-            } else if (option <= 8 && !ConversationTopicsDiscussed[EVENT]) {
+            } else if (!ConversationTopicsDiscussed[EVENT]) {
                 SetTopicToEvent();
                 notSet = false;
-            } else if (option < 11 && !ConversationTopicsDiscussed[WEATHER]) {
+            } else if (!ConversationTopicsDiscussed[WEATHER]) {
                 SetTopicToWeather();
                 notSet = false;
             } else if (ConversationTopicsDiscussed[GREETING] &&
@@ -219,15 +288,12 @@ namespace Kati.Data_Models{
 
         //Set conversation topic 
         private void SetTopicToGreeting() {
-            ConversationTopicsDiscussed[GREETING] = true;
             Topic = GREETING;
         }
         private void SetTopicToEvent() {
-            ConversationTopicsDiscussed[EVENT] = true;
             Topic = EVENT;
         }
         private void SetTopicToWeather() {
-            ConversationTopicsDiscussed[WEATHER] = true;
             Topic = WEATHER;
         }
 

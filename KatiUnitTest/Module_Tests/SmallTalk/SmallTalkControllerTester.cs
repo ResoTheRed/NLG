@@ -79,8 +79,27 @@ namespace KatiUnitTest.Module_Tests
         }
 
         [TestMethod]
-        public void TestRunNextRound() { 
-        
+        public void TestRunNextRound() {
+            for (int i = 0; i < 1000; i++) {
+                controller.EndConversation = false;
+                int option = (int)(controller.Dice.NextDouble()*3+1);
+                controller.DialogueState = (option == 1) ? SmallTalk_Controller.STATEMENT :
+                    (option == 2) ? SmallTalk_Controller.QUESTION : SmallTalk_Controller.RESPONSE;
+                controller.ConversationTopicsDiscussed["event"] = false;
+                controller.ConversationTopicsDiscussed["weather"] = false;
+                controller.ConversationTopicsDiscussed["greeting"] = false;
+                ModuleDialoguePackage mod = controller.RunNextRound();
+                if (controller.DialogueState == SmallTalk_Controller.RESPONSE) {
+                    Assert.IsNotNull(mod.DialogueAndEffects);
+                    Assert.IsTrue(mod.Status == ModuleStatus.CONTINUE);
+                }
+                if (controller.DialogueState == SmallTalk_Controller.QUESTION) {
+                    Assert.IsNotNull(mod.DialogueAndEffects);
+                    Assert.IsTrue(mod.Status == ModuleStatus.RETURN);
+                }
+                    
+
+            }
         }
 
         [TestMethod]

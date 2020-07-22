@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 
 namespace Kati{
 
@@ -12,13 +13,94 @@ namespace Kati{
 
         private static SmallTalk_Module module;
         private static SmallTalk_Parser parser;
+        private static SmallTalk_Controller c;
 
+        public static void Setup() {
+            module = new SmallTalk_Module(Kati.SourceFiles.Constants.smallTalk);
+            parser = new SmallTalk_Parser(module);
+            c = new SmallTalk_Controller(module);
+            c._GameData = SetupGameData();
+            c._CharacterData = SetupCharacterData();
+            c.SetupConversation(c._GameData, c._CharacterData);
+            parser.Ctrl = c;
+        }
+        public static GameData SetupGameData() {
+            GameData data = new GameData();
+            data.DayOfMonth = 6;
+            data.Sector = "Sector 3";
+            data.Season = "Spring";
+            data.TimeOfDay = "evening";
+            data.Weather = "nice_day";
+            data.SetDayOfWeek();
+            data.SetWeek();
+            data.EventCalendar["Spring"]["Art_Fest"] = 12;
+            data.EventCalendar["Spring"]["Blueberry_Fest"] = 21;
+            data.SetPublicEvent();
+            return data;
+        }
+        public static CharacterData SetupCharacterData() {
+            CharacterData data = new CharacterData();
+            data.InitiatorsName = "Kati"; data.InitialorsGender = "Female";
+            data.RespondersName = "Stephen"; data.InitialorsGender = "male";
+            data.InteractionTone = SetTone();
+            data.InitiatorsTone = SetTone();
+            data.RespondersTone = SetTone();
+            data.InitiatorAttributeList["loves_art_fest"] = "characterTrait";
+            data.ResponderAttributeList["loves_art_fest"] = "characterTrait";
+            data.InitiatorScalarList["charming"] = 200;
+            data.ResponderScalarList["charming"] = 200;
+            return data;
+        }
+        public static Dictionary<string, double> SetTone(int att) {
+            string[] str = { "romance", "friend","professional","respect",
+                             "Admiration","disgust","hate","rivalry"};
+            Dictionary<string, double> temp = new Dictionary<string, double>();
+            for (int i = 0; i < str.Length; i++) {
+                if (i != att)
+                    temp[str[i]] = 0;
+                else
+                    temp[str[i]] = 1.0;
+            }
+            return temp;
+        }
+        
         static void Main(string[] args){
 
             //TestSmallTalkText(5);
             //TestSmallTalkEventResponse(20000);
             //TestEventResponse2();
-            TestAB();
+            //TestAB();
+            TestController(50);
+        }
+
+        public static void TestController(int iterations) {
+            Setup();
+            ModuleDialoguePackage mod;
+            for (int i = 0; i < iterations; i++) {
+                Console.WriteLine("\n----------------------------Conversation " + (i + 1) + "---------------------------");
+                mod = c.RunFirstRound();
+                do {
+                    PrintPackage(mod);
+                    mod = c.RunNextRound();
+                } while (!c.EndConversation);
+                c.ResetSmallTalk();
+                Console.WriteLine("---------------------------------------------------------------------\n");
+            }
+        }
+
+        private static void PrintPackage(ModuleDialoguePackage mod) {
+            Console.WriteLine("######################### Mod Data ##############################");
+            Console.WriteLine(mod.ToString());
+            Console.WriteLine("######################### CTRL Data #############################");
+            string output;
+            output = "EndConversation:     " + c.EndConversation + "\n\n";
+            output += "Greeting discussed: " + c.ConversationTopicsDiscussed["greeting"] + "\n";
+            output += "Weather discussed:  " + c.ConversationTopicsDiscussed["weather"] + "\n";
+            output += "Event discussed:    " + c.ConversationTopicsDiscussed["event"] + "\n\n";
+            output += "Conversation Topic: " + c.Topic + "\n";
+            output += "Dialogue type:      " + c.DialogueState + "\n";
+            output += "Speaker:            " + c.Speaking + "\n";
+            Console.WriteLine(output);
         }
 
         public static void TestAB() {
@@ -160,57 +242,7 @@ namespace Kati{
             //}
         }
 
-        public static void Setup() {
-            module = new SmallTalk_Module(Kati.SourceFiles.Constants.smallTalk);
-            parser = new SmallTalk_Parser(module);
-            SmallTalk_Controller c = new SmallTalk_Controller(module);
-            c._GameData = SetupGameData();
-            c._CharacterData = SetupCharacterData();
-            c.SetupConversation(c._GameData, c._CharacterData);
-            parser.Ctrl = c;
-        }
-
-        public static GameData SetupGameData() {
-            GameData data = new GameData();
-            data.DayOfMonth = 6;
-            data.Sector = "Sector 3";
-            data.Season = "Spring";
-            data.TimeOfDay = "evening";
-            data.Weather = "nice_day";
-            data.SetDayOfWeek();
-            data.SetWeek();
-            data.EventCalendar["Spring"]["Art_Fest"] = 12;
-            data.EventCalendar["Spring"]["Blueberry_Fest"] = 21;
-            data.SetPublicEvent();
-            return data;
-        }
-
-        public static CharacterData SetupCharacterData() {
-            CharacterData data = new CharacterData();
-            data.InitiatorsName = "Kati"; data.InitialorsGender = "Female";
-            data.RespondersName = "Stephen"; data.InitialorsGender = "male";
-            data.InteractionTone = SetTone();
-            data.InitiatorsTone = SetTone();
-            data.RespondersTone = SetTone();
-            data.InitiatorAttributeList["loves_art_fest"] = "characterTrait";
-            data.ResponderAttributeList["loves_art_fest"] = "characterTrait";
-            data.InitiatorScalarList["charming"] = 200;
-            data.ResponderScalarList["charming"] = 200;
-            return data;
-        }
-
-        public static Dictionary<string, double> SetTone(int att) {
-            string[] str = { "romance", "friend","professional","respect",
-                             "Admiration","disgust","hate","rivalry"};
-            Dictionary<string, double> temp = new Dictionary<string, double>();
-            for (int i = 0; i < str.Length; i++) {
-                if (i != att)
-                    temp[str[i]] = 0;
-                else
-                    temp[str[i]] = 1.0;
-            }
-            return temp;
-        }
+        
 
         public static void PrintAttributeBranch(int att) {
             if (att == 0)

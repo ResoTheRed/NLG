@@ -22,6 +22,7 @@ namespace Kati.Module_Hub {
         private Dictionary<string, List<string>> dialogueAndEffects;
         private string moduleName;
         private ModuleStatus status;
+        private bool isResponse;
 
         public ModuleDialoguePackage(Dictionary<string, List<string>> data, string name) {
             DialogueAndEffects = data;
@@ -36,5 +37,23 @@ namespace Kati.Module_Hub {
         public Dictionary<string, List<string>> DialogueAndEffects { get => dialogueAndEffects; set => dialogueAndEffects = value; }
         public string ModuleName { get => moduleName; set => moduleName = value; }
         public ModuleStatus Status { get => status; set => status = value; }
+        public bool IsResponse { get => isResponse; set => isResponse = value; }
+
+        override
+        public string ToString() {
+            string output = ModuleName+" Dialogue and Effects Data:\n";
+            foreach (KeyValuePair<string, List<string>> item in dialogueAndEffects) {
+                output += item.Key+"\nEffects: ";
+                foreach (string effect in dialogueAndEffects[item.Key]) {
+                    output += effect + " ";
+                }
+                output += "\n";
+            }
+            output += "Is a response: " + IsResponse + "\n";
+            output += "\nStatus type: ";
+            string stat = (status == ModuleStatus.RETURN) ? "RETURN": 
+                (status==ModuleStatus.EXIT)? "EXIT":"CONTINUE";
+            return output+stat+"\n";
+        }
     }
 }
