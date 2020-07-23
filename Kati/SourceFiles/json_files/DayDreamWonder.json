@@ -1,0 +1,606 @@
+{
+  "dream_statement": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "dream_question": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "dream_response": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+
+  "trivia_statement": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "trivia_question": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "trivia_response": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+
+  "wonder_statement": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "wonder_question": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "wonder_response": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+
+  "whatIf_statement": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "whatIf_question": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "whatIf_response": {
+    "neutral": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "admiration": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  }
+
+}

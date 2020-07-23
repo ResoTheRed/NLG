@@ -16,7 +16,7 @@ namespace KatiUnitTest.Module_Tests
 
         [TestInitialize]
         public void Start() {
-            module = new SmallTalk_Module(Kati.SourceFiles.Constants.smallTalk);
+            module = new SmallTalk_Module("C:/Users/User/Documents/NLG/KatiUnitTest/Module_Tests/SmallTalk/smallTalk.json");
             loader = new SmallTalk_Loader(module);
             controller = new SmallTalk_Controller(module);
             controller._GameData = SetupGameData();

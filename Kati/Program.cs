@@ -65,7 +65,6 @@ namespace Kati{
         }
         
         static void Main(string[] args){
-
             //TestSmallTalkText(5);
             //TestSmallTalkEventResponse(20000);
             //TestEventResponse2();

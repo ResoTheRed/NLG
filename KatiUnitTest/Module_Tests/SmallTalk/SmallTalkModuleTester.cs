@@ -16,7 +16,7 @@ namespace KatiUnitTest.Module_Tests{
 
         [TestInitialize]
         public void Start() {
-            module = new SmallTalk_Module(Constants.smallTalk);
+            module = new SmallTalk_Module("C:/Users/User/Documents/NLG/KatiUnitTest/Module_Tests/SmallTalk/smallTalk.json");
             loader = SmallTalk_Loader.LoadFromFile(module);
         }
 
@@ -97,10 +97,7 @@ namespace KatiUnitTest.Module_Tests{
 
         [TestMethod]
         public void TestEventResponse() {
-            Assert.IsTrue(module.eventResponse["neutral"]
-                ["I love the #current_event#. It is so much fun."]
-                ["req"][0].Equals("PlayerOption.likeCurrentEvent"));
-            Assert.IsTrue(module.eventResponse["neutral"]
+           Assert.IsTrue(module.eventResponse["neutral"]
                 ["The #current_event# is okay. I enjoy it well enough."]
                 ["leads to"].Count==0);
         }
@@ -123,16 +120,6 @@ namespace KatiUnitTest.Module_Tests{
             Assert.IsTrue(module.greetingQuestion["friend"]
                 ["How goes it?"]["req"].Count==0);
         }
-
-        [TestMethod]
-        public void TestGreetingResponse() {
-            Assert.IsTrue(module.greetingResponse["neutral"]
-                ["I'm doing great."]["req"].Count==0);
-            Assert.IsTrue(module.greetingResponse["neutral"]
-                ["I'm doing okay."]["leads to"]
-                [0].Equals("positive+"));
-        }
-
 
     }
 

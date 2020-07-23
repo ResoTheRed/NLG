@@ -1,0 +1,21 @@
+﻿Topics:
+	Dreams:   Dreams that the NPC had at night or day dreams
+	Trivia:   Random facts and thoughts
+	Wonder:   I always liked hubig pies I wonder what's the secret to their yumminess.
+	Goals:    I would love to move out of this dump someday. I've always wanted to join a 
+	What ifs: what if the world just caught on fire and everything exploded
+
+Old choice complexity reuse
+1. Statement and questions Branching : neutral & 8 attributes
+2. response branching Positive+ to Negative+
+3. Uisng Statement, Question, and Response types for each.
+
+New choice complexity ideas
+1. Options based on attribute threshold --> I'll only tell close friends this.
+
+
+New features (could these be reused?)
+1. Replace keys with game characters that the speaker has a certain relationship with
+	ex: character.friendly (some threshold)
+2. Tracery style sentence structures.
+

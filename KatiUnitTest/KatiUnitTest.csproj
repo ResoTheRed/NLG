@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Kati\Kati.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Module_Tests\DayDreamWonder\" />
+  </ItemGroup>
+
 </Project>
