@@ -1,49 +1,183 @@
 {
   "dream_statement": {
     "neutral": {
-      "": {
+      "I had a strange dream last night.": {
+        "req": [],
+        "lead to": [ "dreamDesc" ]
+      },
+      "I didn't sleep so well last night.  I kept thinking about things all night.  #new_text_box# Some times, I just can't turn my brain off.": {
+        "req": [],
+        "lead to": []
+      },
+      "... ... ... ... #new_text_box# Sorry I started day dream.  I guess I have a lot on my mind": {
+        "req": [],
+        "lead to": [ "end_conversation" ]
+      },
+      "I can't stop thinking about this dream that I had last night.": {
+        "req": [],
+        "lead to": [ "dreamDesc" ]
+      },
+      "I've been having the strangest dreams lately.  I don't know how I feel about them.": {
+        "req": [],
+        "lead to": [ "dreamDesc" ]
+      },
+      "I always have wild dreams, but I can never seem to remember them.": {
         "req": [],
         "lead to": []
       }
     },
     "romance": {
-      "": {
+      "I had a dream about you last night. #new_text_box# Lets just say it was a good dream, a REALLY good dream.": {
+        "req": [],
+        "lead to": []
+      },
+      "Hey, guess what. #new_text_box# I dreamed we went on a date at a fancy resturant.  We were sitting at a table for two on a balcony under the moonlight.  The soft candle light was sparking in your eyes, and we kissed.  #new_text_box# It was so romantic. We should go to a resturant sometimes. Maybe in the city.": {
+        "req": [],
+        "lead to": []
+      },
+      "Last night, I dreamed we were walking hand-in-hand on the beach.  Sometimes I wish my dreams were actually memories instead of dreams.": {
+        "req": [],
+        "lead to": []
+      },
+      "I was thinking.  Since you came into my life, my dreams have been so much sweeter.  Thank you for being you.": {
+        "req": [],
+        "lead to": []
+      },
+      "I dreamed about you last night.  I seem to dream about you a lot lately": {
+        "req": [],
+        "lead to": []
+      },
+      "I have to confess something to you. I've been dreaming about you and it's not just when I'm sleeping either.": {
+        "req": [],
+        "lead to": []
+      },
+      "I just couldn't get you out of my head last night. My dreams always seem to lead to you.": {
+        "req": [],
+        "lead to": []
+      },
+      "I dreamed about you last night. I just can't get you out of my mind.": {
         "req": [],
         "lead to": []
       }
     },
     "friend": {
-      "": {
+      "You'll never guess what I dreamed about yesterday.": {
+        "req": [],
+        "lead to": [ "dreamDesc" ]
+      },
+      "I had the stranges dream yesterday.": {
+        "req": [],
+        "lead to": [ "dreamDesc" ]
+      },
+      "Listen to this.  I dreamed we were stuck in a car outside of one of those mega box stores.": {
         "req": [],
         "lead to": []
+      },
+      "I had this dream the other day.": {
+        "req": [],
+        "lead to": [ "dreamDesc", "personal" ]
+      },
+      "I can't stop thinking about this dream that I had last night.": {
+        "req": [],
+        "lead to": [ "dreamDesc", "personal" ]
+      },
+      "I've been having the strangest dreams lately.  I don't know how I feel about them.": {
+        "req": [],
+        "lead to": [ "dreamDesc", "personal" ]
+      },
+      "Let me tell you about this dream I had the other night.": {
+        "req": [],
+        "lead to": [ "dreamDesc", "personal" ]
+      },
+      "Some times I have embarrssing dreams and I wake up in the middle of the night.": {
+        "req": [],
+        "lead to": []
+      },
+      "I've been day dreaming a lot lately.  I wonder why?": {
+        "req": [],
+        "lead to": []
+      },
+      "Some times I wonder why people dream.  I read once that it is a way for peoples minds to catelog memories, but I don't know if thats true.": {
+        "req": [],
+        "lead to": []
+      },
+      "I had a great dream last night. I dreamed that I was running a marathon.  I remember thinking how badly I wanted to stop runnung but I didn't.  I finished the run in first place! #new_text_box# I woke up so motivated.  I wish I had more dreams like that!": {
+        "req": [ "attribute.fitness" ], //revise 
+        "lead to": []
+      },
+      "Last night I dreamed I was a CEO of a major company. I didn't want to wake up this morning.": {
+        "req": [ "attribute.money" ], //revise
+        "lead to": []
+      },
+      "I can't stop thinking about this dream I had.": {
+        "req": [],
+        "lead to": [ "dreamDesc" ]
       }
     },
     "respect": {
-      "": {
+      "Last night, I dreamed you were voted as the person of the year. There was a festival goin on and you went up to give a speech.  Then I woke up.  #new_text_box# I wouldn't be surprised it that happened someday.": {
         "req": [],
         "lead to": []
       }
     },
     "admiration": {
-      "": {
+      "#art_blush# I had a dream about you. It was good and we... You know ... we, nevermind.  Forget I said anything.": {
         "req": [],
         "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
+      },
+      "#art_blush# I may have had a dream about you the other day.  Don't worry, it wasn't anything bad.": {
         "req": [],
         "lead to": []
       }
     },
     "rivalry": {
-      "": {
+      "#art_happy#Last night, I dreamed we were playing a board game and I totally owned you!": {
+        "req": [],
+        "lead to": []
+      },
+      "#art_skeptical#I dreamed you beat me in a card game last night. Pshh.. like that would ever happen.": {
+        "req": [],
+        "lead to": []
+      },
+      "We should have a competition someday and see who's the better than who. I can dream up a few things to test our skills.": {
+        "req": [],
+        "lead to": [ "end_conversation" ]
+      },
+      "You might think you're better than me. But you're just dreaming.": {
+        "req": [],
+        "lead to": []
+      },
+      "I dreamed we were working in at a movie theather and you were my manager. #new_text_box#  HA! Could you imagine. You, my boss.  Only in a dream could that happen.": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "#art_mean# I had a dream about you last night.  I don't really want to talk about it.": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "#art_mean# I can't escape you.  You bother me all of the time, and I even had a dream about you. I tossed and turned all night.": {
+        "req": [],
+        "lead to": []
+      },
+      "Hey, I love talking to you. NOT! #new_text_box# #art_mean# Even in a dream you'd make my skin crawl!": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "dreamDesc": {
+      "It had something to do with a cat in flip flops. I remeber #friend# was there.  #Pron2# had yellow spoons for some reason. #new_text_box# I'm sure you're not interested in that though.": {
+        "req": [ "friend" ],
+        "lead to": []
+      },
+      "I dreamed I was a wild dog chasing a man in a hotdog suit.  For some reason in the dream, this was perfectly normal.  It's funny how dreams are.": {
+        "req": [],
+        "lead to": []
+      },
+      "I dreamed I was walking down the street completely nude and ##": {
         "req": [],
         "lead to": []
       }
@@ -51,8 +185,8 @@
   },
   "dream_question": {
     "neutral": {
-      "": {
-        "req": [],
+      "Do you ever have any weird dreams? You know, like flying in an ice cream truck filled with squirrels or swimming in a giant belly button?": {
+        "req": ["attribute"],
         "lead to": []
       }
     },
