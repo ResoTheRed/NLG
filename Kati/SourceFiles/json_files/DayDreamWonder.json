@@ -69,7 +69,11 @@
         "req": [],
         "lead to": [ "dreamDesc" ]
       },
-      "Listen to this.  I dreamed we were stuck in a car outside of one of those mega box stores.": {
+      "I had a dream the other day that kind of messed me up a little bit.": {
+        "req": [],
+        "lead to": [ "dreamDesc" ]
+      },
+      "Listen to this.  I dreamed we were stuck in a car outside of one of those mega box stores. #new_text_box# I have the most boring dreams.": {
         "req": [],
         "lead to": []
       },
@@ -177,7 +181,55 @@
         "req": [],
         "lead to": []
       },
-      "I dreamed I was walking down the street completely nude and ##": {
+      "I dreamed I was walking down the street completely nude and #npc_romance# was there watching me and giggling. #new_text_box# I don't know how this makes me feel. #new_text_box# Please don't tell anyone about this dream.": {
+        "req": [ "friend", "personal", "npc_romance" ],
+        "lead to": []
+      },
+      "It was something to do with rubber pants and a man playing an acordian.  The rest is kind of a blur.": {
+        "req": [],
+        "lead to": []
+      },
+      "I dreamed that I woke up at #npc_enemy#'s house and I was wearing their clothes. It was so unsettling.": {
+        "req": [ "friend", "personal", "npc_enemy" ],
+        "lead to": []
+      },
+      "I dreamed I went to the market and the walls were made out of old shoes.  When I asked the clerk about it, he kicked me out of the building.": {
+        "req": [],
+        "lead to": []
+      },
+      "It was midnight but the sun was out and #npc_friend# was walking around, chewing on a piece of leather. #new_text_box# Then the ground started shaking and I woke up.": {
+        "req": [ "npc_friend" ],
+        "lead to": []
+      },
+      "It was really foggy out and a large creature was stalking me. I never saw it but I knew it was there. #new_text_#": {
+        "req": [],
+        "lead to": []
+      },
+      "I dreamed my teeth were falling out and I couldn't do anything about it.  It was the worst.": {
+        "req": [],
+        "lead to": []
+      },
+      "I dreamed I was a traveling sales person selling microwaves.  I wasn't able to sell a single one.": {
+        "req": [],
+        "lead to": []
+      },
+      "I dreamed I had a date with a talking cat. Every time it would talk, it would shed in my food. #new_text_block# I remember sneezing and my nose was running.": {
+        "req": [],
+        "lead to": []
+      },
+      "The ground was made out of jello and I was bouncing all over the place.  I got kind of motion sick to tell you the truth.": {
+        "req": [],
+        "lead to": []
+      },
+      "I was a police officer and #npc_enemy# was my partner.  Surprizingly, we were a good team, though I can't anything we did.": {
+        "req": [ "npc_enemy" ],
+        "lead to": []
+      },
+      "Oh, this dream was crazy.  Everything was so other-worldly. #new_text_box# I dreamed something about a leather hat, and there was ... A tall man with a ... microphone or recorder or ..uhhm. #new_text_box# Oh, I don't remember.": {
+        "req": [],
+        "lead to": []
+      },
+      "It was, well... uhm.. #new_text_block# #art_laugh# I guess, I can't remember. #new_text_block# Nevermind": {
         "req": [],
         "lead to": []
       }
@@ -186,97 +238,84 @@
   "dream_question": {
     "neutral": {
       "Do you ever have any weird dreams? You know, like flying in an ice cream truck filled with squirrels or swimming in a giant belly button?": {
-        "req": ["attribute"],
-        "lead to": []
-      }
-    },
-    "romance": {
-      "": {
+        "req": [ "attribute.creative" ], //revise
+        "lead to": [ "player_dreams" ]
+      },
+      "I've been having the strangest dreams lately. How about you?": {
         "req": [],
-        "lead to": []
+        "lead to": [ "player_dreams" ]
+      },
+      "I had a bad dream last night and #npc_friend# said dreams can be omens.  What do you think about dreams?": {
+        "req": [ "npc_freind" ],
+        "lead to": [ "player_dreams" ]
+      },
+      "I usually don't ask these things, but what do you think about that?": {
+        "req": [ "dream_statement" ],
+        "lead to": [ "npc_dreams" ]
+      },
+      "So.. #new_text_box# what do you think?": {
+        "req": [ "dream_statement" ],
+        "lead to": [ "npc_dream" ]
+      },
+      "I know, it's crazy #new_text_box# what do you think?": {
+        "req": ["dream_statement"],
+        "lead to": [ "npc_dream" ]
       }
     },
     "friend": {
-      "": {
+      "I've been having crazy dreams lately. I'm not sure if it's a good thing or not. What do you think?": {
         "req": [],
-        "lead to": []
-      }
-    },
-    "respect": {
-      "": {
+        "lead to": [ "npc_dreams" ]
+      },
+      "What do you think about that?": {
+        "req": [ "dream_statement" ],
+        "lead to": [ "npc_dreams" ]
+      },
+      "Strange don't you think?": {
+        "req": [ "dream_statement" ],
+        "lead to": [ "npc_dreams" ]
+      },
+      "What do you say about that?": {
+        "req": [ "dream_statement" ],
+        "lead to": [ "npc_dreams" ]
+      },
+      "I've got a weird question for you. Been having any strange  dreams lately?": {
         "req": [],
-        "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
+        "lead to": [ "player_dreams" ]
+      },
+      "I haven't been sleeping to great lately.  I've been having weird dreams. How about you? Have you been sleeping peacefully, or is it just me?": {
         "req": [],
-        "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
-      "": {
-        "req": [],
-        "lead to": []
+        "lead to": [ "player_dreams" ]
       }
     }
   },
+  //npc_dreams, player_dreams
   "dream_response": {
+    "positive+": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "positive": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
     "neutral": {
       "": {
         "req": [],
         "lead to": []
       }
     },
-    "romance": {
+    "negative": {
       "": {
         "req": [],
         "lead to": []
       }
     },
-    "friend": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "respect": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
+    "negative+": {
       "": {
         "req": [],
         "lead to": []

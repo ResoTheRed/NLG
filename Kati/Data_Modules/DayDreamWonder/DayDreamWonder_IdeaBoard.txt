@@ -17,6 +17,9 @@ New choice complexity ideas
 	"dreamDesc": labels dialogue that is a dream description --> leads to & req
 	"personal": information that only someone close would be told --> leads to & req
 	"friend","lover","enemy": req a relationship with an npc (positive, romantic,negative)
+3. [leads to]Question [req]Response: "your_dreams"--> response about player's dreams; 
+	"my_dreams"-->response about npc's dream
+	"dream_philosophy"--> what do you think about dreams
 
 New features (could these be reused?)
 1. Replace keys with game characters that the speaker has a certain relationship with
@@ -24,7 +27,7 @@ New features (could these be reused?)
 2. Tracery style sentence structures. #Pron1#,#pron1#,#Pron2#,#pron2#
 3. force next text_box: #new_text_box#
 4. "attribute.<characterBooleanAttribute>"
-5. #art_<emotion>#: signals game to display emotion icon: blush, angry, sad, scared, skeptical, happy, sick, mean 
+5. #art_<emotion>#: signals game to display emotion icon: laugh blush, angry, sad, scared, skeptical, happy, sick, mean 
 6. 
 
 Gossip Features
