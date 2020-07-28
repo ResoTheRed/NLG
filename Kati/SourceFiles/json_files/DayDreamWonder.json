@@ -292,40 +292,140 @@
   //npc_dreams, player_dreams
   "dream_response": {
     "positive+": {
-      "": {
-        "req": [],
-        "lead to": []
+      "Dreams are important to me.": {
+        "req": [ "npc_dreams" ],
+        "lead to": [ "friend.+", "respect.+" ]
+      },
+      "Dreams are special and can reveal your inner self.": {
+        "req": [ "npc_dreams" ],
+        "lead to": [ "friend.+", "admiration.+" ]
+      },
+      "I absolutely love it when I dream.": {
+        "req": [ "npc_dreams" ],
+        "lead to": [ "friend.++" ]
+      },
+      "Sometimes when I dream, I don't want to wake up. Especially when it involves you.": {
+        "req": [ "npc_dreams" ],
+        "lead to": [ "romance.++" ]
+      },
+      "You're lucky to have all of those interesting dreams.": {
+        "req": ["npc_dreams"],
+        "lead to": ["friend.++"]
       }
     },
     "positive": {
-      "": {
-        "req": [],
-        "lead to": []
+      "I love a good dream from time to time.": {
+        "req": [ "npc_dreams" ],
+        "lead to": [ "friend.+" ]
+      },
+      "I do a lot of problem solving when I dream.": {
+        "req": [ "npc_dreams" ],
+        "lead to": [ "respect.+" ]
+      },
+      "Dreams are like odd movies. I'm just missing the popcorn.": {
+        "req": [ "npc_dreams" ],
+        "lead to": [ "friend.+" ]
+      },
+      "Good dreams are the best, but I'd rather talk to you.": {
+        "req": [ "npc_dream" ],
+        "lead to": [ "romance.+" ]
+      },
+      "Dreams are visions of the mind and are worth pondering.": {
+        "req": ["npc_dream"],
+        "lead to": ["admiration.+"]
       }
     },
     "neutral": {
-      "": {
+      "Im indifferent I guess.": {
+        "req": [ "npc_dream" ],
+        "lead to": []
+      },
+      "I like dreaming sometimes, but sometimes they can be annoying.": {
+        "req": [ "npc_dream" ],
+        "lead to": []
+      },
+      "I haven't really thought about it before.": {
+        "req": [ "npc_dream" ],
+        "lead to": []
+      },
+      "I don't know one way or another.": {
+        "req": [ "npc_dream" ],
+        "lead to": []
+      },
+      "I never remember my dreams.": {
         "req": [],
         "lead to": []
       }
     },
     "negative": {
-      "": {
+      "It's a waste of time thinking about dreams.": {
         "req": [],
-        "lead to": []
+        "lead to": [ "disgust.+" ]
+      },
+      "I don't care talk about dreams.": {
+        "req": [],
+        "lead to": [ "friend.-" ]
+      },
+      "Dreams are just you elements of your day blended together.  They aren't worth remebering.": {
+        "req": [],
+        "lead to": [ "disgust.+" ]
+      },
+      "Dreams are whatever.": {
+        "req": [],
+        "lead to": [ "friend.-" ]
+      },
+      "I don't know.": {
+        "req": [],
+        "lead to": [ "disgust.+" ]
+      },
+      "I'm not interested in dreams.": {
+        "req": [],
+        "lead to": [ "admiration.-","friend.-" ]
+      },
+      "I can't talk about my dreams with you.  You'll think they're vulgar.": {
+        "req": [ "player_dreams" ],
+        "lead to": [ "respect.-" ]
+      },
+      "If you took better care of your self your dreams wouldn't be such a mess.": {
+        "req": ["npc_dreams"],
+        "lead to": ["hate.++"]
       }
     },
     "negative+": {
-      "": {
+      "Dreams are boring, just like this conversation.": {
         "req": [],
-        "lead to": []
+        "lead to": [ "respect.-", "friend.-", "romance.-", "hate.+" ]
+      },
+      "Why are we talking about such a lame topic?": {
+        "req": [],
+        "lead to": [ "friend.-", "romance.-", "disgust.+" ]
+      },
+      "This conversation is a waste of time.": {
+        "req": [],
+        "lead to": [ "respect.-", "friend.-", "disgust.+" ]
+      },
+      "I don't care.  Really, I don't.": {
+        "req": [],
+        "lead to": [ "friend.-", "admiration.--", "hate.+" ]
+      },
+      "Nobody cares about your dreams.": {
+        "req": [ "npc_dreams" ],
+        "lead to": [ "friend.-", "romance.-", "disgust.+" ]
+      },
+      "Why would I tell you about my dreams. It's none of your business.": {
+        "req": [ "player_dreams" ],
+        "lead to": [ "friend.-", "respect.-", "romance.-" ]
+      },
+      "Who cares about dreams, they're meaningless.": {
+        "req": [],
+        "lead to": ["friend.-","hate.+"]
       }
     }
   },
 
   "trivia_statement": {
     "neutral": {
-      "": {
+      "I've got a random fact for you. I heard that some lizards can run on water. #new_text_box# Nature is an odd duck.": {
         "req": [],
         "lead to": []
       }
@@ -424,49 +524,31 @@
     }
   },
   "trivia_response": {
+    "positive+": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "positive": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
     "neutral": {
       "": {
         "req": [],
         "lead to": []
       }
     },
-    "romance": {
+    "negative": {
       "": {
         "req": [],
         "lead to": []
       }
     },
-    "friend": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "respect": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
+    "negative+": {
       "": {
         "req": [],
         "lead to": []
@@ -476,13 +558,25 @@
 
   "wonder_statement": {
     "neutral": {
-      "": {
+      "I wonder what I should have for dinner.  Maybe some speghetti or maybe a nice piece of grilled fish. #new_text_box# Yeah, I think I'll have the fish.": {
+        "req": [],
+        "lead to": []
+      },
+      "I was listening to the radio and I heard a song I really like.  I wonder if #npc_friend# would like it. #new_text_box# Maybe I'll ask them.": {
+        "req": [ "npc_friend" ],
+        "lead to": []
+      },
+      "How do you think gravity works.  I mean it's invisible and it keeps everything from flying into outerspace. #new_text_box# What even is it?": {
         "req": [],
         "lead to": []
       }
     },
     "romance": {
-      "": {
+      "#art_blush# What would you think about taking a midnight stroll sometime. #new_text_box# #art_blush# I think it sounds amazing.": {
+        "req": [],
+        "lead to": []
+      },
+      "You know, I toyed with the idea of moving out of this town, but now that I've met you.  I just don't think that I can go.": {
         "req": [],
         "lead to": []
       }
@@ -526,16 +620,10 @@
   },
   "wonder_question": {
     "neutral": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
+      
     },
     "romance": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
+      
     },
     "friend": {
       "": {
@@ -575,49 +663,31 @@
     }
   },
   "wonder_response": {
+    "positive+": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "positive": {
+      "": {
+        "req": [],
+        "lead to": []
+      }
+    },
     "neutral": {
       "": {
         "req": [],
         "lead to": []
       }
     },
-    "romance": {
+    "negative": {
       "": {
         "req": [],
         "lead to": []
       }
     },
-    "friend": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "respect": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
+    "negative+": {
       "": {
         "req": [],
         "lead to": []
