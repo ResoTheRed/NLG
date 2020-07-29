@@ -579,40 +579,26 @@
       "You know, I toyed with the idea of moving out of this town, but now that I've met you.  I just don't think that I can go.": {
         "req": [],
         "lead to": []
+      },
+      "I wonder what it would be like to be filthy rich? I could just go buy what ever I want when I want. #new_text_box# That would be the life.": {
+        "req": [ "attribute.greedy" ],
+        "lead to": []
       }
     },
     "friend": {
-      "": {
+      "I've been thinking a lot about life  lately. #new_text_block# Sometimes I wonder if I doing it right. #new_text_box# You know, this whole living in society thing. #new_text_box# Wow, how depressing do I sound right now. Let's talk about something else.": {
         "req": [],
         "lead to": []
-      }
-    },
-    "respect": {
-      "": {
+      },
+      "I walked by a pile of trash on the ground the other day and had to stop and pick it up. #new_text_box# #art_mean# People have some nerve just throwing trash all over the place. #new_text_box# HUFF.. Sorry, I'm sure you didn't come to hear me complain, though I do feel better now.": {
         "req": [],
         "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
+      },
+      "Oooh, I love to watch horror movies. I like to turn the lights out, make some popcorn, and see how scared I can get. #new_text_box# I never really feel scared until it's time to go to sleep. #new_text_box# #art_laugh# Please don't tell anyone that last part.": {
         "req": [],
         "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
-      "": {
+      },
+      "I was sitting at the Blonde Mouse the other day and I realized something. #new_text_box# I LOVE COFFEE. I love the aroma, the taste, and sipping on it while enjoy a good book.": {
         "req": [],
         "lead to": []
       }

@@ -20,6 +20,7 @@ New choice complexity ideas
 3. [leads to]Question [req]Response: "your_dreams"--> response about player's dreams; 
 	"my_dreams"-->response about npc's dream
 	"dream_philosophy"--> what do you think about dreams
+4. leads to & req "npc_should_do"
 
 New features (could these be reused?)
 1. Replace keys with game characters that the speaker has a certain relationship with
@@ -31,6 +32,6 @@ New features (could these be reused?)
 6. 
 
 Gossip Features
-1. #npc_friend#, #npc_lover#, #npc_enemy# --> replace value with a game character that the 
+1. #npc_friend#, #npc_lover#, #npc_enemy# #npc_neutral#--> replace value with a game character that the 
 	speaker has those feelings for
 
