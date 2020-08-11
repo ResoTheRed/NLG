@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Kati.Data_Modules;
 using Kati.Module_Hub;
 using Newtonsoft.Json;
 
@@ -26,7 +27,7 @@ namespace Kati.Data_Models{
        -other tones may use the neutral category
        --------------------------------------------------------------------------------------------
     */
-    public class SmallTalk_Module
+    public class SmallTalk_Module: I_Module
     {
         //can talk to itself
         //topics questions or statements (invoke a response or not)
@@ -66,6 +67,8 @@ namespace Kati.Data_Models{
             pathToJson = path;
             SmallTalk_Loader.LoadFromFile(this);
         }
+
+        public string getPathToJson() { return pathToJson; }
 
         public string PathToJson { get => pathToJson; set => pathToJson = value; }
     }

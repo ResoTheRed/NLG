@@ -1,11 +1,7 @@
 ﻿using Kati.Data_Models;
 using Kati;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Kati.SourceFiles;
-using System.Security.Cryptography;
 
 namespace KatiUnitTest.Module_Tests{
 

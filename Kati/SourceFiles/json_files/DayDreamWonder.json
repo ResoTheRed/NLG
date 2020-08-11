@@ -2,8 +2,8 @@
   "dream_statement": {
     "neutral": {
       "I had a strange dream last night.": {
-        "req": [],
-        "lead to": [ "dreamDesc" ]
+        "req" : [],
+        "lead to" : [ "dreamDesc" ]
       },
       "I didn't sleep so well last night.  I kept thinking about things all night.  #new_text_box# Some times, I just can't turn my brain off.": {
         "req": [],
@@ -555,7 +555,7 @@
       }
     }
   },
-
+  //what if type stuff
   "wonder_statement": {
     "neutral": {
       "I wonder what I should have for dinner.  Maybe some speghetti or maybe a nice piece of grilled fish. #new_text_box# Yeah, I think I'll have the fish.": {
@@ -568,6 +568,14 @@
       },
       "How do you think gravity works.  I mean it's invisible and it keeps everything from flying into outerspace. #new_text_box# What even is it?": {
         "req": [],
+        "lead to": []
+      },
+      "Everytime I watch the news I feel a bit sick. It got so bad that I had to quit all-together. #new_text_box# Now, I don't know what's going on but I'l happier for it.": {
+        "req": [],
+        "lead to": []
+      },
+      "I saw, what was their name? Ah yes, #npc_neutral# earlier and #pron1# was looking very chipper. #new_text_box# They seem to be having a good day today.": {
+        "req": ["npc_neutral"],
         "lead to": []
       }
     },
@@ -605,229 +613,66 @@
     }
   },
   "wonder_question": {
-    "neutral": {
-      
-    },
-    "romance": {
-      
-    },
     "friend": {
-      "": {
+      "I saw #npc_enemy# looking very suspicious the other day.  I thought about following them, but I didn't.  #new_text_box# What do you think I should do in those types of situations?": {
         "req": [],
-        "lead to": []
-      }
-    },
-    "respect": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
-      "": {
-        "req": [],
+        "lead to": [ "npc_should_do" ]
+      },
+      "I always wanted to travel the world. I would love to go overseas and see all of the different cultures. #new_text_box# You can see the history built right in to the architechture of these places. #new_text_box# Maybe I'll save up and go.  What do you think I should do?": {
+        "req": [ "npc_should_do" ],
         "lead to": []
       }
     }
   },
   "wonder_response": {
     "positive+": {
-      "": {
-        "req": [],
-        "lead to": []
+      "Yeah! You should go with your gut.": {
+        "req": [ "npc_should_do" ],
+        "lead to": ["friend.++"]
+      },
+      "I absolutely agree with you. You should.": {
+        "req": [ "npc_should_do" ],
+        "lead to": ["freind.++","respect.-"]
       }
     },
     "positive": {
-      "": {
-        "req": [],
-        "lead to": []
+      "Well, if it's what you believe, then go for it.": {
+        "req": [ "npc_should_do" ],
+        "lead to": ["friend.+","respect.+"]
+      },
+      "Maybe you should.  It couldn't hurt.": {
+        "req": [ "npc_should_do" ],
+        "lead to": ["friend.+"]
       }
     },
     "neutral": {
-      "": {
-        "req": [],
+      "That's a tought one. I don't know.": {
+        "req": [ "npc_should_do" ],
+        "lead to": []
+      },
+      "There are pros and cons to it.  It's really up to you.": {
+        "req": [ "npc_should_do" ],
         "lead to": []
       }
     },
     "negative": {
-      "": {
-        "req": [],
-        "lead to": []
+      "I don't know. Maybe you should ask someone else.": {
+        "req": [ "npc_should_do" ],
+        "lead to": [ "admiration.-" ]
+      },
+      "Whatever you want.  It doesn't matter to me.": {
+        "req": [ "npc_should_do" ],
+        "lead to": ["friend.-","respect.-"]
       }
     },
     "negative+": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    }
-  },
-
-  "whatIf_statement": {
-    "neutral": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "romance": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "friend": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "respect": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    }
-  },
-  "whatIf_question": {
-    "neutral": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "romance": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "friend": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "respect": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    }
-  },
-  "whatIf_response": {
-    "neutral": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "romance": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "friend": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "respect": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "admiration": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "disgust": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "hate": {
-      "": {
-        "req": [],
-        "lead to": []
-      }
-    },
-    "rivalry": {
-      "": {
-        "req": [],
-        "lead to": []
+      "Don't ask me. I don't care.": {
+        "req": [ "npc_should_do" ],
+        "lead to": [ "friend.-", "admiration.-", "romance.-", "hate.+" ]
+      },
+      "Why would I care about that?": {
+        "req": [ "npc_should_do" ],
+        "lead to": ["disgust.++","romance.-"]
       }
     }
   }
