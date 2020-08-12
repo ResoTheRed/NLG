@@ -9,11 +9,12 @@ namespace Kati.Data_Modules.GlobalClasses {
     /// </summary>
     public class Controller {
 
+        public static Random dice = new Random();
+
         private ModuleLib lib;
         private Parser parser;
         private GameData game;
         private CharacterData npc;
-
 
         public Controller(string path) {
             Lib = new ModuleLib(path);

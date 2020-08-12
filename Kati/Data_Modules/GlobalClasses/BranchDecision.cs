@@ -14,13 +14,20 @@ namespace Kati.Data_Modules.GlobalClasses {
         private int high;
         private int mid;
         private int low;
+        //flags
+        private bool isNeutral;
+        private bool isStranger;
         public Controller Ctrl { get => ctrl; set => ctrl = value; }
         public int High { get => high; set => high = value; }
         public int Mid { get => mid; set => mid = value; }
         public int Low { get => low; set => low = value; }
+        public bool IsNeutral { get => isNeutral; set => isNeutral = value; }
+        public bool IsStranger { get => isStranger; set => isStranger = value; }
 
         public BranchDecision(Controller ctrl) {
             Ctrl = ctrl;
+            IsNeutral = false;
+            IsStranger = false;
         }
 
         //holds all method calls for ease of use
@@ -28,8 +35,7 @@ namespace Kati.Data_Modules.GlobalClasses {
             (Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> data) {
             SetThresholds();
             var tone = CancelAttributeTones();
-            tone = FindMostInfluentialAttribute(tone);
-            return null;
+            return GetAttributeBranch(tone, data);
         }
 
         //set threshold levels
@@ -48,21 +54,21 @@ namespace Kati.Data_Modules.GlobalClasses {
             new_tone["hate"] = HateRule(tone);
             new_tone["professional"] = ProfessionalRule(tone);
             new_tone["rivalry"] = RivalryRule(tone);
-            new_tone["admiration"] = AdmirationRule(tone);
+            new_tone["affinity"] = Affinity(tone);
             new_tone["respect"] = RespectRule(tone);
             return new_tone;
         }
 
         //romance += admiration - (disgust+(hate/2))
         public double RomanceRule(Dictionary<string, double> tone) {
-            double romance = tone["romance"] + tone["admiration"] / 2;
+            double romance = tone["romance"] + tone["affinity"] / 2;
             romance -= (tone["disgust"] + tone["hate"] / 2);
             return romance;
         }
 
         public double DisgustRule(Dictionary<string, double> tone) {
             double disgust = tone["disgust"] + tone["hate"] / 2;
-            disgust -= (tone["romance"] + tone["admiration"] / 2);
+            disgust -= (tone["romance"] + tone["affinity"] / 2);
             return disgust;
         }
 
@@ -74,7 +80,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         
         public double HateRule(Dictionary<string, double> tone) {
             double hate = tone["hate"] + (tone["disgust"] / 2);
-            hate -= (tone["friend"] + (tone["admiration"] / 2));
+            hate -= (tone["friend"] + (tone["affinity"] / 2));
             return hate;
         }
         
@@ -86,12 +92,12 @@ namespace Kati.Data_Modules.GlobalClasses {
         
         public double RivalryRule(Dictionary<string, double> tone) {
             double prof = tone["rivalry"] + (tone["respect"] / 2);
-            prof -= (tone["professional"] + (tone["admiration"] / 2));
+            prof -= (tone["professional"] + (tone["affinity"] / 2));
             return prof;
         }
         
-        public double AdmirationRule(Dictionary<string, double> tone) {
-            double admire = tone["admiration"] + (tone["romance"] / 2);
+        public double Affinity(Dictionary<string, double> tone) {
+            double admire = tone["affinity"] + (tone["romance"] / 2);
             admire -= (tone["disgust"] + tone["hate"] / 2);
             return admire;
         }
@@ -102,18 +108,61 @@ namespace Kati.Data_Modules.GlobalClasses {
             return respect;
         }
 
-        
+        //remove qualifying attributes from original and move them into copy
         public Dictionary<string, double> ExtractQualifyingAttributes
             (Dictionary<string, double> tone, int threshold) {
             Dictionary<string, double> qualifying = new Dictionary<string, double>();
             foreach (KeyValuePair<string, double> item in tone) {
-                if (item.Value >= threshold)
+                if (item.Value >= threshold) {
                     qualifying[item.Key] = item.Value;
+                    tone.Remove(item.Key);
+                }
             }
             return tone;
         }
 
+        //return first dialogue branch from list of ordered branches
+        public Dictionary<string, Dictionary<string, List<string>>> GetAttributeBranch
+           (Dictionary<string, double> tone,Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> data) {
+            List<string> full = OrderConversationBranches(tone);//orders all branches from most important to least
+            for (int i=0;i<full.Count;i++) {
+                if (data.ContainsKey(full[i])) {
+                    return data[full[i]];
+                }
+            }
+            return null;
+        }
+
+        //returns an ordered list of conversation branches
+        //the idea is to strat with the first and if the
+        //dialogue JSON doesn't have it move to the next one
+        public List<string> OrderConversationBranches
+                                    (Dictionary<string, double> tone) {
+            List<string> full = new List<string>();
+            while (!IsNeutral) {
+                var copy = FindMostInfluentialAttribute(tone);//toggles on IsNeutral
+                double total = ProbabilityOffset(copy);
+                List<string> partial = PickAtttibutes(copy,total);//adds neutral to full list
+                AddToList(full, partial);
+            }
+            IsNeutral = false;
+            return full;
+        }
+
+        /*TODO:
+         * find most influential Attributes
+         * reduce attributes value
+         * offset their probability
+         * pick each based on probability
+         * add them to the ordered list
+         * remove them from the dictionary
+         * repeat for high, mid, and low
+         * when neutral is true end at neutral
+         * if isStranger is true list == [stranger, neutral]
+         */
+
         //find if any attributes meet the threshold starting from high to none
+        //@param: tone--> original dict that will have elements removed
         public Dictionary<string, double> FindMostInfluentialAttribute
                                         (Dictionary<string, double> tone) {
             Dictionary<string, double> options;
@@ -124,23 +173,112 @@ namespace Kati.Data_Modules.GlobalClasses {
                 options = ExtractQualifyingAttributes(tone, low);
             } else if (options.Count == 0) {
                 options = tone;
+                IsNeutral = true;
             } 
             return options;
         }
 
-        public Dictionary<string, Dictionary<string, List<string>>> GetAttributeBranch
-                                                        (Dictionary<string, double> tone) {
-            
-            return null;
+        //weight the options to yeild some emotions as stronger than others
+        //done by reference
+        public double ProbabilityOffset(Dictionary<string, double> copy) {
+            if (IsNeutral) return 0;
+            double total = 0;
+            ReduceAttributeValue(copy);
+            total = ProbabilityOffsetSingle(copy,"romance",total,280);
+            total = ProbabilityOffsetSingle(copy,"hate",total,240);
+            total = ProbabilityOffsetSingle(copy,"disgust",total,200);
+            total = ProbabilityOffsetSingle(copy,"affinity",total,160);
+            total = ProbabilityOffsetSingle(copy,"friend",total,120);
+            total = ProbabilityOffsetSingle(copy,"respect",total,80);
+            total = ProbabilityOffsetSingle(copy,"rivalry",total,40);
+            total = ProbabilityOffsetSingle(copy,"professional",total,0);
+            return total;
         }
 
-
-        public bool RomanceProbability() {
-
-            return true;
+        public Dictionary<string, double> DeepCopyBrachDict(Dictionary<string, double> original) {
+            Dictionary<string, double> copy = new Dictionary<string, double>();
+            foreach (KeyValuePair<string, double> item in original) {
+                copy[item.Key] = item.Value;
+            }
+            return copy;
         }
-        //has between 2 and 8 entries
 
+        //devise the probability for a single attribute
+        public double ProbabilityOffsetSingle
+            (Dictionary<string, double> tone, string att, double total, int offset) {
+            if (tone.ContainsKey(att)) {
+                tone[att] += offset;
+                total += tone[att];
+            }
+            return total;
+        }
+
+        //order attributes based on
+        public List<string> PickAtttibutes(Dictionary<string, double> copy, double max) {
+            List<string> sort = new List<string>();
+            if (IsNeutral) {
+                sort.Add("neutral");
+                return sort;
+            }
+            while (copy.Count > 0) {
+                double choice = Controller.dice.NextDouble() * max;
+                if (copy.ContainsKey("romance") && copy["romace"] <= choice) {
+                    sort.Add("romance");
+                    copy.Remove("romance");
+                } else if (copy.ContainsKey("hate") && copy["hate"] <= choice) {
+                    sort.Add("hate");
+                    copy.Remove("hate");
+                } else if (copy.ContainsKey("disgust") && copy["disgust"] <= choice) {
+                    sort.Add("disgust");
+                    copy.Remove("disgust");
+                } else if (copy.ContainsKey("affinity") && copy["affinity"] <= choice) {
+                    sort.Add("affinity");
+                    copy.Remove("affinity");
+                } else if (copy.ContainsKey("friend") && copy["friend"] <= choice) {
+                    sort.Add("friend");
+                    copy.Remove("friend");
+                } else if (copy.ContainsKey("respect") && copy["respect"] <= choice) {
+                    sort.Add("respect");
+                    copy.Remove("respect");
+                } else if (copy.ContainsKey("rivalry") && copy["rivalry"] <= choice) {
+                    sort.Add("rivaly");
+                    copy.Remove("rivalry");
+                } else if (copy.ContainsKey("professional") && copy["professional"] <= choice) {
+                    sort.Add("professional");
+                    copy.Remove("professional");
+                } else {
+                    break;//something went wrong
+                }
+            }
+            return sort;
+        }
+
+        //public string 
+
+        //subtract each tone branch value by the value with the 
+        //smallest ammount
+        public void ReduceAttributeValue(Dictionary<string, double> tone) {
+            double min = 1000;
+            foreach (KeyValuePair<string, double> item in tone) {
+                if (item.Value < min)
+                    min = item.Value;
+            }
+            foreach (KeyValuePair<string, double> item in tone) {
+                tone[item.Key] -= min;
+            }
+
+        }
+
+        public void AddToList(List<string> full, List<string> partial) {
+            foreach (string s in partial) {
+                full.Add(s);
+            }
+        }
+
+        public bool CheckIsStranger() {
+            return false;
+        }
+        
 
 
     }
