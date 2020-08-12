@@ -28,6 +28,7 @@ namespace Kati.Module_Hub{
         private string publicEvent;
         //format: season : { event : day }
         private Dictionary<string, Dictionary<string, int>> eventCalendar;
+        private string gameEventTrigger;
 
         public string Weather { get => weather; set => weather = value; }
         public string Sector { get => sector; set => sector = value; }
@@ -38,6 +39,7 @@ namespace Kati.Module_Hub{
         public string PublicEvent { get => publicEvent; set => publicEvent = value; }
         public Dictionary<string, Dictionary<string, int>> EventCalendar { get => eventCalendar; set => eventCalendar = value; }
         public int DayOfWeek { get => dayOfWeek; set => dayOfWeek = value; }
+        public string GameEventTrigger { get => gameEventTrigger; set => gameEventTrigger = value; }
 
         public GameData() {
             SetupEventCalendar();

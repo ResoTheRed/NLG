@@ -431,7 +431,11 @@
       }
     },
     "romance": {
-      "": {
+      "Sample romance trivia statement. no reqs or lead to": {
+        "req": [],
+        "lead to": []
+      },
+      "Sample romace trivia with multi-reqs lover: #npc_lover#": {
         "req": [],
         "lead to": []
       }

@@ -1,0 +1,239 @@
+﻿######### Attribute Branch Dialogue Decision Trees ###########
+branches of dialogue are split into different sections encompassing dialogue bits that are
+    of a relationship type. The applicable branches are the ones that the partcipants share.
+    Not all categories are required for any module topic.  Only "neutral" branch is required 
+    for every topic branch.
+
+Split into 10 default categories: (in order of presidence)
+    1. "romance": characters have a strong romanic relationship, 
+    2. "hate": hated enemy 
+    3. "disgust": annoying or gross 
+    4. "affinity": Crush style, heart throb
+    5. "friend": strong friendship relationship 
+    6. "respect": Holds a high opinion of 
+    7. "rivalry": competitor like relationship 
+    8. "professional": will probably get rid of this one 
+    9. "neutral": no strong feeling but aquantinces (default option)
+    10."Stranger to": strangers
+
+Any additional branches will be defined in Derived Parser classes. 
+
+
+###################### Required Rules ########################
+
+Required Rules are ones that dictate if a dialogue option will be available for display to the game.  
+Suppose the characters in the dialogue do not have the requirements for the dialogue. In that case, 
+it is discarded as a possible option.
+
+GameData Rules:
+    1. Setting Rules
+        1. Weather Rules: regards to the current weather in the game
+            Format::"weather.<type>"-->"weather.rain"
+            "weather":
+            [
+                "nice_day","hot","humid","rain","windy","cold"
+            ]
+        2. Map Sector Rules:  where is the character on the map
+            Format::"sector.<sector_number>"-->"sector.12"
+            "sector":
+            [
+                1-12
+            ]
+        3. Time of Day Rules:  what time of day is it?
+            Format::"time.<time of day>"-->"time.morning"
+            "time":
+            [
+                "morning","noon","afternoon","evening","night"
+            ]
+        4. Day of Week Rules: is day
+            Format::"day.<day>"-->"day.mon"
+            "day":
+            [
+                "mon","tues","weds","thurs","fri","sat","sun"
+            ]
+        5. Season Rules: is season
+            Format::"season.<season>"-->"season.fall"
+            "season":
+            [
+                "fall","winter","spring","summer"
+            ]
+    2. Event Rules:  deals with gameEvents
+        
+        1. Public Event rules: Game event such as a festival base on calendar dates
+            Format::"publicEvent.<specific event>"-->"publicEvent.art_fest": the specific event is near
+            Format::"publicEvent.<generic event>"-->"publicEvent.next": if an event is near
+            "publicEvent":
+            [
+                "next","art_fest","writers_block","music_fest","halloween","blueberry_fest","yuletide","bizaar","carnival"
+            ]
+        
+        2. Trigger Event Rules: Game events that are triggered by the player ex: unlocking a feature
+            Format:: "trigger.<triggerd game event>"
+            "trigger":
+            [
+                "I wish I had something to put in here"
+            ]
+
+
+Character Data Rules:
+
+    1. Persoanl Schema Rules: Attributes/personality regarding themself 
+    
+        1. Character Trait Rules: [req]
+            Format::"trait.<characterTrait>" --> "trait.active": include dialogue option if character has this trait
+            "trait":
+            [ 
+                "active","adventurous","agreeable","articulate","clever","calm","cheerful","Greedy",
+                "courteous","dramatic","forgiving","generous","honest","humble","humorous","logical",
+                "loyal","passionate","patient","playful","protective","romantic","scholarly","sensitive",
+                "sociable","studious","trusting","hardy","aggressive","ambitious","competitive",
+                "noncommittal","noncompetitive","outspoken","paternalistic","sarcastic","stubborn",
+                "amoral","apathetic","argumentative","arrogant","artificial","bland","cold","criminal",
+                "cynical","deceitful","disloyal","envious","grim","insensitive","insecure","jealous",
+                "lazy","moody","obsessive","sloppy","neat","timid","attractive","very attractive",
+                "un-attractive","ugly"
+            ]
+
+        2.  Character Status Rules: [req]
+            Format::"status.<status>"-->"status.drunk": include dialogue option if character has this status
+            "status":
+            [
+                "injured","fatigued","grieving","happy","lonely","drunk","angry","sick","sleeping",
+                "sad","dirty","stinky","aroused","confident","bitter","embarrased","none"
+            ]
+
+        3.  Character Interests Rules [req]
+            Format::"interest.<interest>"-->"intered.likes sports"
+            "interest"
+            [
+                "likes movies","likes sports","likes music","likes making music","likes art","likes making art",
+                "likes dancing","likes coffee","likes socializing","likes working","likes excersie","likes gaming",
+                "likes being alone","likes being quiet","likes talking","likes cooking","likes shopping",
+                "likes writing","likes reading","likes theater","likes watching TV","likes acedemics",
+                "likes partying","likes drinking","likes fishing","likes being outdoors","likes nature",
+                "likes animals","likes swimmings","likes traveling","loves_art_fest","loves_writers_block","loves_music_fest",
+                "loves_halloween","loves_blueberry_fest","loves_yuletide","loves_bizaar","loves_carnival",
+                "hates_art_fest","hates_writers_block","hates_music_fest","hates_halloween","hates_blueberry_fest",
+                "hates_yuletide","hates_bizaar","hates_carnival"
+            ]
+
+        4.  Physical Feature Rules: [req]
+            Format::"physicalFeature.<npc feature>"-->"physical.has a creepy smile"
+            "physicalFeature":
+            [
+                "has a great smile","has a creepy smile","has nice eyes","has a kind face","has a stern face",
+                "has great hair","has nappy hair","has nice curves","has great skin","has bad skin","is balding",
+                "is over weight","is under weight","is in shape", "is out of shape","has hot body", 
+                "has confident demeanor","has quiet demeanor","has akward demeanor","is tall","is short",
+                "is hairy","is old","is middle aged","is teen","is child","has wrinkled skin","is youthful",
+                "has pale skin","is petite","has light complextion","has medium complextion","has dark complextion"
+            ]
+
+        5. Scalar Traits: [req]
+            Format::"scalarTrait.<trait>.<threshold>"-->"scalarTrait.charm.500"
+            "scalarTraits": //0-1000 where 0 is not at all and 1000 max
+            [
+                "charm","confident","leader","popular","attractive","persuasive","creative",
+                "style","athletics","charisma","luck"
+            ]
+
+    2. Social Schema Rules: Attributes relating to others
+
+        1.  Relational Attributes Rules: [req] core status that a character has with another
+            Format::"attribute.<stat>.<threshold>"-->"attribute.friend.375": npc && player || player && npc
+            Format::"attribute.npc.<stat>.<threshold>"-->"attribute.npc.hate.500": npc speaker && any npc 
+            Format::"attribute.<name>.<stat>.<threshold>"-->"attribute.bob.hate.500": npc speaker && specific npc
+            "attribute": //scalar 0-1000
+            [
+                "romance", "friend", "professional", "disgust", "hate", "rivalry", "respect", "affinity" 
+            ]
+
+        2. Relationship State Rules: [req] speakers relationship status with another npc (2-way)
+            Format::"relationship.<state>"-->"relationship.involved with": npc && player || player && npc
+            Format::"relationship.npc.<state>"-->"relationship.npc.involved with": npc speaker && any npc 
+            Format::"relationship.<name>.<stat>"-->"relationship.bob.involved with": npc speaker && specific npc
+            "relationship":
+            [
+                "trust", "loyal to","friends with", "involved with", "related to", "works with", "lives with", "sleeping with", "stranger to"
+            ]
+        3. Directed status Rules: [req] a one-way relationship state the speaker has with another
+            Format::"directed.<state>"-->"directed.in love with": npc && player || player && npc
+            Format::"directed.npc.<state>"-->"directed.npc.in love with": npc speaker && any npc 
+            Format::"directed.<name>.<stat>"-->"directed.bob.in love with": npc speaker && specific npc
+            "directed":
+            [
+                "interested in","attracted to","curious about","in love with","betrayed by","worried about",
+                "snubbed by","infatuated with","encouraged by","scared of","dislikes","hates","disgusted by",
+                "misses","tired of","envious of","annoyed with","rivals with","angry with","hurt by",
+                "injured by","neutral"
+            ]
+
+Gossip and History Rules: Coming soon
+
+
+###################### Leads To Rules ########################
+
+Leads To rules are ones that direct the conversation and/or convey information to the game state.  There are 
+    three types of topic, Statements, Questions, and Responses.  Each topic type will have different 
+    lead to properties;
+
+Statement topic types: direct the conversation to the next topic of discussion
+Question topic types: direct conversation to response types
+Response topic types: relay information to the game about state updates and direct conversation. By default,
+    all game state updates apply to the NPC and not the player.
+    
+    1. Direct Conversation Module: [leads to] set next dialogue topic to be pulled from a module and topic
+        Format::"<module_name>"-->"smallTalk": directs conversation to specified module
+        Format::"<module_name>.<topic>"-->"smallTalk.weather": : directs conversation to specified module and topic
+        Format::"<mod_name>.<topic>.<type>"-->"smallTalk.weather.question"
+        "director": 
+        [
+            "<module>", "<module_topics>", "statement","quetion"
+        ]
+
+    2. Direct To Response: [leads to] set next dialogue topic to be a specific response branch dealing with the 
+        question. No module given defaults to the current module THESE ARE RESERVED FOR QUESTIONS ONLY. works 
+        in conjunction with question tags
+        Format::"<module_name>"-->"smallTalk": directs a response to be given by the player
+        "questionResponse":
+        [
+            "<module_name>"
+        ]
+
+    3. Question Tags: [leads to] points to specific response braches that pertain to the question.  These are 
+        unique to each module and will be defined by each Derived module.  It will be a requirement on responses
+        Format::"<module_unique_tag>"-->"thoughs_on_yuletide"
+        "questionTags":
+        [
+            <unique to each derived module>
+        ]
+
+    4. Response Scalar State Alteration Rules: [leads to] (npc by default) change the relationship value that an
+        NPC has with the player.
+        Format::"<branch_name>.<attribute_name>.<delta>"-->"attribute.friend.+"
+        Format::"<branch_name>.<attribute_name>.<delta>.player"-->"attribute.friend.+.player" (targets the player)
+        "scalarChange":
+        [
+            Branch Name: "scalarTrait"
+            Attribute Names : "charm","confident","leader","popular","attractive","persuasive","creative",
+                "style","athletics","charisma","luck"
+
+            Branch Name: "attribute"
+            Attribute Names :  "romance", "friend", "professional", "disgust", "hate", "rivalry", "respect", 
+                "affinity"
+        ]
+
+    5. Response Gain/Lose State AlterationRules: [leads to ] gain or lose boolean attribute. This includes both
+        personal and relationship attributes
+        Format::"<change state>.<branch_name>.<attribute_name>"-->"gain.directed.trusts"
+        Format::"<change state>.<branch_name>.<attribute_name>.player"-->"gain.directed.trusts.player" (targets player)
+        "gainLoseState":
+        [
+            Change State: "gain","lose"
+            Branch Name: "trait","status","interest","physicalFeature","relationship","directed"
+            Attribute Name: <See character Rule Section for names>
+        ]
+
+
+
+

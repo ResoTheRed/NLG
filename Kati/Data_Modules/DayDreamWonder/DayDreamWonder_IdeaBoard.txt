@@ -20,7 +20,7 @@ New choice complexity ideas
 3. [leads to]Question [req]Response: "your_dreams"--> response about player's dreams; 
 	"my_dreams"-->response about npc's dream
 	"dream_philosophy"--> what do you think about dreams
-4. leads to & req "npc_should_do"
+4. req: "attribute.<character_attribute>": speaker must have this attribute for this option to be available
 
 New features (could these be reused?)
 1. Replace keys with game characters that the speaker has a certain relationship with
