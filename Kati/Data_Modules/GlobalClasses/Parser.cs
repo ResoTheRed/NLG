@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Kati.Data_Modules.GlobalClasses {
-    class Parser {
+    public class Parser {
 
         private Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> data;
         private string topic;//main topic "dreams","weather"...
@@ -16,7 +16,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         public Controller Ctrl { get => ctrl; set => ctrl = value; }
         public Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> Data 
             { get => data; set => data = value; }
-        internal BranchDecision BranchDecision { get => branchDecision; set => branchDecision = value; }
+        public BranchDecision BranchDecision { get => branchDecision; set => branchDecision = value; }
 
         public Parser(Controller ctrl) {
             Ctrl = ctrl;
@@ -31,7 +31,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         public void Parse() { 
-            var = BranchDecision.runDecision()
+            //var = BranchDecision.runDecision()
         }
 
     }

@@ -7,7 +7,7 @@ namespace Kati.Data_Modules.GlobalClasses {
     /// Default class to decide which dialogue branch shuld be chosen based on 
     /// character data and inner ruling.  It is only for Statements and questions
     /// </summary>
-    class BranchDecision {
+    public class BranchDecision {
 
         private Controller ctrl;
         //attribute Threshold
@@ -28,6 +28,7 @@ namespace Kati.Data_Modules.GlobalClasses {
             Ctrl = ctrl;
             IsNeutral = false;
             IsStranger = false;
+            SetThresholds();
         }
 
         //holds all method calls for ease of use
@@ -39,7 +40,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         //set threshold levels
-        public void SetThresholds() {
+        protected void SetThresholds() {
             High = 700;
             Mid = 450;
             low = 200;
@@ -60,49 +61,49 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         //romance += admiration - (disgust+(hate/2))
-        public double RomanceRule(Dictionary<string, double> tone) {
+        protected double RomanceRule(Dictionary<string, double> tone) {
             double romance = tone["romance"] + tone["affinity"] / 2;
             romance -= (tone["disgust"] + tone["hate"] / 2);
             return romance;
         }
 
-        public double DisgustRule(Dictionary<string, double> tone) {
+        protected double DisgustRule(Dictionary<string, double> tone) {
             double disgust = tone["disgust"] + tone["hate"] / 2;
             disgust -= (tone["romance"] + tone["affinity"] / 2);
             return disgust;
         }
 
-        public double FriendRule(Dictionary<string, double> tone) {
-            double friend = tone["friend"] + (tone["respect"] / 2) + (tone["admiration"]/2);
+        protected double FriendRule(Dictionary<string, double> tone) {
+            double friend = tone["friend"] + (tone["respect"] / 2) + (tone["affinity"]/2);
             friend -= (tone["hate"] + tone["disgust"] / 2);
             return friend;
         }
-        
-        public double HateRule(Dictionary<string, double> tone) {
+
+        protected double HateRule(Dictionary<string, double> tone) {
             double hate = tone["hate"] + (tone["disgust"] / 2);
             hate -= (tone["friend"] + (tone["affinity"] / 2));
             return hate;
         }
-        
-        public double ProfessionalRule(Dictionary<string, double> tone) {
+
+        protected double ProfessionalRule(Dictionary<string, double> tone) {
             double prof = tone["professional"] + (tone["respect"] / 2);
             prof -= (tone["rivalry"] + (tone["disgust"] / 2));
             return prof;
         }
-        
-        public double RivalryRule(Dictionary<string, double> tone) {
+
+        protected double RivalryRule(Dictionary<string, double> tone) {
             double prof = tone["rivalry"] + (tone["respect"] / 2);
             prof -= (tone["professional"] + (tone["affinity"] / 2));
             return prof;
         }
-        
-        public double Affinity(Dictionary<string, double> tone) {
+
+        protected double Affinity(Dictionary<string, double> tone) {
             double admire = tone["affinity"] + (tone["romance"] / 2);
             admire -= (tone["disgust"] + tone["hate"] / 2);
             return admire;
         }
-        
-        public double RespectRule(Dictionary<string, double> tone) {
+
+        protected double RespectRule(Dictionary<string, double> tone) {
             double respect = tone["respect"] + (tone["professional"] / 2);
             respect -= (tone["disgust"] + (tone["hate"] / 2));
             return respect;
@@ -118,7 +119,7 @@ namespace Kati.Data_Modules.GlobalClasses {
                     tone.Remove(item.Key);
                 }
             }
-            return tone;
+            return qualifying;
         }
 
         //return first dialogue branch from list of ordered branches
@@ -166,12 +167,14 @@ namespace Kati.Data_Modules.GlobalClasses {
         public Dictionary<string, double> FindMostInfluentialAttribute
                                         (Dictionary<string, double> tone) {
             Dictionary<string, double> options;
-            options = ExtractQualifyingAttributes(tone, high);
+            options = ExtractQualifyingAttributes(tone, High);
             if (options.Count == 0) {
-                options = ExtractQualifyingAttributes(tone, mid);
-            } else if (options.Count == 0) {
-                options = ExtractQualifyingAttributes(tone, low);
-            } else if (options.Count == 0) {
+                options = ExtractQualifyingAttributes(tone, Mid);
+            } 
+            if (options.Count == 0) {
+                options = ExtractQualifyingAttributes(tone, Low);
+            }
+            if (options.Count == 0) {
                 options = tone;
                 IsNeutral = true;
             } 
@@ -258,15 +261,22 @@ namespace Kati.Data_Modules.GlobalClasses {
         //subtract each tone branch value by the value with the 
         //smallest ammount
         public void ReduceAttributeValue(Dictionary<string, double> tone) {
-            double min = 1000;
+            double min =  GetMinValue(tone);
+            Dictionary<string, double> temp = new Dictionary<string, double>();
+            foreach (KeyValuePair<string, double> item in tone) {
+                temp[item.Key] = tone[item.Key] - min;
+            }
+            tone = temp;
+
+        }
+
+        private double GetMinValue(Dictionary<string, double> tone) {
+            double min = 10000;
             foreach (KeyValuePair<string, double> item in tone) {
                 if (item.Value < min)
                     min = item.Value;
             }
-            foreach (KeyValuePair<string, double> item in tone) {
-                tone[item.Key] -= min;
-            }
-
+            return min;
         }
 
         public void AddToList(List<string> full, List<string> partial) {
