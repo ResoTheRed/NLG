@@ -16,18 +16,15 @@ namespace Kati.Data_Modules.GlobalClasses {
         private int low;
         //flags
         private bool isNeutral;
-        private bool isStranger;
         public Controller Ctrl { get => ctrl; set => ctrl = value; }
         public int High { get => high; set => high = value; }
         public int Mid { get => mid; set => mid = value; }
         public int Low { get => low; set => low = value; }
         public bool IsNeutral { get => isNeutral; set => isNeutral = value; }
-        public bool IsStranger { get => isStranger; set => isStranger = value; }
-
+       
         public BranchDecision(Controller ctrl) {
             Ctrl = ctrl;
             IsNeutral = false;
-            IsStranger = false;
             SetThresholds();
         }
 
@@ -210,8 +207,9 @@ namespace Kati.Data_Modules.GlobalClasses {
         public double ProbabilityOffsetSingle
             (Dictionary<string, double> tone, string att, double total, int offset) {
             if (tone.ContainsKey(att)) {
-                tone[att] += offset;
-                total += tone[att];
+               //increase each size
+                total += tone[att] + offset;
+                tone[att] = total;
             }
             return total;
         }
@@ -224,33 +222,33 @@ namespace Kati.Data_Modules.GlobalClasses {
                 return sort;
             }
             while (copy.Count > 0) {
-                double choice = Controller.dice.NextDouble() * max;
-                if (copy.ContainsKey("romance") && copy["romace"] <= choice) {
+                double choice = (Controller.dice.NextDouble() * max);
+                if (copy.ContainsKey("romance") && copy["romance"] >= choice) {
                     sort.Add("romance");
                     copy.Remove("romance");
-                } else if (copy.ContainsKey("hate") && copy["hate"] <= choice) {
+                } else if (copy.ContainsKey("hate") && copy["hate"] >= choice) {
                     sort.Add("hate");
                     copy.Remove("hate");
-                } else if (copy.ContainsKey("disgust") && copy["disgust"] <= choice) {
+                } else if (copy.ContainsKey("disgust") && copy["disgust"] >= choice) {
                     sort.Add("disgust");
                     copy.Remove("disgust");
-                } else if (copy.ContainsKey("affinity") && copy["affinity"] <= choice) {
+                } else if (copy.ContainsKey("affinity") && copy["affinity"] >= choice) {
                     sort.Add("affinity");
                     copy.Remove("affinity");
-                } else if (copy.ContainsKey("friend") && copy["friend"] <= choice) {
+                } else if (copy.ContainsKey("friend") && copy["friend"] >= choice) {
                     sort.Add("friend");
                     copy.Remove("friend");
-                } else if (copy.ContainsKey("respect") && copy["respect"] <= choice) {
+                } else if (copy.ContainsKey("respect") && copy["respect"] >= choice) {
                     sort.Add("respect");
                     copy.Remove("respect");
-                } else if (copy.ContainsKey("rivalry") && copy["rivalry"] <= choice) {
+                } else if (copy.ContainsKey("rivalry") && copy["rivalry"] >= choice) {
                     sort.Add("rivaly");
                     copy.Remove("rivalry");
-                } else if (copy.ContainsKey("professional") && copy["professional"] <= choice) {
+                } else if (copy.ContainsKey("professional") && copy["professional"] >= choice) {
                     sort.Add("professional");
                     copy.Remove("professional");
                 } else {
-                    break;//something went wrong
+                    //break;//something went wrong
                 }
             }
             return sort;
@@ -264,13 +262,14 @@ namespace Kati.Data_Modules.GlobalClasses {
             double min =  GetMinValue(tone);
             Dictionary<string, double> temp = new Dictionary<string, double>();
             foreach (KeyValuePair<string, double> item in tone) {
-                temp[item.Key] = tone[item.Key] - min;
+                temp[item.Key] = (tone[item.Key] - min);
             }
-            tone = temp;
-
+            foreach (KeyValuePair<string, double> item in temp) {
+                tone[item.Key] = temp[item.Key];
+            }
         }
 
-        private double GetMinValue(Dictionary<string, double> tone) {
+        protected double GetMinValue(Dictionary<string, double> tone) {
             double min = 10000;
             foreach (KeyValuePair<string, double> item in tone) {
                 if (item.Value < min)

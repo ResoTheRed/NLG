@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Kati.Data_Modules.GlobalClasses;
 using Kati.SourceFiles;
@@ -112,26 +111,134 @@ namespace KatiUnitTest.Module_Tests.GlobalModuleTest {
             double total = bd.ProbabilityOffset(d);
             Assert.IsTrue(total == 1120);
             Assert.IsTrue(d["romance"] == 280);
-            Assert.IsTrue(d["hate"] == 240);
-            Assert.IsTrue(d["disgust"] == 200);
-            Assert.IsTrue(d["affinity"] == 160);
-            Assert.IsTrue(d["friend"] == 120);
-            Assert.IsTrue(d["respect"] == 80);
-            Assert.IsTrue(d["rivalry"] == 40);
-            Assert.IsTrue(d["professional"] == 0);
+            Assert.IsTrue(d["hate"] == 520);
+            Assert.IsTrue(d["disgust"] == 720);
+            Assert.IsTrue(d["affinity"] == 880);
+            Assert.IsTrue(d["friend"] == 1000);
+            Assert.IsTrue(d["respect"] == 1080);
+            Assert.IsTrue(d["rivalry"] == 1120);
+            Assert.IsTrue(d["professional"] == 1120);
             arr = new double[]{ 110, 110, 10, 110, 110, 110, 110, 110 };
             SetNpcTone(arr);
             d = ctrl.Npc.InitiatorsTone;
             total = bd.ProbabilityOffset(d);
-            Assert.IsTrue(total == 1900);
+            Assert.IsTrue(total == 1820);
             Assert.IsTrue(d["romance"] == 380);
-            Assert.IsTrue(d["hate"] == 340);
-            Assert.IsTrue(d["disgust"] == 300);
-            Assert.IsTrue(d["affinity"] == 260);
-            Assert.IsTrue(d["friend"] == 220);
-            Assert.IsTrue(d["respect"] == 180);
-            Assert.IsTrue(d["rivalry"] == 140);
-            Assert.IsTrue(d["professional"] == 0);
+            Assert.IsTrue(d["hate"] == 720);
+            Assert.IsTrue(d["disgust"] == 1020);
+            Assert.IsTrue(d["affinity"] == 1280);
+            Assert.IsTrue(d["friend"] == 1500);
+            Assert.IsTrue(d["respect"] == 1680);
+            Assert.IsTrue(d["rivalry"] == 1820);
+            Assert.IsTrue(d["professional"] == 1820);
+        }
+
+        [TestMethod]
+        public void TestPickAttributes() {
+            for (int i = 0; i < 100; i++) {
+                double[] arr = { 700, 600, 500, 400, 300, 200, 100, 0 };
+                SetNpcTone(arr);
+                Dictionary<string, double> d = ctrl.Npc.InitiatorsTone;
+                d = bd.CancelAttributeTones();
+                Assert.IsTrue(d["romance"] == 600);
+                Assert.IsTrue(d["friend"] == 750.0);
+                Assert.IsTrue(d["professional"] == 600.0);
+                Assert.IsTrue(d["respect"] == 400.0);
+                Assert.IsTrue(d["affinity"] == 400.0);
+                Assert.IsTrue(d["disgust"] < 0);
+                Assert.IsTrue(d["hate"] < 0);
+                Assert.IsTrue(d["rivalry"] < 0);
+
+                //high
+                var copy = bd.FindMostInfluentialAttribute(d);
+                Assert.IsTrue(copy.ContainsKey("friend"));
+                Assert.IsTrue(!d.ContainsKey("friend"));
+                Assert.IsTrue(copy.Count == 1);
+
+                double total = bd.ProbabilityOffset(copy);
+                Assert.IsTrue(total <= 120);//was 870 but reduced by min with is 750 and also max
+                Assert.IsTrue(copy.ContainsKey("friend"));
+                Assert.IsTrue(copy.Count == 1);
+                Assert.IsTrue(copy["friend"] >= total);
+                
+                List<string> list = bd.PickAtttibutes(copy, total);
+                Assert.IsTrue(list.Count == 1);
+                Assert.IsTrue(list[0].Equals("friend")|| list[0].Equals("neutral"));
+                
+                //mid
+                copy = bd.FindMostInfluentialAttribute(d);
+                Assert.IsTrue(copy.ContainsKey("romance"));
+                Assert.IsTrue(!d.ContainsKey("romance"));
+                Assert.IsTrue(copy.ContainsKey("professional"));
+                Assert.IsTrue(!d.ContainsKey("professional"));
+                Assert.IsTrue(copy.Count == 2);
+                
+                total = bd.ProbabilityOffset(copy);
+                Assert.IsTrue(total == 280);//was 870 but reduced by min with is 750 and also max
+                Assert.IsTrue(copy.ContainsKey("romance"));
+                Assert.IsTrue(copy.ContainsKey("professional"));
+                Assert.IsTrue(copy.Count == 2);
+                
+                list = bd.PickAtttibutes(copy, total);
+                Assert.IsTrue(list.Count == 2);
+                Assert.IsTrue(list[0].Equals("romance"));
+                Assert.IsTrue(list[1].Equals("professional"));
+                //low
+                copy = bd.FindMostInfluentialAttribute(d);
+                Assert.IsTrue(copy.ContainsKey("affinity"));
+                Assert.IsTrue(!d.ContainsKey("affinity"));
+                Assert.IsTrue(copy.ContainsKey("respect"));
+                Assert.IsTrue(!d.ContainsKey("respect"));
+                Assert.IsTrue(copy.Count == 2);
+                total = bd.ProbabilityOffset(copy);
+                Assert.IsTrue(total == 240);
+                Assert.IsTrue(copy.ContainsKey("affinity"));
+                Assert.IsTrue(copy.ContainsKey("respect"));
+                Assert.IsTrue(copy.Count == 2);
+                list = bd.PickAtttibutes(copy, total);
+                Assert.IsTrue(list.Count == 2);
+                Assert.IsTrue(list[0].Equals("affinity") || list[0].Equals("respect"));
+                Assert.IsTrue(list[1].Equals("affinity") || list[1].Equals("respect"));
+                //none-->neutral
+                copy = bd.FindMostInfluentialAttribute(d);
+                Assert.IsTrue(copy.Count == 3);
+                Assert.IsTrue(d.Count == 3);
+                total = bd.ProbabilityOffset(copy);
+                Assert.IsTrue(total == 0);
+                Assert.IsTrue(bd.IsNeutral);
+                list = bd.PickAtttibutes(copy, total);
+                Assert.IsTrue(list.Count == 1);
+                Assert.IsTrue(list[0].Equals("neutral"));
+                bd.IsNeutral = false;
+            }
+        }//end test method
+
+        [TestMethod]
+        public void TestOrderConversationBranches() {
+            for (int i = 0; i < 1000; i++) {
+                double[] arr = { 700, 600, 500, 400, 300, 200, 100, 0 };
+                SetNpcTone(arr);
+                Dictionary<string, double> d = ctrl.Npc.InitiatorsTone;
+                d = bd.CancelAttributeTones();
+                List<string> list = bd.OrderConversationBranches(d);
+                //Assert.IsTrue(list.Count == 6);
+                Assert.IsTrue(list[0].Equals("friend"));
+                Assert.IsTrue(list[1].Equals("romance"));
+                Assert.IsTrue(list[2].Equals("professional"));
+                Assert.IsTrue(list[3].Equals("affinity") || list[3].Equals("respect"));
+                Assert.IsTrue(list[4].Equals("affinity") || list[4].Equals("respect"));
+                Assert.IsTrue(list[5].Equals("neutral"));
+                Assert.IsFalse(bd.IsNeutral);
+            }
+        }
+
+        [TestMethod]
+        public void TestRunDecision() {
+            double[] arr = { 700, 600, 500, 400, 300, 200, 100, 0 };
+            SetNpcTone(arr);
+            var decision = bd.RunDecision(ctrl.Lib.Data[ctrl.Lib.Keys["dream"][ctrl.Lib.STATEMENT]]);
+            Assert.IsTrue(decision.Count == 14);
+            Assert.IsTrue(decision.ContainsKey("I've been day dreaming a lot lately.  I wonder why?"));
 
         }
 

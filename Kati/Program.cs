@@ -2,14 +2,146 @@
 using Kati.Module_Hub;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.Linq;
-using System.Reflection.PortableExecutable;
+using Kati.Data_Modules.GlobalClasses;
+using Kati.SourceFiles;
 
 namespace Kati{
 
     class Program{
+
+        
+
+
+        static void Main(string[] args){
+            //TestSmallTalkText(5);
+            //TestSmallTalkEventResponse(20000);
+            //TestEventResponse2();
+            //TestAB();
+            //TestController(50);
+            TestA(5);
+        }
+
+
+        static Controller ctrl;
+        static BranchDecision bd;
+
+        public static void Start() {
+            ctrl = new Controller(Constants.DayDreamWonder);
+            bd = ctrl.Parser.BranchDecision;
+        }
+
+        public static void SetNpcTone(double[] val) {
+            ctrl.Npc.InitiatorsTone["romance"] = val[0];
+            ctrl.Npc.InitiatorsTone["friend"] = val[1];
+            ctrl.Npc.InitiatorsTone["professional"] = val[2];
+            ctrl.Npc.InitiatorsTone["respect"] = val[3];
+            ctrl.Npc.InitiatorsTone["affinity"] = val[4];
+            ctrl.Npc.InitiatorsTone["disgust"] = val[5];
+            ctrl.Npc.InitiatorsTone["hate"] = val[6];
+            ctrl.Npc.InitiatorsTone["rivalry"] = val[7];
+        }
+
+        public static void TestA(int n) {
+            
+            for (int i = 0; i < n; i++) {
+                Start();
+                double[] arr = { 700, 600, 500, 400, 300, 200, 100, 0 };
+                SetNpcTone(arr);
+                Dictionary<string, double> d = ctrl.Npc.InitiatorsTone;
+                d = bd.CancelAttributeTones();
+                Console.WriteLine("d[romance] == 600: "+ d["romance"] );
+                Console.WriteLine("d[friend] == 750.0" + d["friend"] );
+                Console.WriteLine("d[professional] == 600.0: "+(d["professional"]));
+                Console.WriteLine("d[respect] == 400.0: "+(d["respect"]));
+                Console.WriteLine("d[affinity] == 400.0: " + d["affinity"]);
+                Console.WriteLine("d[disgust] < 0: " + d["disgust"]);
+                Console.WriteLine("d[hate] < 0" + d["hate"]);
+                Console.WriteLine("d[rivalry] < 0" + d["rivalry"]);
+
+                //high
+                Console.WriteLine("\n--------Running High Stats-------------------------");
+                var copy = bd.FindMostInfluentialAttribute(d);
+                Console.WriteLine("copy.ContainsKey(friend) " + copy.ContainsKey("friend"));
+                Console.WriteLine("copy.Count == 1: " + (copy.Count == 1));
+                foreach (KeyValuePair<string, double> item in copy) {
+                    Console.WriteLine("copy["+item.Key+"] : "+item.Value);
+                }
+
+                double total = bd.ProbabilityOffset(copy);
+                Console.WriteLine("total 120: "+total+"\n Should only contain friend");//was 870 but reduced by min with is 750 and also max
+                foreach (KeyValuePair<string, double> item in copy) {
+                    Console.WriteLine("copy[" + item.Key + "] : " + item.Value + " == total: " + total);
+                }
+                List<string> list = bd.PickAtttibutes(copy, total);
+                Console.WriteLine("List should have one element friend");
+                int counter = 0;
+                foreach (string s in list) {
+                    Console.WriteLine("list["+counter+"] : "+s);
+                    counter++;
+                }
+                //mid
+                Console.WriteLine("\n--------Running Mid Stats--------------------------");
+                copy = bd.FindMostInfluentialAttribute(d);
+                Console.WriteLine("Should contain only romance and professional");
+                foreach (KeyValuePair<string, double> item in copy) {
+                    Console.WriteLine("copy[" + item.Key + "] : " + item.Value);
+                }
+                total = bd.ProbabilityOffset(copy);
+                Console.WriteLine("total 280: " + total + "\n Should only contain romance and professional");//was 870 but reduced by min with is 750 and also max
+                foreach (KeyValuePair<string, double> item in copy) {
+                    Console.WriteLine("copy[" + item.Key + "] : " + item.Value+" == total: "+ total);
+                }
+                list = bd.PickAtttibutes(copy, total);
+                Console.WriteLine("List should have romance and professional");
+                counter = 0;
+                foreach (string s in list) {
+                    Console.WriteLine("list[" + counter + "] : " + s);
+                    counter++;
+                }
+                //low
+                Console.WriteLine("\n--------Running Low Stats--------------------------");
+                copy = bd.FindMostInfluentialAttribute(d);
+                Console.WriteLine("Should contain only affinity and respect");
+                foreach (KeyValuePair<string, double> item in copy) {
+                    Console.WriteLine("copy[" + item.Key + "] : " + item.Value);
+                }
+                total = bd.ProbabilityOffset(copy);
+                Console.WriteLine("total 240: " + total + "\n Should only contain affinity and respect");//was 870 but reduced by min with is 750 and also max
+                foreach (KeyValuePair<string, double> item in copy) {
+                    Console.WriteLine("copy[" + item.Key + "] : " + item.Value + " == total: " + total);
+                }
+                list = bd.PickAtttibutes(copy, total);
+                Console.WriteLine("List should have afinity and respect");
+                counter = 0;
+                foreach (string s in list) {
+                    Console.WriteLine("list[" + counter + "] : " + s);
+                    counter++;
+                }
+                //none-->neutral
+                Console.WriteLine("\n--------Running Neutral----------------------------");
+                copy = bd.FindMostInfluentialAttribute(d);
+                total = bd.ProbabilityOffset(copy);
+                Console.WriteLine("Total: "+total+" IsNeutral: "+bd.IsNeutral);
+                list = bd.PickAtttibutes(copy, total);
+                Console.WriteLine("List should have neutral");
+                counter = 0;
+                foreach (string s in list) {
+                    Console.WriteLine("list[" + counter + "] : " + s);
+                    counter++;
+                }
+            }
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// SmallTalk Stuff
+        /// </summary>
+        /// <param name="iterations"></param>
 
         private static SmallTalk_Module module;
         private static SmallTalk_Parser parser;
@@ -63,14 +195,7 @@ namespace Kati{
             }
             return temp;
         }
-        
-        static void Main(string[] args){
-            //TestSmallTalkText(5);
-            //TestSmallTalkEventResponse(20000);
-            //TestEventResponse2();
-            //TestAB();
-            TestController(50);
-        }
+
 
         public static void TestController(int iterations) {
             Setup();
