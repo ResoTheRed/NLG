@@ -13,7 +13,7 @@ namespace KatiUnitTest.Module_Tests.GlobalModuleTest {
         [TestInitialize]
         public void Start() {
             ctrl = new Controller(Constants.DayDreamWonder);
-            bd = ctrl.Parser.BranchDecision;
+            bd = ctrl.Parser.Branch;
         }
 
         public void SetNpcTone(double[] val) {

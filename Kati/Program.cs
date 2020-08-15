@@ -27,7 +27,7 @@ namespace Kati{
 
         public static void Start() {
             ctrl = new Controller(Constants.DayDreamWonder);
-            bd = ctrl.Parser.BranchDecision;
+            bd = ctrl.Parser.Branch;
         }
 
         public static void SetNpcTone(double[] val) {

@@ -28,31 +28,31 @@ it is discarded as a possible option.
 GameData Rules:
     1. Setting Rules
         1. Weather Rules: regards to the current weather in the game
-            Format::"weather.<type>"-->"weather.rain"
+            Format::"game.weather.<type>"-->"game.weather.rain"
             "weather":
             [
                 "nice_day","hot","humid","rain","windy","cold"
             ]
         2. Map Sector Rules:  where is the character on the map
-            Format::"sector.<sector_number>"-->"sector.12"
+            Format::"game.sector.<sector_number>"-->"game.sector.12"
             "sector":
             [
                 1-12
             ]
         3. Time of Day Rules:  what time of day is it?
-            Format::"time.<time of day>"-->"time.morning"
+            Format::"game.time.<time of day>"-->"game.time.morning"
             "time":
             [
                 "morning","noon","afternoon","evening","night"
             ]
         4. Day of Week Rules: is day
-            Format::"day.<day>"-->"day.mon"
+            Format::"game.day.<day>"-->"game.day.mon"
             "day":
             [
                 "mon","tues","weds","thurs","fri","sat","sun"
             ]
         5. Season Rules: is season
-            Format::"season.<season>"-->"season.fall"
+            Format::"game.season.<season>"-->"game.season.fall"
             "season":
             [
                 "fall","winter","spring","summer"
@@ -60,7 +60,7 @@ GameData Rules:
     2. Event Rules:  deals with gameEvents
         
         1. Public Event rules: Game event such as a festival base on calendar dates
-            Format::"publicEvent.<specific event>"-->"publicEvent.art_fest": the specific event is near
+            Format::"game.publicEvent.<specific event>"-->"game.publicEvent.art_fest": the specific event is near
             Format::"publicEvent.<generic event>"-->"publicEvent.next": if an event is near
             "publicEvent":
             [
@@ -68,7 +68,7 @@ GameData Rules:
             ]
         
         2. Trigger Event Rules: Game events that are triggered by the player ex: unlocking a feature
-            Format:: "trigger.<triggerd game event>"
+            Format:: "game.trigger.<triggerd game event>"
             "trigger":
             [
                 "I wish I had something to put in here"

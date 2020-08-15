@@ -1,0 +1,2115 @@
+{
+  "sample1_statement": {
+    "neutral": {
+      " neutral teat 1": {
+        "req": ["game.weather.nice_day"],
+        "lead to": []
+      },
+      " neutral teat 2": {
+        "req": [ "game.weather.windy" ],
+        "lead to": []
+      },
+      " neutral teat 3": {
+        "req": [ "game.season.fall" ],
+        "lead to": []
+      },
+      " neutral teat 4": {
+        "req": [ "game.time.morning" ],
+        "lead to": []
+      },
+      " neutral teat 5": {
+        "req": [],
+        "lead to": [ "game.day.mon" ]
+      },
+      " neutral teat 6": {
+        "req": [],
+        "lead to": ["game.day.fri"]
+      },
+      " neutral teat 7": {
+        "req": [ "game.publicEvent.art_fest" ],
+        "lead to": [  ]
+      },
+      " neutral teat 8": {
+        "req": [ "game.publicEvent.next" ],
+        "lead to": []
+      },
+      " neutral teat 9": {
+        "req": ["game.sector.5"],
+        "lead to": []
+      },
+      " neutral teat 10": {
+        "req": ["game.publicEvent.art_fest","game.weather.nice_day","game.day.mon"],
+        "lead to": []
+      },
+      " neutral teat 11": {
+        "req": ["game.sector.5","game.publicEvent.next","game.day.fri","game.season.spring"],
+        "lead to": []
+      },
+      " neutral teat 12": {
+        "req": [ "game.publicEvent.art_fest", "game.weather.nice_day", "game.day.mon", "game.sector.9" ],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "romance test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "friend test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "respect test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "affinity": {
+      "affinity test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "disgust test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "hate test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "rivalry test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 12": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "sample1_question": {
+    "neutral": {
+      " neutral teat 1": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 2": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 3": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 4": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 5": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 6": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 7": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 8": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 9": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 10": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 11": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "romance test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "friend test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "respect test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "affinity": {
+      "affinity test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "disgust test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "hate test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "rivalry test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 12": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "sample1_response": {
+    "positive+": {
+      "positive+ test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "positive": {
+      "positive test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "neutral": {
+      "neutral test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "negative": {
+      "negative test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "negative+": {
+      "negative+ test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 12": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+
+  "sample2_statement": {
+    "neutral": {
+      " neutral teat 1": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 2": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 3": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 4": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 5": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 6": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 7": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 8": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 9": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 10": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 11": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "romance test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "friend test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "respect test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "affinity": {
+      "affinity test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "disgust test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "hate test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "rivalry test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 12": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "sample2_question": {
+    "neutral": {
+      " neutral teat 1": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 2": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 3": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 4": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 5": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 6": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 7": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 8": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 9": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 10": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 11": {
+        "req": [],
+        "lead to": []
+      },
+      " neutral teat 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "romance": {
+      "romance test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "romance test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "friend": {
+      "friend test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "friend test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "respect": {
+      "respect test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "respect test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "affinity": {
+      "affinity test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "affinity test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "disgust": {
+      "disgust test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "disgust test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "hate": {
+      "hate test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "hate test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "rivalry": {
+      "rivalry test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "rivalry test 12": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  },
+  "sample2_response": {
+    "positive+": {
+      "positive+ test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "positive+ test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "positive": {
+      "positive test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "positive test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "neutral": {
+      "neutral test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "neutral test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "negative": {
+      "negative test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "negative test 12": {
+        "req": [],
+        "lead to": []
+      }
+    },
+    "negative+": {
+      "negative+ test 1": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 2": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 3": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 4": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 5": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 6": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 7": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 8": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 9": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 10": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 11": {
+        "req": [],
+        "lead to": []
+      },
+      "negative+ test 12": {
+        "req": [],
+        "lead to": []
+      }
+    }
+  }
+}
