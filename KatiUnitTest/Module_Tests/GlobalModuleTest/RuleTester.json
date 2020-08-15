@@ -1,51 +1,55 @@
 {
   "sample1_statement": {
     "neutral": {
-      " neutral teat 1": {
-        "req": ["game.weather.nice_day"],
+      " neutral test 0": {
+        "req": [],
         "lead to": []
       },
-      " neutral teat 2": {
+      " neutral test 1": {
+        "req": [ "game.weather.nice_day" ],
+        "lead to": []
+      },
+      " neutral test 2": {
         "req": [ "game.weather.windy" ],
         "lead to": []
       },
-      " neutral teat 3": {
+      " neutral test 3": {
         "req": [ "game.season.fall" ],
         "lead to": []
       },
-      " neutral teat 4": {
+      " neutral test 4": {
         "req": [ "game.time.morning" ],
         "lead to": []
       },
-      " neutral teat 5": {
-        "req": [],
-        "lead to": [ "game.day.mon" ]
+      " neutral test 5": {
+        "req": [ "game.day.mon" ],
+        "lead to": []
       },
-      " neutral teat 6": {
-        "req": [],
-        "lead to": ["game.day.fri"]
+      " neutral test 6": {
+        "req": [ "game.day.fri" ],
+        "lead to": []
       },
-      " neutral teat 7": {
+      " neutral test 7": {
         "req": [ "game.publicEvent.art_fest" ],
-        "lead to": [  ]
+        "lead to": []
       },
-      " neutral teat 8": {
+      " neutral test 8": {
         "req": [ "game.publicEvent.next" ],
         "lead to": []
       },
-      " neutral teat 9": {
-        "req": ["game.sector.5"],
+      " neutral test 9": {
+        "req": [ "game.sector.5" ],
         "lead to": []
       },
-      " neutral teat 10": {
-        "req": ["game.publicEvent.art_fest","game.weather.nice_day","game.day.mon"],
+      " neutral test 10": {
+        "req": [ "game.publicEvent.art_fest", "game.weather.nice_day", "game.day.mon" ],
         "lead to": []
       },
-      " neutral teat 11": {
-        "req": ["game.sector.5","game.publicEvent.next","game.day.fri","game.season.spring"],
+      " neutral test 11": {
+        "req": [ "game.sector.5", "game.publicEvent.next", "game.day.fri", "game.season.spring" ],
         "lead to": []
       },
-      " neutral teat 12": {
+      " neutral test 12": {
         "req": [ "game.publicEvent.art_fest", "game.weather.nice_day", "game.day.mon", "game.sector.9" ],
         "lead to": []
       }

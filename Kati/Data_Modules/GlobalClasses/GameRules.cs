@@ -38,36 +38,46 @@ namespace Kati.Data_Modules.GlobalClasses {
         /**********************Remove GameData Non aplicable Content**************************/
 
         //format:: {"dialogue":{"req" : [],"leads to" : []}}
-        public Dictionary<string, Dictionary<string, List<string>>> RemoveGameRequirments
+        //all done by reference
+        public Dictionary<string, Dictionary<string, List<string>>> ParseGameRequirments
                                 (Dictionary<string, Dictionary<string, List<string>>> data) {
             List<string> keysToDelete = new List<string>();
             foreach (KeyValuePair<string, Dictionary<string, List<string>>> item in data) {
                 foreach (string req in data[item.Key]["req"]) {
                     if (RemoveElement(req)) {
                         keysToDelete.Add(item.Key);
-                    }
+                    } 
                 }
+            }
+            foreach (string key in keysToDelete) {
+                if(data.ContainsKey(key))
+                    data.Remove(key);
             }
             return data;
         }
 
+        //fault tolerant method.
         public bool RemoveElement(string req) {
+            if (req == null)
+                return true;
             string[] arr = req.Split(".");
-            if (arr.Length == 0 || !arr[0].Equals(GAME)) {
+            if (arr.Length < 3 && arr[0].Equals(GAME)) {
+                return true;
+            } else if (arr.Length == 0 || !arr[0].Equals(GAME)) {
                 return false;
             } else {
-                string[] temp = new string[arr.Length-1];
-                for (int i = 1; i < arr.Length-1; i++) {//remove game Keyword
+                string[] temp = new string[arr.Length - 1];
+                for (int i = 1; i <= arr.Length - 1; i++) {//remove game Keyword
                     temp[i - 1] = arr[i];
                 }
-                return RuleDirectory(temp);   
+                return RuleDirectory(temp);
             }
         }
 
         public bool RuleDirectory(string[] arr) {
             string key = arr[0];
             string[] temp = new string[arr.Length - 1];
-            for (int i = 1; i <= arr.Length - 1; i++) {//remove game Keyword
+            for (int i = 1; i <= arr.Length - 1; i++) {
                 temp[i - 1] = arr[i];
             }
             switch (key) {
@@ -78,7 +88,7 @@ namespace Kati.Data_Modules.GlobalClasses {
                 case SEASON: { return CheckSeason(temp); }
                 case PUBLIC_EVENT: { return CheckPublicEvent(temp); }
                 case TRIGGER_EVENT: { return CheckTriggerEvent(temp); }
-                default: { return false; }
+                default: { return true; }//if it made it here then there is a typo
             }
         }
         //no rules made yet
@@ -87,17 +97,17 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         protected bool CheckPublicEvent(string[] temp) {
-            if (temp[0] == null)
+            if (temp[0] == null || temp == null)
                 return true;
             if (temp[0].Equals("next")) {
                 bool isNear = false;
+                //return false if it needs to be saved
                 foreach (KeyValuePair<string, int> item in Ctrl.Game.EventCalendar[Ctrl.Game.Season]) {
                     isNear = isNear || Ctrl.Game.EventIsNear(item.Value - 6, Ctrl.Game.Season, item.Key);
                 }
-                return isNear;
+                return !isNear;
             }
-            return Ctrl.Game.EventIsNear
-                (Ctrl.Game.EventCalendar[Ctrl.Game.Season][temp[0]] - 6, Ctrl.Game.Season, temp[0]);
+            return !(Ctrl.Game.EventIsNear().Equals(temp[0]));
         }
 
         protected bool CheckSeason(string[] temp) {

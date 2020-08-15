@@ -52,16 +52,16 @@ namespace Kati.Module_Hub{
 
         private void SetupEventCalendar() {
             EventCalendar = new Dictionary<string, Dictionary<string, int>>();
-            EventCalendar["Spring"] = new Dictionary<string, int>();
-            EventCalendar["Summer"] = new Dictionary<string, int>();
-            EventCalendar["Fall"] = new Dictionary<string, int>();
+            EventCalendar["spring"] = new Dictionary<string, int>();
+            EventCalendar["summer"] = new Dictionary<string, int>();
+            EventCalendar["fall"] = new Dictionary<string, int>();
             EventCalendar["winter"] = new Dictionary<string, int>();
-            EventCalendar["Spring"]["art_fest"] = 12;
-            EventCalendar["Spring"]["blueberry_fest"] = 21;
-            EventCalendar["Summer"]["writers_block"] = 10;
-            EventCalendar["Summer"]["carnival"] = 24;
-            EventCalendar["Fall"]["music_fest"] = 15;
-            EventCalendar["Fall"]["halloween"] = 28;
+            EventCalendar["spring"]["art_fest"] = 12;
+            EventCalendar["spring"]["blueberry_fest"] = 21;
+            EventCalendar["summer"]["writers_block"] = 10;
+            EventCalendar["summer"]["carnival"] = 24;
+            EventCalendar["fall"]["music_fest"] = 15;
+            EventCalendar["fall"]["halloween"] = 28;
             EventCalendar["winter"]["bizaar"] = 7;
             EventCalendar["winter"]["yule_tide"] = 26;
         }

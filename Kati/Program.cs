@@ -18,8 +18,45 @@ namespace Kati{
             //TestEventResponse2();
             //TestAB();
             //TestController(50);
-            TestA(5);
+            //TestA(5);
+            TestGameRule();
         }
+
+        /*-----Parse Game Data-------*/
+        static Dictionary<string, Dictionary<string, List<string>>> data;
+        static GameRules game;
+
+        public static void _Start() {
+            ctrl = new Controller("C:/Users/User/Documents/NLG/KatiUnitTest/Module_Tests/GlobalModuleTest/RuleTester.json");
+            _SetGameData(ctrl.Game);
+            data = ctrl.Lib.Data["sample1_statement"]["neutral"];
+            game = ctrl.Parser.Game;
+        }
+
+        public static  void _SetGameData(GameData g) {
+            g.Weather = "nice_day";
+            g.Sector = "5";
+            g.TimeOfDay = "morning";
+            g.Season = "spring";
+            g.DayOfWeek = 1;
+            g.DayOfMonth = 8;
+        }
+
+        public static void TestGameRule() {
+            _Start();
+            Console.WriteLine("\nWhat is contained in the dataset before\n");
+            foreach (string key in ctrl.Lib.Data["sample1_statement"]["neutral"].Keys) {
+                Console.WriteLine(key);
+            }
+
+            var data = game.ParseGameRequirments(ctrl.Lib.Data["sample1_statement"]["neutral"]);
+
+            Console.WriteLine("\nWhat is contained in the dataset after\n");            
+            foreach (string key in data.Keys) {
+                Console.WriteLine(key);
+            }
+        }
+
 
 
         static Controller ctrl;
