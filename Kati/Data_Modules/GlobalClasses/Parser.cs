@@ -8,9 +8,11 @@ namespace Kati.Data_Modules.GlobalClasses {
         private Dictionary<string, Dictionary<string, Dictionary<string, List<string>>>> data;
         private string topic;//main topic "dreams","weather"...
         private string type;//Statement or Question
+
         private Controller ctrl;
         private BranchDecision branch;
         private GameRules game;
+        private PersonalCharacterRules personal;
 
         public string Topic { get => topic; set => topic = value; }
         public string Type { get => type; set => type = value; }
@@ -19,11 +21,13 @@ namespace Kati.Data_Modules.GlobalClasses {
             { get => data; set => data = value; }
         public BranchDecision Branch { get => branch; set => branch = value; }
         public GameRules Game { get => game; set => game = value; }
+        public PersonalCharacterRules Personal { get => personal; set => personal = value; }
 
         public Parser(Controller ctrl) {
             Ctrl = ctrl;
             Branch = new BranchDecision(Ctrl);
             Game = new GameRules(Ctrl);
+            Personal = new PersonalCharacterRules(Ctrl);
         }
 
         public void Setup(string topic, string type,
@@ -37,8 +41,8 @@ namespace Kati.Data_Modules.GlobalClasses {
             //Data most not point to Lib data but be a copy
             var data = Branch.RunDecision(Data);
             //Remove GameData Selections
-            //Remove CharacterData Boolean attributes
-            //Remove CharacterData Scalar attributes
+            //Remove CharacterData personal attributes
+            //Remove CharacterData social attributes
         }
 
     }

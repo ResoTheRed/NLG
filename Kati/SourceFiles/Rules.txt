@@ -77,10 +77,13 @@ GameData Rules:
 
 Character Data Rules:
 
+the "not" keyword: execute the dialogue if the speaker doesn't have the attribute
+
     1. Persoanl Schema Rules: Attributes/personality regarding themself 
     
         1. Character Trait Rules: [req]
-            Format::"trait.<characterTrait>" --> "trait.active": include dialogue option if character has this trait
+            Format::"personal.trait.<characterTrait>" --> "personal.trait.active": include dialogue option if character has this trait
+            Format::"personal.trait.not.<characterTrait>" --> "personal.trait.not.active": run if speaker doesn't have attribute
             "trait":
             [ 
                 "active","adventurous","agreeable","articulate","clever","calm","cheerful","Greedy",
@@ -95,7 +98,8 @@ Character Data Rules:
             ]
 
         2.  Character Status Rules: [req]
-            Format::"status.<status>"-->"status.drunk": include dialogue option if character has this status
+            Format::"personal.status.<status>"-->"personal.status.drunk": include dialogue option if character has this status
+            Format::"personal.status.not.<status>"-->"personal.status.not.drunk": runs if character doesn't have status
             "status":
             [
                 "injured","fatigued","grieving","happy","lonely","drunk","angry","sick","sleeping",
@@ -103,7 +107,8 @@ Character Data Rules:
             ]
 
         3.  Character Interests Rules [req]
-            Format::"interest.<interest>"-->"intered.likes sports"
+            Format::"personal.interest.<interest>"-->"personal.interest.likes sports"
+            Format::"personal.interest.not.<interest>"-->"personal.interest.not.likes sports"
             "interest"
             [
                 "likes movies","likes sports","likes music","likes making music","likes art","likes making art",
@@ -118,7 +123,8 @@ Character Data Rules:
             ]
 
         4.  Physical Feature Rules: [req]
-            Format::"physicalFeature.<npc feature>"-->"physical.has a creepy smile"
+            Format::"personal.physicalFeature.<npc feature>"-->"personal.physical.has a creepy smile"
+            Format::"personal.physicalFeature.not.<npc feature>"-->"personal.physical.not.has a creepy smile"
             "physicalFeature":
             [
                 "has a great smile","has a creepy smile","has nice eyes","has a kind face","has a stern face",
@@ -130,8 +136,8 @@ Character Data Rules:
             ]
 
         5. Scalar Traits: [req]
-            Format::"scalarTrait.<trait>.<threshold>"-->"scalarTrait.charm.500"
-            "scalarTraits": //0-1000 where 0 is not at all and 1000 max
+            Format::"personal.scalarTrait.<trait>.<threshold>"-->"personal.scalarTrait.charm.500"
+            "scalarTrait": //0-1000 where 0 is not at all and 1000 max
             [
                 "charm","confident","leader","popular","attractive","persuasive","creative",
                 "style","athletics","charisma","luck"

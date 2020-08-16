@@ -12,7 +12,7 @@ namespace Kati.SourceFiles{
         public const string time = "C:/Users/User/Documents/NLG/Kati/SourceFiles/json_files/time.json";
         public const string smallTalk = "C:/Users/User/Documents/NLG/Kati/SourceFiles/json_files/smallTalk.json";
         public const string DayDreamWonder = "C:/Users/User/Documents/NLG/Kati/SourceFiles/json_files/DayDreamWonder.json";
-
+        public const string TestJson = "C:/Users/User/Documents/NLG/KatiUnitTest/Module_Tests/GlobalModuleTest/RuleTester.json";
 
     }
 }
