@@ -55,11 +55,11 @@
       }
     },
     "romance": {
-      "romance test 0": { //keep
+      "romance test 0": { //keep 1
         "req": [],
         "lead to": []
       },
-      "romance test 1": { //keep
+      "romance test 1": { //keep 2
         "req": [ "personal.trait.honest" ],
         "lead to": []
       },
@@ -71,7 +71,7 @@
         "req": [ "personal.trait.lazy" ],
         "lead to": []
       },
-      "romance test 2-not": {//keep
+      "romance test 2-not": {//keep 3
         "req": [ "personal.trait.not.lazy" ],
         "lead to": []
       },
@@ -79,7 +79,7 @@
         "req": [ "personal.trait.honest", "personal.trait.lazy" ],
         "lead to": []
       },
-      "romance test 3-not": {//keep
+      "romance test 3-not": {
         "req": [ "personal.trait.not.honest", "personal.trait.not.lazy" ],
         "lead to": []
       },
@@ -87,7 +87,7 @@
         "req": [ "personal.trait.garfunkle" ],
         "lead to": []
       },
-      "romance test 5": { //keep
+      "romance test 5": { //keep 4
         "req": [ "personal.trait.active", "personal.trait.agreeable", "personal.trait.calm" ],
         "lead to": []
       },
@@ -95,7 +95,7 @@
         "req": [ "personal.trait.not.active", "personal.trait.not.agreeable", "personal.trait.not.calm" ],
         "lead to": []
       },
-      "romance test 6": { //keep
+      "romance test 6": { //keep 5
         "req": [ "personal.status.drunk" ],
         "lead to": []
       },
@@ -103,7 +103,7 @@
         "req": [ "personal.status.injured" ],
         "lead to": []
       },
-      "romance test 7-not": {//keep
+      "romance test 7-not": {//keep 6
         "req": [ "personal.status.not.injured" ],
         "lead to": []
       },
@@ -115,7 +115,7 @@
         "req": [ "personal.status.drunk", "personal.status.lonely", "personal.status.dirty" ],
         "lead to": []
       },
-      "romance test 10": { //keep
+      "romance test 10": { //keep 7
         "req": [ "personal.interest.likes movies" ],
         "lead to": []
       },
@@ -123,11 +123,11 @@
         "req": [ "personal.interest.likes animals" ],
         "lead to": []
       },
-      "romance test 11-not": {//keep
+      "romance test 11-not": {//keep 8
         "req": [ "personal.interest.not.likes animals" ],
         "lead to": []
       },
-      "romance test 12": { //keep
+      "romance test 12": { //keep 9
         "req": [ "personal.interest.likes movies", "personal.interest.likes music", "personal.interest.likes art" ],
         "lead to": []
       },
@@ -135,35 +135,35 @@
         "req": [ "personal.interest", "personal", "personal.l.l.o.p.i.p.n" ],
         "lead to": []
       },
-      "romance test 14": { //keep
-        "req": [ "personal.physicalFeatures.has a great smile" ],
+      "romance test 14": { //keep 10
+        "req": [ "personal.physicalFeature.has a great smile" ],
         "lead to": []
       },
       "romance test 14-not": { 
-        "req": [ "personal.physicalFeatures.not.has a great smile" ],
+        "req": [ "personal.physicalFeature.not.has a great smile" ],
         "lead to": []
       },
       "romance test 15": {
-        "req": [ "personal.physicalFeatures.is petite" ],
+        "req": [ "personal.physicalFeature.is petite" ],
         "lead to": []
       },
-      "romance test 15-not": {//keep
-        "req": [ "personal.physicalFeatures.not.is petite" ],
+      "romance test 15-not": {//keep 11
+        "req": [ "personal.physicalFeature.not.is petite" ],
         "lead to": []
       },
       "romance test 16": {
-        "req": [ "personal.physicalFeatures", "personal.physicalFeatures.fff.ttt.ggg.hh.fd.g.d" ],
+        "req": [ "personal.physicalFeature", "personal.physicalFeature.fff.ttt.ggg.hh.fd.g.d" ],
         "lead to": []
       },
-      "romance test 17": { //keep
-        "req": [ "personal.physicalFeatures.has a great smile", "personal.physicalFeatures.has nice eyes" ],
+      "romance test 17": { //keep 12
+        "req": [ "personal.physicalFeature.has a great smile", "personal.physicalFeature.has nice eyes" ],
         "lead to": []
       },
-      "romance test 18": { //keep
+      "romance test 18": { //keep 13
         "req": [ "personal.scalarTrait.luck.500" ],
         "lead to": []
       },
-      "romance test 19": {
+      "romance test 19": { //keep 14
         "req": [ "personal.scalarTrait.charm.250" ],
         "lead to": []
       },
@@ -171,9 +171,9 @@
         "req": [ "personal.scalarTrait.charm.-1", "personal.scalarTrait.charm.Q", "personal.scalarTrait.Blam.999", "personal.scarsRemain" ],
         "lead to": []
       },
-      "romance test 21": { //keep
+      "romance test 21": { //keep 15
         "req": [
-          "personal.scalarTrait.attractive.777",
+          "personal.scalarTrait.attractive.450",
           "personal.physicalFeature.has a great smile",
           "personal.interest.likes art",
           "personal.status.drunk",

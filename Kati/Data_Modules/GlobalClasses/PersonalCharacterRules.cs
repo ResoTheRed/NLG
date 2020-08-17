@@ -1,6 +1,8 @@
 ﻿using Kati.Module_Hub;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace Kati.Data_Modules.GlobalClasses {
@@ -10,7 +12,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         public const string TRAIT = "trait";
         public const string STATUS = "status";
         public const string INTEREST = "interest";
-        public const string PHYSICAL_FEATURES = "physicalFeatures";
+        public const string PHYSICAL_FEATURES = "physicalFeature";
         public const string SCALAR_TRAIT = "scalarTrait";
         private Controller ctrl;
         private CharacterData  npc;
@@ -58,23 +60,31 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         public bool RuleDirectory(string[] arr) {
-            bool remove = true;
+            bool remove;
             (string key, string[] temp) = PopQueue(arr);
+            if (temp.Length < 1)
+                return true;
             bool inverse = temp[0].Equals("not");
             if (inverse) {
                 var t = PopQueue(temp);
                 temp = t.Item2;
             }
-            switch (key) {
-                case TRAIT: { remove = CheckTrait(temp); }break;
-                case STATUS: { remove = CheckStatus(temp); }break;
-                case INTEREST: { remove = CheckInterest(temp); }break;
-                case PHYSICAL_FEATURES: { remove = CheckPhysicalFeatures(temp); }break;
-                case SCALAR_TRAIT: { remove = CheckScalarTrait(temp); }break;
-                default: { return true; }
-            }
+            remove = RulesDirectory(key, temp);
             if (inverse)
                 return !remove;
+            return remove;
+        }
+
+        private bool RulesDirectory(string key, string[] temp) {
+            bool remove;
+            switch (key) {
+                case TRAIT: { remove = CheckTrait(temp); } break;
+                case STATUS: { remove = CheckStatus(temp); } break;
+                case INTEREST: { remove = CheckInterest(temp); } break;
+                case PHYSICAL_FEATURES: { remove = CheckPhysicalFeatures(temp); } break;
+                case SCALAR_TRAIT: { remove = CheckScalarTrait(temp); } break;
+                default: { return true; }
+            }
             return remove;
         }
         //pop first element and return the element and the shortend array
@@ -104,7 +114,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         protected bool CheckPhysicalFeatures(string[] temp) {
-            if (temp[0] == null)
+            if (temp.Length < 1)
                 return true;
             if (Ctrl.Npc.InitiatorAttributeList.ContainsKey(temp[0])) {
                 if (Ctrl.Npc.InitiatorAttributeList[temp[0]].Equals(PHYSICAL_FEATURES)) {
@@ -115,7 +125,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         protected bool CheckInterest(string[] temp) {
-            if (temp[0] == null)
+            if (temp.Length < 1)
                 return true;
             if (Ctrl.Npc.InitiatorAttributeList.ContainsKey(temp[0])) {
                 if (Ctrl.Npc.InitiatorAttributeList[temp[0]].Equals(INTEREST)) {
@@ -126,7 +136,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         protected bool CheckStatus(string[] temp) {
-            if (temp[0] == null)
+            if (temp.Length < 1)
                 return true;
             if (Ctrl.Npc.InitiatorAttributeList.ContainsKey(temp[0])) {
                 if (Ctrl.Npc.InitiatorAttributeList[temp[0]].Equals(STATUS)) {
@@ -137,7 +147,7 @@ namespace Kati.Data_Modules.GlobalClasses {
         }
 
         protected bool CheckTrait(string[] temp) {
-            if (temp[0] == null)
+            if (temp.Length<1)
                 return true;
             if (Ctrl.Npc.InitiatorAttributeList.ContainsKey(temp[0])) {
                 if (Ctrl.Npc.InitiatorAttributeList[temp[0]].Equals(TRAIT)) {
