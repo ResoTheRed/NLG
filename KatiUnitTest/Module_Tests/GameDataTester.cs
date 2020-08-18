@@ -175,12 +175,6 @@ namespace KatiUnitTest.Module_Tests{
         }
 
         [TestMethod]
-        public void TestInitiatorIsPlayer() {
-            data.InitiatorIsPlayer = false;
-            Assert.IsFalse(data.InitiatorIsPlayer);
-        }
-
-        [TestMethod]
         public void TestInteracitonTone() {
             Dictionary<string, double> tones = new Dictionary<string, double>();
             for (int i = 0; i < stats.Length; i++) {
