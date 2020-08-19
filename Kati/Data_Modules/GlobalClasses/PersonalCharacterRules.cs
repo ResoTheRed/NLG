@@ -116,8 +116,8 @@ namespace Kati.Data_Modules.GlobalClasses {
         protected bool CheckPhysicalFeatures(string[] temp) {
             if (temp.Length < 1)
                 return true;
-            if (Ctrl.Npc.InitiatorAttributeList.ContainsKey(temp[0])) {
-                if (Ctrl.Npc.InitiatorAttributeList[temp[0]].Equals(PHYSICAL_FEATURES)) {
+            if (Ctrl.Npc.InitiatorPersonalList.ContainsKey(temp[0])) {
+                if (Ctrl.Npc.InitiatorPersonalList[temp[0]].Equals(PHYSICAL_FEATURES)) {
                     return false;
                 }
             }
@@ -127,8 +127,8 @@ namespace Kati.Data_Modules.GlobalClasses {
         protected bool CheckInterest(string[] temp) {
             if (temp.Length < 1)
                 return true;
-            if (Ctrl.Npc.InitiatorAttributeList.ContainsKey(temp[0])) {
-                if (Ctrl.Npc.InitiatorAttributeList[temp[0]].Equals(INTEREST)) {
+            if (Ctrl.Npc.InitiatorPersonalList.ContainsKey(temp[0])) {
+                if (Ctrl.Npc.InitiatorPersonalList[temp[0]].Equals(INTEREST)) {
                     return false;
                 }
             }
@@ -138,8 +138,8 @@ namespace Kati.Data_Modules.GlobalClasses {
         protected bool CheckStatus(string[] temp) {
             if (temp.Length < 1)
                 return true;
-            if (Ctrl.Npc.InitiatorAttributeList.ContainsKey(temp[0])) {
-                if (Ctrl.Npc.InitiatorAttributeList[temp[0]].Equals(STATUS)) {
+            if (Ctrl.Npc.InitiatorPersonalList.ContainsKey(temp[0])) {
+                if (Ctrl.Npc.InitiatorPersonalList[temp[0]].Equals(STATUS)) {
                     return false;
                 }
             }
@@ -149,8 +149,8 @@ namespace Kati.Data_Modules.GlobalClasses {
         protected bool CheckTrait(string[] temp) {
             if (temp.Length<1)
                 return true;
-            if (Ctrl.Npc.InitiatorAttributeList.ContainsKey(temp[0])) {
-                if (Ctrl.Npc.InitiatorAttributeList[temp[0]].Equals(TRAIT)) {
+            if (Ctrl.Npc.InitiatorPersonalList.ContainsKey(temp[0])) {
+                if (Ctrl.Npc.InitiatorPersonalList[temp[0]].Equals(TRAIT)) {
                     return false;
                 }
             }

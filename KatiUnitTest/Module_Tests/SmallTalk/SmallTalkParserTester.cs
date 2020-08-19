@@ -50,7 +50,7 @@ namespace KatiUnitTest.Module_Tests{
             data.InteractionTone = SetTone();
             data.InitiatorsTone = SetTone();
             data.RespondersTone = SetTone();
-            data.InitiatorAttributeList["loves_art_fest"] = "characterTrait";
+            data.InitiatorPersonalList["loves_art_fest"] = "characterTrait";
             data.ResponderAttributeList["loves_art_fest"] = "characterTrait";
             data.InitiatorScalarList["charming"] = 200;
             data.ResponderScalarList["charming"] = 200;
@@ -383,7 +383,7 @@ namespace KatiUnitTest.Module_Tests{
             string attribute = parser.PullFromNothing(cat["none"]);
             Assert.IsTrue(attribute.Equals("neutral"));
 
-            parser.Ctrl._CharacterData.InitiatorAttributeList["stranger to"] = "characterTrait";
+            parser.Ctrl._CharacterData.InitiatorPersonalList["stranger to"] = "characterTrait";
             parser.Ctrl._CharacterData.ResponderAttributeList["stranger to"] = "characterTrait";
 
             attribute = parser.PullFromNothing(cat["none"]);
@@ -469,7 +469,7 @@ namespace KatiUnitTest.Module_Tests{
         public void TestDropLeadsFromList() {
             parser.SetStage("initiator", "statement", "event");
             parser.Ctrl._GameData.DayOfMonth = 10;
-            parser.Ctrl._CharacterData.InitiatorAttributeList["loves_art_fest"] = "character_trait";
+            parser.Ctrl._CharacterData.InitiatorPersonalList["loves_art_fest"] = "character_trait";
             parser.SetCurrentListTopic();
             var dialogueList = parser.TrimDialogueOptions("neutral");
             var dialogue = parser.DropLeadsToFromList(dialogueList);
@@ -483,7 +483,7 @@ namespace KatiUnitTest.Module_Tests{
 
         [TestMethod]
         public void TestGetSpeakersAttributes() {
-            parser.Ctrl._CharacterData.InitiatorAttributeList["farty"] = "characterTrait";
+            parser.Ctrl._CharacterData.InitiatorPersonalList["farty"] = "characterTrait";
             parser.SetStage("initiator", "statement", "event");
             var attributes = parser.GetSpeakersAttributes();
             Assert.IsTrue(attributes.Count==2);

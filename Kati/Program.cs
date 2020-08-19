@@ -173,7 +173,7 @@ namespace Kati{
 
 
 
-
+        /*  Depreciated elements SmallTalk Module
 
         /// <summary>
         /// SmallTalk Stuff
@@ -214,7 +214,7 @@ namespace Kati{
             data.InteractionTone = SetTone();
             data.InitiatorsTone = SetTone();
             data.RespondersTone = SetTone();
-            data.InitiatorAttributeList["loves_art_fest"] = "characterTrait";
+            data.InitiatorPersonalList["loves_art_fest"] = "characterTrait";
             data.ResponderAttributeList["loves_art_fest"] = "characterTrait";
             data.InitiatorScalarList["charming"] = 200;
             data.ResponderScalarList["charming"] = 200;
@@ -451,6 +451,6 @@ namespace Kati{
             gameData.SetPublicEvent();
             Console.WriteLine(gameData.PublicEvent);
         }
-
+        */
     }
 }

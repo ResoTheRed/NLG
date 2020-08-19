@@ -702,7 +702,7 @@ namespace Kati.Data_Models{
         public string PullFromNothing(Dictionary<string, double> none) {
             string finalAttribute = "neutral";
             Dictionary<string, string> attribute = (speaker.Equals(SmallTalk_Controller.INITIATOR)) ?
-                Ctrl._CharacterData.InitiatorAttributeList : Ctrl._CharacterData.ResponderAttributeList;
+                Ctrl._CharacterData.InitiatorPersonalList : Ctrl._CharacterData.ResponderAttributeList;
             if (attribute.ContainsKey("stranger to"))
                 finalAttribute = "stranger";
             return finalAttribute;
@@ -861,7 +861,7 @@ namespace Kati.Data_Models{
 
         public Dictionary<string, string> GetSpeakersAttributes() {
             Dictionary<string, string> attribute = (speaker.Equals(SmallTalk_Controller.INITIATOR)) ?
-                Ctrl._CharacterData.InitiatorAttributeList : Ctrl._CharacterData.ResponderAttributeList;
+                Ctrl._CharacterData.InitiatorPersonalList : Ctrl._CharacterData.ResponderAttributeList;
             return attribute;
         }
 

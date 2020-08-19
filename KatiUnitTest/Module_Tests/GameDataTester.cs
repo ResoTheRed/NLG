@@ -149,7 +149,7 @@ namespace KatiUnitTest.Module_Tests{
         public void Start() {
             data = new CharacterData();
         }
-
+        /*
         [TestMethod]
         public void TestInitiatorNameString() {
             data.InitiatorsName = "Stephen";
@@ -214,8 +214,8 @@ namespace KatiUnitTest.Module_Tests{
         public void TestIniatorsAttributeList() {
             Dictionary<string, string> list = new Dictionary<string, string>();
             list["lucky"] = "characterTrait";
-            data.InitiatorAttributeList = list;
-            Assert.AreEqual(data.InitiatorAttributeList["lucky"], "characterTrait");
+            data.InitiatorPersonalList = list;
+            Assert.AreEqual(data.InitiatorPersonalList["lucky"], "characterTrait");
         }
 
         [TestMethod]
@@ -241,7 +241,7 @@ namespace KatiUnitTest.Module_Tests{
             data.ResponderScalarList = list;
             Assert.AreEqual(data.ResponderScalarList["charm"], 200);
         }
-
+        */
     }
 
 }

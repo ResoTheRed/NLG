@@ -46,7 +46,7 @@ namespace KatiUnitTest.Module_Tests
             data.InteractionTone = SetTone();
             data.InitiatorsTone = SetTone();
             data.RespondersTone = SetTone();
-            data.InitiatorAttributeList["loves_Art_Fest"] = "characterTrait";
+            data.InitiatorPersonalList["loves_Art_Fest"] = "characterTrait";
             data.ResponderAttributeList["loves_Art_Fest"] = "characterTrait";
             data.InitiatorScalarList["charming"] = 200;
             data.ResponderScalarList["charming"] = 200;

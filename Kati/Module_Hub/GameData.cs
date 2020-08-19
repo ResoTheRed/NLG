@@ -128,7 +128,7 @@ namespace Kati.Module_Hub{
         private Dictionary<string, double> initiatorsTone;
         private Dictionary<string, double> respondersTone;
         /*Collections of character's boolean attributes-> format: "lucky" : "characterTrait" */
-        private Dictionary<string, string> initiatorAttributeList;
+        private Dictionary<string, string> initiatorPersonalList;
         private Dictionary<string, string> responderAttributeList;
         /*collection of every social and personal scalar trait*/
         private Dictionary<string, int> initiatorScalarList;
@@ -138,7 +138,7 @@ namespace Kati.Module_Hub{
             interactionTone = new Dictionary<string, double>();
             initiatorsTone = new Dictionary<string, double>();
             respondersTone = new Dictionary<string, double>();
-            initiatorAttributeList = new Dictionary<string, string>();
+            initiatorPersonalList = new Dictionary<string, string>();
             responderAttributeList = new Dictionary<string, string>();
             initiatorScalarList = new Dictionary<string, int>();
             responderScalarList = new Dictionary<string, int>();
@@ -151,7 +151,7 @@ namespace Kati.Module_Hub{
         public Dictionary<string, double> InteractionTone { get => interactionTone; set => interactionTone = value; }
         public Dictionary<string, double> InitiatorsTone { get => initiatorsTone; set => initiatorsTone = value; }
         public Dictionary<string, double> RespondersTone { get => respondersTone; set => respondersTone = value; }
-        public Dictionary<string, string> InitiatorAttributeList { get => initiatorAttributeList; set => initiatorAttributeList = value; }
+        public Dictionary<string, string> InitiatorPersonalList { get => initiatorPersonalList; set => initiatorPersonalList = value; }
         public Dictionary<string, string> ResponderAttributeList { get => responderAttributeList; set => responderAttributeList = value; }
         public Dictionary<string, int> InitiatorScalarList { get => initiatorScalarList; set => initiatorScalarList = value; }
         public Dictionary<string, int> ResponderScalarList { get => responderScalarList; set => responderScalarList = value; }

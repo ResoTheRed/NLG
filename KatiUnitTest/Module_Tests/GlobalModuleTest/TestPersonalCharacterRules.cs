@@ -51,7 +51,7 @@ namespace KatiUnitTest.Module_Tests.GlobalModuleTest {
             foreach (string s in arr) {
                 scal[s] = 500;
             }
-            d.InitiatorAttributeList = con;
+            d.InitiatorPersonalList = con;
             d.InitiatorScalarList = scal;
         }
 
